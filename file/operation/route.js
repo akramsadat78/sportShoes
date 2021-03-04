@@ -6,6 +6,7 @@ let Shoe = require('../model/shoe');
 
 // Defined store route
 shoeRoutes.route('/add').post(function (req, res) {
+  console.log("+++++++++++++++++++++++++ enter add part +++++++++++++++++++++++++")  
   let shoe = new Shoe(req.body);
   shoe.save()
     .then(shoe => {
