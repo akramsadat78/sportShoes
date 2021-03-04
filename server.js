@@ -1,17 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-
 const app = express();
+const bodyParser = require('body-parser');
 const port = process.env.PORT || 5000;
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-/*add*/
+const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('./file/database/mongo');
 const shoeRoute = require('./file/operation/route');
+const path = require('path');
 
 mongoose.connect(config.DB, {
   useNewUrlParser: true,
@@ -23,17 +18,12 @@ mongoose.connect(config.DB, {
   err => { console.log('Can not connect to the database'+ err)}
 );
 
-app.use('/shoe', shoeRoute);
-/*
-startDatabase().then(async () => {
-  console.log("startDatabase")
-}
-);
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-add().then(async () => {
-  console.log("add")
-}
-);*/
+console.log("hello server");
+app.use('/shoe', shoeRoute);
 
 // API calls
 app.get('/api/hello', (req, res) => {
