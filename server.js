@@ -6,6 +6,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('./file/database/mongo');
 const shoeRoute = require('./file/operation/route');
+const loginRoute = require('./file/operation/loginRout');
 const path = require('path');
 
 mongoose.connect(config.DB, {
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 console.log("hello server");
 app.use('/shoe', shoeRoute);
+app.use('/login', loginRoute);
 
 // API calls
 app.get('/api/hello', (req, res) => {
