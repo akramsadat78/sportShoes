@@ -6,7 +6,11 @@ let Login = require('../model/loginModel');
 
 // Defined store route
 loginRoutes.route('/add').post(function (req, res) {
-  console.log("+++++++++++++++++++++++++ add new login +++++++++++++++++++++++++")  
+  console.log("+++++++++++++++++++++++++ add new login +++++++++++++++++++++++++") 
+  res.send(
+    `I received : ${req.body.post}`,
+  ); /*
+  console.log(req.body)
   let login = new Login(req.body);
   login.save()
     .then(login => {
@@ -14,7 +18,7 @@ loginRoutes.route('/add').post(function (req, res) {
     })
     .catch(err => {
     res.status(400).send("unable to save to database");
-    });
+    });*/
 });
 
 // Defined get data(index or listing) route

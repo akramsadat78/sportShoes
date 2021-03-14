@@ -17,6 +17,20 @@ export default class LoginComponent extends Component {
     }
   }
 
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await axios('/login');
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    
+    return body;
+  };
+
   onChangeUserName(e) {
     this.setState({
       username: e.target.value
