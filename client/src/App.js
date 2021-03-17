@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 import logo from './logo.svg';
 
 import './App.css';
 
 
 class App extends Component {
-  state = {
+
+  constructor(props) {
+    super(props);
+    this.onChangeUserName = this.onChangeUserName.bind(this);
+    this.onChangePassword= this.onChangePassword.bind(this);
+    this.onSubmit = this.handleSubmit.bind(this);
+
+    this.state = {
+        response: '',
+        post: '', // data you sed for server from client
+        responseToPost: '',//show data from server in client
+        username: '',
+        password: ''
+    }
+  }
+  /*state = {
     response: '',
     post: '', // data you sed for server from client
     responseToPost: '',//show data from server in client
   };
-  
+  */
   /*componentDidMount() {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
@@ -26,50 +41,95 @@ class App extends Component {
     return body;
   };
   */
+/* componentDidMount() {
+  this.callApi()
+    .then(res => this.setState({ response: res.express }))
+    .catch(err => console.log(err));
+}
+
+callApi = async () => {
+  const response = await axios('/login');
+  const body = await response.json();
+  if (response.status !== 200) throw Error(body.message);
+  
+  return body;
+};*/
+
+
+onChangeUserName(e) {
+  this.setState({
+    username: e.target.value
+  });
+}
+
+onChangePassword(e) {
+  this.setState({
+    password: e.target.value
+  })
+}
+
+
   handleSubmit = async e => {
     e.preventDefault();
-    const response = await fetch('/login/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post: this.state.post }),
-    });
 
+    const obj = {
+      username: this.state.username,
+      password: this.state.password
+    };
+    alert("form information enterd :) ")
+   /* axios.post('http://localhost:5000/login/add', obj)
+        .then(res => console.log(res.data));
+  */
+      const response = await fetch('/login/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+       // body: JSON.stringify({ post: obj }),
+       body: JSON.stringify(obj ) ,
+      });
+
+       
     const body = await response.text();
-    
-    
-    this.setState({ responseToPost: body });
+    this.setState({
+      responseToPost: body ,
+      username: '',
+      password: ''
+    })
+
+    //this.setState({ responseToPost: body });
   };
   
 render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
         <p>{this.state.response}</p>
         <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Post to Server:</strong>
-          </p>
-          <input
-            type="text"
-            value={this.state.post}
-            onChange={e => this.setState({ post: e.target.value })}
-          />
-          <button type="submit">Submit</button>
+                <div className="form-group">
+                    <label>username :  </label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      value={this.state.username}
+                      onChange={this.onChangeUserName}
+                      />
+                </div>
+          
+          <div className="form-group">
+                    <label>Password : </label>
+                    <input type="text" 
+                      className="form-control"
+                      value={this.state.password}
+                      onChange={this.onChangePassword}
+                      />
+                </div>
+                <div className="form-group">
+                    <input type="submit" 
+                      value="Register Business" 
+                      className="btn btn-primary"/>
+                </div>
+          
+
         </form>
         <p>{this.state.responseToPost}</p>
       </div>
