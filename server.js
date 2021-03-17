@@ -12,6 +12,17 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+mongoose.connect(config.DB, {
+  useNewUrlParser: true,
+  useFindAndModify:false,
+  useCreateIndex:true,
+  useUnifiedTopology:true
+}).then(
+  () => {console.log('Database is connected') },
+  err => { console.log('Can not connect to the database'+ err)}
+);
+
 // API calls
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
