@@ -6,19 +6,24 @@ let Login = require('../model/loginModel');
 
 // Defined store route
 loginRoutes.route('/add').post(function (req, res) {
-  console.log("+++++++++++++++++++++++++ add new login +++++++++++++++++++++++++") 
-  res.send(
+  console.log("+++++++++++++++++++++++++ add new login +++++++++++++++++++++++++",req.body) 
+  /*res.send(
     `I received : ${req.body.post}`,
-  ); /*
-  console.log(req.body)
+  );*/
+  /*res.send(
+    `I received : ${req.body.post.username} and ${ req.body.post.password}`,
+  );
+*/
   let login = new Login(req.body);
+  console.log(login)
   login.save()
-    .then(login => {
-      res.status(200).json({'login': 'login in added successfully'});
-    })
-    .catch(err => {
-    res.status(400).send("unable to save to database");
-    });*/
+        .then(() => res.json({
+            message: "Created account successfully"
+        }))
+        /*.catch(err => res.status(400).json({
+            "error": err,
+            "message": "Error creating account"
+        }))  */ 
 });
 
 // Defined get data(index or listing) route
