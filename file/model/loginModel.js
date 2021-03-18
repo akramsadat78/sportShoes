@@ -7,7 +7,7 @@ let Login = new Schema({
     type: String
   },
   password: {
-    type: Number
+    type: String
   }
 },{
     collection: 'login'
