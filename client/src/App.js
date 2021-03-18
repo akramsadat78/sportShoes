@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import logo from './logo.svg';
+import React from 'react';
+
+import LoginComponent from './component/LoginComponent';
 
 import './App.css';
 
+function App () {
+  return ( <LoginComponent/> );
+}
 
-class App extends Component {
+export default App;
+/*
 
   constructor(props) {
     super(props);
@@ -53,7 +57,7 @@ callApi = async () => {
   if (response.status !== 200) throw Error(body.message);
   
   return body;
-};*/
+};
 
 
 onChangeUserName(e) {
@@ -79,7 +83,7 @@ onChangePassword(e) {
     alert("form information enterd :) ")
    /* axios.post('http://localhost:5000/login/add', obj)
         .then(res => console.log(res.data));
-  */
+  
       const response = await fetch('/login/add', {
         method: 'POST',
         headers: {
@@ -137,7 +141,7 @@ render() {
   }
 }
 
-export default App;
+
 /*import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
