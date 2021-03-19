@@ -1,33 +1,26 @@
 const express = require('express');
 const loginRoutes = express.Router();
 
-// Require shoe model in our routes module
 let Login = require('../model/loginModel');
 
-// Defined store route
+// create a new doqument
 loginRoutes.route('/add').post(function (req, res) {
   console.log("+++++++++++++++++++++++++ add new login +++++++++++++++++++++++++",req.body) 
-  /*res.send(
-    `I received : ${req.body.post}`,
-  );*/
-  /*res.send(
-    `I received : ${req.body.post.username} and ${ req.body.post.password}`,
-  );
-*/
   let login = new Login(req.body);
   console.log(login)
   login.save()
         .then(() => res.json({
             message: "Created account successfully"
         }))
-        /*.catch(err => res.status(400).json({
+        .catch(err => res.status(400).json({
             "error": err,
             "message": "Error creating account"
-        }))  */ 
+        })) 
 });
 
-// Defined get data(index or listing) route
+//get information
 loginRoutes.route('/').get(function (req, res) {
+    console.log("+++++++++++++++++++++++++ get information +++++++++++++++++++++++++") 
     Login.find(function(err, logins){
     if(err){
       console.log(err);
