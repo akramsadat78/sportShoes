@@ -1,7 +1,7 @@
 body {
-    background-image: url("../picture/login.jpg");
-    background-repeat: no-repeat;
-    background-position: 0%;
+   background-image: url("../picture/login.jpg");
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 #wrap {  
