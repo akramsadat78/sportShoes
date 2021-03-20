@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InputTextField from './InputTextField';
 import '../css/loginpage.css';
+import logo from '../picture/1.png';
 export default class LoginComponent extends Component {
   
   constructor(props) {
@@ -62,11 +63,11 @@ export default class LoginComponent extends Component {
     }
 
     return (
-      <body>
-      <div id="wrap">
+      <div id="pic">
+        
         <form onSubmit={this.handleSubmit}>
           <div id = "border" > 
-
+          <img src={logo} />
             <div id = "section" >
 
               <div id = "lables" >
@@ -101,15 +102,15 @@ export default class LoginComponent extends Component {
 
               </div>
 
-            </div>
+          
 
             <div id = "sectionSubmit" >
               <button  type="submit" class = "button"> ورود </button> 
             </div>
-
+            </div>
         </form>
+     
       </div>
-      </body>
     );
   }
 }
