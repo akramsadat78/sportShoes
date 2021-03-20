@@ -1,5 +1,14 @@
-body {
-   /* background-image: url("../picture/9.jpg");*/
+/*body {
+   /* background-image: url("../picture/9.jpg");
     background-repeat: no-repeat;
     background-position: 0%;
+}*/
+
+#pice{
+    background-image: url("../picture/9.jpg");
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh;
+    margin-top: -1.5%;
+
 }
