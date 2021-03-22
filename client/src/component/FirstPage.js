@@ -12,7 +12,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+import '../css/FirstPage.css';
+import { red } from '@material-ui/core/colors';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    alignItems: 'center',
+    backgroundColor: 'rgb(11, 99, 99)',
+    cursor: "default",
   },
   drawer: {
     width: drawerWidth,
@@ -44,19 +50,28 @@ function PermanentDrawerRight() {
   return (
     <div className={classes.root}>
       <CssBaseline />
+
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Permanent drawer
+           کفش ورزشی
           </Typography>
         </Toolbar>
       </AppBar>
+      
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          well come
-        </Typography>
+        <div id = "borderfirstpage" >
+
+        <li>
+        <a href = { `/user` } > 1 </a> 
+        </li>
         
+        <li>
+        <a href = { `/user` } > 2 </a> 
+        </li>
+
+        </div>
       </main>
       <Drawer
         className={classes.drawer}
@@ -67,16 +82,26 @@ function PermanentDrawerRight() {
         anchor="right"
       >
         <div className={classes.toolbar} />
+      
         <Divider />
-        <List>
-          {['ثبت اطلاعات', 'جستجو', 'محاسبه درامد'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+        <List id="firstpagelist"> 
+
+          <ListItem  style={{display:'flex', justifyContent:'center',padding:'10%'}}>  
+            <a href = { `/SubmitInformation` } ><b>ثبت اطلاعات</b></a> 
+          </ListItem>
+          <Divider />
+
+          <ListItem  style={{display:'flex', justifyContent:'center',padding:'10%'}}>
+            <a  href = { `/Search` } ><b>جستجو</b></a> 
+          </ListItem>
+          <Divider />
+
+          <ListItem  style={{display:'flex', justifyContent:'center',padding:'10%'}}>  
+            <a href = { `/ProfitCalculation` } ><b>محاسبه درامد</b></a> 
+          </ListItem>
+          <Divider />
+
         </List>
-        <Divider />
       </Drawer>
     </div>
   );
