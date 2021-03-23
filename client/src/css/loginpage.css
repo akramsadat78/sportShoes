@@ -36,7 +36,7 @@
    
 }
 
-input {
+#input-loginpage {
     width: 78.5%;
     height: 5vh;
     margin-left: 10.5%;
@@ -55,14 +55,14 @@ input {
     padding-bottom: 5%;
 }
 
-img {
+#img-firstpage {
     padding-top: 2%;
     padding-bottom: 2%;
     padding-left: 35%;
     width: 30%;
 }
 
-.button {
+.button-firstpage {
     width: 90%;
     height: 5vh;
     margin-left: 5%;
@@ -72,7 +72,7 @@ img {
     border-width: thin;
 }
 
-.button:hover {
+.button-firstpage:hover {
     background-color: rgb(23, 122, 122);
     color: aliceblue;
 }

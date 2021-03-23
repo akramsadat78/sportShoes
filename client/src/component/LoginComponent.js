@@ -67,7 +67,7 @@ export default class LoginComponent extends Component {
         
         <form onSubmit={this.handleSubmit}>
           <div id = "border" > 
-          <img src={logo} />
+          <img id="img-firstpage" src={logo} />
             <div id = "section" >
 
               <div id = "lables" >
@@ -76,6 +76,7 @@ export default class LoginComponent extends Component {
 
               <InputTextField 
                 name = "uname"
+                id = "input-loginpage"
                 type = "text"
                 required = "true"
                 placeholder = "نام کاربری"
@@ -93,6 +94,7 @@ export default class LoginComponent extends Component {
 
               <InputTextField 
                 name = "psw"
+                id = "input-loginpage"
                 type = "text"
                 required = "true"
                 placeholder = "رمز عبور"
@@ -105,7 +107,7 @@ export default class LoginComponent extends Component {
           
 
             <div id = "sectionSubmit" >
-              <button  type="submit" class = "button"> ورود </button> 
+              <button  type="submit" class = "button-firstpage"> ورود </button> 
             </div>
             </div>
         </form>
