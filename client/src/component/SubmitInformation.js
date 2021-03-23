@@ -1,10 +1,212 @@
 import React, { Component } from 'react';
-
+import '../css/SubmitInformation.css';
+import InputTextField from './InputTextField';
 export default class SubmitInformation extends Component {
-  
+  constructor(props){
+    super(props)
+    this.state = {
+      file: null
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange(event) {
+    this.setState({
+      file: URL.createObjectURL(event.target.files[0])
+    })
+  }
   
   render() {
 
-    return <p>SubmitInformation</p>
+    return (
+      
+      <div>
+        <ul id="navbar">
+          <li><a href="/first">کفش ورزشی</a></li>
+          <li><a href="#">=></a></li>
+          <li><a href="#">ثبت اطلاعات</a></li>
+        </ul>
+      <div id="wrap">
+        <div id="section1-SubmitInformation">
+          
+          <div id = "section1" >
+            <div id = "border" >
+              <img id="image" src={this.state.file}/>
+            </div>
+          </div>
+          <div id = "section2" >
+            <div id = "border" >
+              <input class="file-input" type="file"  onChange={this.handleChange}/>
+            </div>
+          </div>
+        </div>
+
+        <div id="section2-SubmitInformation">
+          <div id="section2-col1">
+          <ul>
+            <li>
+            <label  ><b>: کد کفش</b></label> 
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "text"
+                required = "true"
+                placeholder = "کد کفش"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            <li>
+              <label  ><b>: تعداد کفش</b></label>
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "text"
+                required = "true"
+                placeholder = "تعداد کفش"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            </ul>
+          </div>
+            
+          <div id="section2-col2">
+          <ul>
+            <li>
+              <label  ><b>: مدل کفش</b></label>
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "text"
+                required = "true"
+                placeholder = "مدل کفش"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            <li>
+              <label  ><b>: سایز کفش</b></label>
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "text"
+                required = "true"
+                placeholder = "سایز کفش"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            </ul>
+          </div>
+
+          <div id="section2-col3">
+          <ul>
+            <li>
+            <label  ><b>: نام کفش</b></label>
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "text"
+                required = "true"
+                placeholder = "نام کفش"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            <li>
+              <label  ><b>: رنگ کفش</b></label> 
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "text"
+                required = "true"
+                placeholder = "رنگ کفش"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+          </ul>
+          </div>
+        </div>
+
+        <div id="section3-SubmitInformation">
+        <div id="section2-col1">
+          <ul>
+            <li>
+            <label  ><b>: تاریخ فروش</b></label>
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "Date"
+                required = "true"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            <li>
+              <label  ><b>: هزینه فروش</b></label>
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "Date"
+                required = "true"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            </ul>
+          </div>
+            
+          <div id="section2-col2">
+          <ul>
+            <li>
+            <label  ><b>: تاریخ خرید</b></label> 
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "Date"
+                required = "true"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            <li>
+              <label  ><b>: هزینه خرید</b></label>
+                <InputTextField 
+                name = "test"
+                id = "test"
+                type = "Date"
+                required = "true"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+              />
+            </li>
+            <li>
+             <label id="name-profit" ><b>: سود</b></label> 
+             <label id="answer"><b>??</b></label> 
+            </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div id="section4-SubmitInformation">
+          <label  ><b>: توضیحات</b></label> 
+            <InputTextField 
+                name = "test"
+                id = "test"
+                type = "text"
+                required = "true"
+                placeholder = "توضیحات"
+                val = {this.state.username}
+                _handleChange ={this.enterUserName}
+            />
+        </div>
+        </div>
+        <div id = "sectionSubmit-SubmitInformation" >
+        <button  type="submit" class = "button-SubmitInformation"> ثبت </button> 
+</div>
+      </div>
+      );
   }
 }
