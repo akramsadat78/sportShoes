@@ -25,7 +25,7 @@
 #wrap{
      border: solid rgb(12, 6, 7);
      height: 80vh;
-     width: 98%;
+     width: 98.2%;
      overflow: auto;
      border-radius: 1%;
      margin-left: .8%;
@@ -35,7 +35,7 @@
 /***** section1-SubmitInformation *****/
 #section1-SubmitInformation{
     float: left;
-    width: 30%;
+    width: 29%;
     margin-left: .2%;
    
 }
@@ -84,8 +84,8 @@
     list-style: none;
     background: #cce5ff;
     margin: auto;
-    margin-left: 13.5%;
-    width: 71%;
+    margin-left: 10%;
+    width: 75%;
     height: 4vh;
     overflow: auto;
     padding-top: 2%;
@@ -132,7 +132,7 @@
     float: right;
     margin-right: .8%;
     margin-top: .3%;
-    width: 68%;
+    width: 69%;
 }
 
 #section2-SubmitInformation #section2-col1{
@@ -185,7 +185,7 @@
     border-width: .1px;
     margin-right: .8%;
     margin-top: .3%;
-    width: 68%;
+    width: 69%;
     float: right;
 }
 
@@ -252,7 +252,7 @@
     border: solid rgb(12, 6, 7);
     border-width: .1px;
     margin-top: .1%;
-    width: 29.1%;
+    width: 28.5%;
     margin-left: .4%;
     float: left;   
 }
@@ -265,7 +265,7 @@
 
 #section4-SubmitInformation input {
     width: 70%;
-    height: 13vh;
+    height: 15vh;
     margin-right: 6%;
     margin-top: 1%;
     margin-bottom: 1%;
@@ -299,8 +299,8 @@
     background: white;
     width: 40%;
     margin: auto;
-    margin-top: .5%;
-    padding: .5%;
+    margin-top: 1%;
+    padding: .1%;
     border-radius: 26px;
     border-width: 2px;
 }
