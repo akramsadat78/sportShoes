@@ -32,15 +32,19 @@ shoeRoutes.route('/').get(function (req, res) {
 });
 
 // Defined edit route
-shoeRoutes.route('/edit/:id').get(function (req, res) {
-  let id = req.params.id;
-  Shoe.findById(id, function (err, shoe){
+shoeRoutes.route('/edit/:shoe_code').get(function (req, res) {
+  console.log("+++++++++++++++++++++++++ edit +++++++++++++++++++++++++") 
+  let id = req.params.shoe_code;
+  console.log("+++++++++++++++++++++++++",id)
+  Shoe.find(id, function (err, shoe){
       res.json(shoe);
+      console.log("+++++++++++++++++++++++++",shoe)
   });
 });
 
 //  Defined update route
 shoeRoutes.route('/update/:id').post(function (req, res) {
+  console.log("+++++++++++++++++++++++++ update +++++++++++++++++++++++++") 
     Shoe.findById(req.params.id, function(err, shoes) {
     if (!shoes)
       res.status(404).send("data is not found");
