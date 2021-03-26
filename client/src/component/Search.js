@@ -216,6 +216,11 @@ export default class Search extends Component {
       alert("not found!!");
     }
   };
+
+  onTrigger = (event) => {
+    this.props.parentCallback("Data from child");
+    event.preventDefault();
+}
   
   render() {
 
@@ -237,12 +242,12 @@ export default class Search extends Component {
             <div id="section1-SubmitInformation">
               <div id = "section1" >
                 <div id = "border" >
-                  <a href = { `/shoe${this.state.array_code[index]}` }  > 
-                
-                  <Update  dataParentToChild = {this.state.array_code[index]}/>
-
+               <Link to={ `/shoe${this.state.array_code[index]}` }>
+                {/*<Update dataParentToChild = {this.state.array_code[index]}/>*/}
+                  {/*<a href = { `/shoe${this.state.array_code[index]}` }  >*/} 
                     <img id="image" src={item}/>
-                  </a>
+                 {/* </a>*/}
+                  </Link>
                 </div>
               </div>
             </div>
@@ -364,6 +369,8 @@ export default class Search extends Component {
 
               </form>
         </div>
+      
+     
       </div>
       );
   }
