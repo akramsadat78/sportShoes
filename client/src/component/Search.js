@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../css/Search.css';
 import InputTextField from './InputTextField';
-import Update from './Update';
 import {
   BrowserRouter as Router,
   Switch,
@@ -36,8 +35,6 @@ export default class Search extends Component {
     }
     
   }
-
-  
 
   enterShoeName(e) {
     this.setState({
@@ -78,12 +75,11 @@ export default class Search extends Component {
         'Content-Type': 'application/json',
       }
     })
+
     const body = await response.json();
     var joined ;
     var code ;
     
-    
-
     body.map(index => {
       if(this.state.shoe_size != '' && this.state.shoe_color != ''){
         if(this.state.shoe_code != ''){
@@ -215,18 +211,10 @@ export default class Search extends Component {
      if(this.state.validation == 0){
       alert("not found!!");
     }
-  };
 
-  onTrigger = (event) => {
-    this.props.parentCallback("Data from child");
-    event.preventDefault();
-}
+  };
   
   render() {
-
-  /*  if (this.state.validation == 1) {
-      alert(this.state.array_code)
-    }*/
 
     return (
       <div>
@@ -237,35 +225,18 @@ export default class Search extends Component {
         </ul>
                 
         <div id="wrap1">
-        {this.state.array.map((item, index) => (
-            
-            <div id="section1-SubmitInformation">
-              <div id = "section1" >
-                <div id = "border" >
-               <Link to={ `/shoe${this.state.array_code[index]}` }>
-                {/*<Update dataParentToChild = {this.state.array_code[index]}/>*/}
-                  {/*<a href = { `/shoe${this.state.array_code[index]}` }  >*/} 
+          {this.state.array.map((item, index) => (
+          
+                <div id = "border_update" >
+                  <Link to={ `/shoe${this.state.array_code[index]}` }>
                     <img id="image" src={item}/>
-                 {/* </a>*/}
                   </Link>
                 </div>
-              </div>
-            </div>
-        ))
-           
-        }
+          
+             )) 
+          }
         </div>
 
-        {/*
-          
-          this.state.array_code.map((item, index) => ( 
-
-            <Router>
-           return (  <Route path = { `/shoe4` } component = { Update } />)
-            </Router>
-          ))
-          
-        */}
         <div id="wrap2">
         <form onSubmit={this.handleSubmit}>
           <ul>
