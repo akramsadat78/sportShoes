@@ -1,0 +1,24 @@
+#navbar-update {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(11, 99, 99);
+  }
+  
+#navbar-update li {
+    float: left;
+}
+  
+#navbar-update  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: 120%;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+#navbar-update li a:hover:not(.active) {
+    background-color: rgb(23, 122, 122);
+}
