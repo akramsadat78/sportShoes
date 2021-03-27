@@ -49,3 +49,39 @@
     font-size: larger;
     color: #000;
 }
+
+
+/*picture*/
+
+#wrap_first_page{
+    float: left;
+    width: 83%;
+    margin-left: 8.4%;
+    border: solid rgb(12, 6, 7);
+     height: 75vh;
+     overflow: auto;
+     border-radius: 1%;
+     margin-top: 3%;
+}
+
+#border_first {    
+    width: 70%;
+    height: 70.5vh;
+    overflow: auto;
+    border-radius: 50px;
+    margin-left: 16%;
+    margin-top: 1.5%;
+    margin-bottom: 1%;
+    padding: 1%;
+    padding-top: 3%;
+    border: solid rgb(12, 6, 7);
+    border-width: 2px;
+    background-color: rgb(203, 240, 255);
+}
+
+#border_first #image{
+    width: 100%;
+    height: 60vh;
+    border-radius: 50px;
+    padding-left: .5%;
+}
