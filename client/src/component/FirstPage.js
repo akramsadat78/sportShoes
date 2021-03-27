@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect }  from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,14 +8,14 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import '../css/FirstPage.css';
-import { red } from '@material-ui/core/colors';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +46,25 @@ const useStyles = makeStyles((theme) => ({
 
 function PermanentDrawerRight() {
   const classes = useStyles();
+  const [array_images, update_array_images] = useState([]);
+  const [array_codes, update_array_codes] = useState([]);
+
+  useEffect(() => {
+    fetch('/information', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+
+        result.map(index => {
+           update_array_images( arr => [...arr, index.shoe_image]);
+           update_array_codes( arr => [...arr, index.shoe_code]);
+      })
+   })
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -61,16 +80,18 @@ function PermanentDrawerRight() {
       
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <div id = "borderfirstpage" >
-
-        <li>
-        <a href = { `/user` } > 1 </a> 
-        </li>
+        <div id="wrap_first_page">
         
-        <li>
-        <a href = { `/user` } > 2 </a> 
-        </li>
-
+          {array_images.map((item, index) => (
+          
+                <div id = "border_first" >
+                  <Link to={ `/shoe${array_codes[index]}` }>
+                    <img id="image" src={item}/>
+                  </Link>
+                </div>
+          
+             )) 
+          }
         </div>
       </main>
       <Drawer
