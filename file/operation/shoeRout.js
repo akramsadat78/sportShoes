@@ -42,24 +42,61 @@ shoeRoutes.route('/edit/:shoe_code').get(function (req, res) {
   });
 });
 
-//  Defined update route
-shoeRoutes.route('/update/:id').post(function (req, res) {
-  console.log("+++++++++++++++++++++++++ update +++++++++++++++++++++++++") 
-    Shoe.findById(req.params.id, function(err, shoes) {
-    if (!shoes)
-      res.status(404).send("data is not found");
+// update 
+shoeRoutes.route('/update').post(function (req, res) {
+  console.log("+++++++++++++++++++++++++ update +++++++++++++++++++++++++",req.body) 
+  Shoe.find(function(err, shoes){
+    if(err){
+      console.log(err);
+    }
     else {
-        shoe.shoe_name = req.body.shoe_name;
-        shoe.shoe_code = req.body.shoe_code;
+      shoes.map(index => {
+        if ( (index.shoe_code == req.body.shoe_code) ){
+          index.shoe_name= req.body.shoe_name;
+          index.shoe_model= req.body.shoe_model;
+          index.shoe_code= req.body.shoe_code;
+          index.shoe_color= req.body.shoe_color;
+          index.shoe_size= req.body.shoe_size;
+          index.shoe_count= req.body.shoe_count;
+          index.shoe_purchase_date=req.body.shoe_purchase_date;
+          index.shoe_sale_date=req.body.shoe_sale_date;
+          index.shoe_cost_buy= req.body.shoe_cost_buy;
+          index.shoe_cost_sale= req.body.shoe_cost_sale;
+          index.shoe_profit= req.body.shoe_profit;
+          index.shoe_image= req.body.shoe_image;
+          index.shoe_description= req.body.shoe_description;
 
-        shoe.save().then(shoe => {
-          res.json('Update complete');
-      })
-      .catch(err => {
+          index.save().then(shoe => {
+            res.json('Update complete');
+          })
+          .catch(err => {
             res.status(400).send("unable to update the database");
-      });
+          });
+        }
+      })
     }
   });
+  /*shoe.shoe_name= req.body.shoe_name;
+  shoe.shoe_model= req.body.shoe_model;
+  shoe.shoe_code= req.body.shoe_code;
+  shoe.shoe_color= req.body.shoe_color;
+  shoe.shoe_size= req.body.shoe_size;
+  shoe.shoe_count= req.body.shoe_count;
+  shoe.shoe_purchase_date=req.body.shoe_purchase_date;
+  shoe.shoe_sale_date=req.body.shoe_sale_date;
+  shoe.shoe_cost_buy= req.body.shoe_cost_buy;
+  shoe.shoe_cost_sale= req.body.shoe_cost_sale;
+  shoe.shoe_profit= req.body.shoe_profit;
+  shoe.shoe_image= req.body.file;
+  shoe.shoe_description= req.body.shoe_description;
+
+  shoe.save().then(shoe => {
+    res.json('Update complete');
+  })
+  .catch(err => {
+    res.status(400).send("unable to update the database");
+  });*/
+   
 });
 
 // Defined delete | remove | destroy route
