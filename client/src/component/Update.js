@@ -1,10 +1,37 @@
 import React, { Component } from 'react';
 import InputTextField from './InputTextField';
+import '../css/Update.css';
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default class Update extends Component {
+ 
     constructor(props){
         super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.onSubmit = this.handleSubmit.bind(this);
+    
+        this.changeShoeName = this.changeShoeName.bind(this);
+        this.changeShoeModel = this.changeShoeModel.bind(this);
+        this.changeShoeCode = this.changeShoeCode.bind(this);
+        this.changeShoeColor = this.changeShoeColor.bind(this);
+        this.changeShoeSize = this.changeShoeSize.bind(this);
+        this.changeShoeCount = this.changeShoeCount.bind(this);
+    
+        this.changeShoePurchaseDate = this.changeShoePurchaseDate.bind(this);
+        this.changeShoeSaleDate = this.changeShoeSaleDate.bind(this);
+        this.changeShoeCostBuy = this.changeShoeCostBuy.bind(this);
+        this.changeShoeCostSale = this.changeShoeCostSale.bind(this);
+        this.changeShoeProfit = this.changeShoeProfit.bind(this);
+    
+        this.changeShoeDescription = this.changeShoeDescription.bind(this);
+        this.changeShoeImage = this.changeShoeImage.bind(this);
 
         this.state = {
             data: this.props.dataParentToChild,
@@ -20,61 +47,184 @@ export default class Update extends Component {
             shoe_cost_sale: '',
             shoe_profit: '',
             shoe_image: '',
-            shoe_description: ''
+            shoe_description: '',
+            file: null,
+            validation:0
         }
     }
 
     
-  handl = async e => {
-    e.preventDefault();
-    alert("ssssssssss")
-    const response = await fetch('/information', {
+    changeShoeName(e) {
+    this.setState({
+      shoe_name: e.target.value
+    });
+  }
+
+  changeShoeModel(e) {
+    this.setState({
+      shoe_model: e.target.value
+    });
+  }
+  
+  changeShoeCode(e) {
+    this.setState({
+      shoe_code: e.target.value
+    });
+  }
+
+  changeShoeColor(e) {
+    this.setState({
+      shoe_color: e.target.value
+    });
+  }
+  
+  changeShoeSize(e) {
+    this.setState({
+      shoe_size: e.target.value
+    });
+  }
+   
+  changeShoeCount(e) {
+    this.setState({
+      shoe_count: e.target.value
+    });
+  }
+
+  changeShoePurchaseDate(e) {
+    this.setState({
+      shoe_purchase_date: e.target.value
+    });
+  }
+
+  changeShoeSaleDate(e) {
+    this.setState({
+      shoe_sale_date: e.target.value
+    });
+  }
+
+  changeShoeCostBuy(e) {
+    this.setState({
+      shoe_cost_buy: e.target.value
+    });
+  }
+
+  changeShoeCostSale(e) {
+    this.setState({
+      shoe_cost_sale: e.target.value
+    });
+  }
+
+  changeShoeProfit(e) {
+    this.setState({
+      shoe_profit: e.target.value
+    });
+  }
+
+  changeShoeDescription(e) {
+    this.setState({
+      shoe_description: e.target.value
+    });
+  }
+
+  changeShoeImage(e) {
+    this.setState({
+      shoe_image: e.target.value
+    });
+  }
+
+  handleChange(event) {
+   
+    this.setState({
+      //file: URL.createObjectURL(event.target.files[0])
+      file : event.target.value
+    })
+  }
+
+  componentDidMount() {
+    fetch('/information', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
-    const body = await response.json();
+      .then(response => response.json())
+      .then(result => {
 
+            result.map(index => {
+              if ( (index.shoe_code == this.state.data) ){
+                alert( index.shoe_purchase_date)
+                  this.setState({
+                  shoe_name: index.shoe_name ,
+                  shoe_model: index.shoe_model,
+                  shoe_code: index.shoe_code,
+                  shoe_color: index.shoe_color,
+                  shoe_size: index.shoe_size,
+                  shoe_count: index.shoe_count,
+                  shoe_purchase_date: index.shoe_purchase_date,
+                  shoe_sale_date: index.shoe_sale_date,
+                  shoe_cost_buy: index.shoe_cost_buy,
+                  shoe_cost_sale: index.shoe_cost_sale,
+                  shoe_profit: index.shoe_profit,
+                  shoe_image: index.shoe_image,
+                  file:index.shoe_image,
+                  shoe_description: index.shoe_description
+             }) 
+           }
+      })
+   })
+  }
+    
+  handleSubmit = async e => {
+    e.preventDefault();
+
+    const obj = {
+      shoe_name: this.state.shoe_name,
+      shoe_model: this.state.shoe_model,
+      shoe_code: this.state.shoe_code,
+      shoe_color: this.state.shoe_color,
+      shoe_size: this.state.shoe_size,
+      shoe_count: this.state.shoe_count,
+      shoe_purchase_date:this.state.shoe_purchase_date,
+      shoe_sale_date:this.state.shoe_sale_date,
+      shoe_cost_buy: this.state.shoe_cost_buy,
+      shoe_cost_sale: this.state.shoe_cost_sale,
+      shoe_profit: this.state.shoe_profit,
+      shoe_image: this.state.file,
+      shoe_description: this.state.shoe_description
+    };
+
+    const response = await fetch('/information/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(obj) ,
+    });
   
-    body.map(index => {
-      if ( (index.shoe_code == this.state.data) ){
-        alert(index.shoe_name )
-        alert(index.shoe_model )
-        alert(index.shoe_image )
-        this.setState({
-            shoe_name: index.shoe_name ,
-            shoe_model: index.shoe_model,
-            shoe_code: index.shoe_code,
-            shoe_color: index.shoe_color,
-            shoe_size: index.shoe_size,
-            shoe_count: index.shoe_count,
-            shoe_purchase_date: index.shoe_purchase_date,
-            shoe_sale_date: index.shoe_sale_date,
-            shoe_cost_buy: index.shoe_cost_buy,
-            shoe_cost_sale: index.shoe_cost_sale,
-            shoe_profit: index.shoe_profit,
-            shoe_image: index.shoe_image,
-            shoe_description: index.shoe_description
-          }) 
-      }
-     })
+    this.setState({
+      validation : 1
+    }) 
      
 
   };
 
-      
+ 
     render() { 
+
+      if (this.state.validation == 1) {
+        this.props.history.push('/first')
+      //  history.push("/first")
+      }
         return(
             <div>
-            <ul id="navbar">
+            <ul id="navbar-update">
               <li><a href="/first">کفش ورزشی</a></li>
               <li><a href="#">=></a></li>
               <li><a href="#">به روز رسانی </a></li>
             </ul>
     
             
-            <form onSubmit={this.handl}>
+            <form onSubmit={this.handleSubmit}>
               <div id="wrap">
     
                 <div id="section1-SubmitInformation">
@@ -86,7 +236,7 @@ export default class Update extends Component {
                   <div id = "section2" >
                     <div id = "border" >
                       {/*<input class="file-input" type="file"  onChange={this.handleChange}/>*/}
-                      <input class="file-input" type="text" /*required= "true"*/  onChange={this.handleChange}/>
+                      <input class="file-input" type="text"  onChange={this.handleChange}/>
                     </div>
                   </div>
                 </div>
@@ -100,10 +250,10 @@ export default class Update extends Component {
                           name = "test"
                           id = "test"
                           type = "text"
-                          //required = "true"
+                          required = "true"
                           placeholder = "کد کفش"
                           val = {this.state.shoe_code}
-                          //_handleChange ={this.enterShoeCode}
+                          _handleChange ={this.changeShoeCode}
                         />
                       </li>
                       <li>
@@ -115,7 +265,7 @@ export default class Update extends Component {
                           //required = "true"
                           placeholder = "تعداد کفش"
                           val = {this.state.shoe_count}
-                         // _handleChange ={this.enterShoeCount}
+                          _handleChange ={this.changeShoeCount}
                         />
                       </li>
                     </ul>
@@ -132,7 +282,7 @@ export default class Update extends Component {
                           //required = "true"
                           placeholder = "مدل کفش"
                           val = {this.state.shoe_model}
-                         // _handleChange ={this.enterShoeModel}
+                          _handleChange ={this.changeShoeModel}
                         />
                       </li>
                       <li>
@@ -144,7 +294,7 @@ export default class Update extends Component {
                           //required = "true"
                           placeholder = "سایز کفش"
                           val = {this.state.shoe_size}
-                         // _handleChange ={this.enterShoeSize}
+                          _handleChange ={this.changeShoeSize}
                         />
                       </li>
                     </ul>
@@ -158,10 +308,10 @@ export default class Update extends Component {
                           name = "test"
                           id = "test"
                           type = "text"
-                         // required = "true"
+                          required = "true"
                           placeholder = "نام کفش"
                           val = {this.state.shoe_name}
-                         // _handleChange ={this.enterShoeName}
+                          _handleChange ={this.changeShoeName}
                         />
                       </li>
                       <li>
@@ -173,7 +323,7 @@ export default class Update extends Component {
                           //required = "true"
                           placeholder = "رنگ کفش"
                           val = {this.state.shoe_color}
-                          //_handleChange ={this.enterShoeColor}
+                          _handleChange ={this.changeShoeColor}
                         />
                       </li>
                     </ul>
@@ -191,7 +341,7 @@ export default class Update extends Component {
                           type = "Date"
                           //required = "true"
                           val = {this.state.shoe_sale_date}
-                         // _handleChange ={this.enterShoeSaleDate}
+                          _handleChange ={this.changeShoeSaleDate}
                         />
                       </li>
                       <li>
@@ -202,7 +352,7 @@ export default class Update extends Component {
                           type = "text"
                           //required = "true"
                           val = {this.state.shoe_cost_sale}
-                          //_handleChange ={this.enterShoeCostSale}
+                          _handleChange ={this.changeShoeCostSale}
                         />
                       </li>
                     </ul>
@@ -216,9 +366,9 @@ export default class Update extends Component {
                           name = "test"
                           id = "test"
                           type = "Date"
-                         // required = "true"
+                          required = "true"
                           val = {this.state.shoe_purchase_date}
-                          //_handleChange ={this.enterShoePurchaseDate}
+                          _handleChange ={this.changeShoePurchaseDate}
                         />
                       </li>
                       <li>
@@ -227,9 +377,9 @@ export default class Update extends Component {
                           name = "test"
                           id = "test"
                           type = "text"
-                          //required = "true"
+                          required = "true"
                           val = {this.state.shoe_cost_buy}
-                         // _handleChange ={this.enterShoeCostBuy}
+                          _handleChange ={this.changeShoeCostBuy}
                         />
                       </li>
                       <li>
@@ -249,13 +399,13 @@ export default class Update extends Component {
                    // required = "true"
                     placeholder = "توضیحات"
                     val = {this.state.shoe_description}
-                   // _handleChange ={this.enterShoeDescription}
+                    _handleChange ={this.changeShoeDescription}
                   />
                 </div>
               </div>
     
               <div id = "sectionSubmit-SubmitInformation" >
-                  <button  type="submit" class = "button-SubmitInformation"> ثبت </button> 
+                  <button  type="submit" class = "button-SubmitInformation"> به روز رسانی </button> 
                 </div>
     
             </form>
@@ -266,99 +416,3 @@ export default class Update extends Component {
 
     }
 }
-/*
-export default class Update extends Component {
-  
-    constructor(props){
-        super(props);
-
-        this.onChangeShoeName = this.onChangeShoeName.bind(this);
-        this.onChangeShoeModel = this.onChangeShoeModel.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
-
-        this.state = {
-            data: this.props.dataParentToChild,
-            shoe_name: '',
-            shoe_model: ''
-        }
-    }
-
-    componentDidMount() {
-        axios.get('http://localhost:5000/information/edit/'+this.state.data)
-            .then(response => {
-                this.setState({ 
-                    shoe_name: response.data.shoe_name, 
-                    shoe_model: response.data.shoe_model });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        alert(this.state.shoe_name)
-    }
-  
-    onChangeShoeName(e) {
-        this.setState({
-            shoe_name: e.target.value
-        });
-    }
-
-    onChangeShoeModel(e) {
-        this.setState({
-            shoe_model: e.target.value
-        })  
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-        const obj = {
-          shoe_name: this.state.shoe_name,
-          shoe_model: this.state.shoe_model
-        };
-
-        axios.post('http://localhost:5000/information/update/'+this.state.data, obj)
-            .then(res => console.log(res.data));
-        
-            this.props.history.push('/first');
-    }
-
-  render() {
-    
-  //  const {data} = this.state;
-        return(
-            <div style={{ marginTop: 10 }}>
-            <h3 align="center">Update shoe</h3>
-            <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                    <label>shoe Name:  </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      value={this.state.shoe_name}
-                      onChange={this.onChangeShoeName}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>shoe model : </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.shoe_model}
-                      onChange={this.onChangeShoeModel}
-                      />
-                </div>
-                <div className="form-group">
-                    <input type="submit" 
-                      value="Update Business" 
-                      className="btn btn-primary"/>
-                </div>
-            </form>
-        </div>
-
-            /*<div>
-                <p>=================</p>
-                {data}
-            </div>
-        )
-  }
-}
-*/
