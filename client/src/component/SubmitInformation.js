@@ -210,7 +210,7 @@ export default class SubmitInformation extends Component {
               <div id = "section2" >
                 <div id = "border" >
                   {/*<input class="file-input" type="file"  onChange={this.handleChange}/>*/}
-                  <input class="file-input" type="text" required= "true"  onChange={this.handleChange}/>
+                  <input class="file-input" placeholder = " عکس را وارد کنید url" type="text" required= "true"  onChange={this.handleChange}/>
                 </div>
               </div>
             </div>
@@ -355,10 +355,6 @@ export default class SubmitInformation extends Component {
                       val = {this.state.shoe_cost_buy}
                       _handleChange ={this.enterShoeCostBuy}
                     />
-                  </li>
-                  <li>
-                    <label id="name-profit" ><b>: سود</b></label> 
-                    <label id="answer"><b>??</b></label> 
                   </li>
                 </ul>
               </div>
