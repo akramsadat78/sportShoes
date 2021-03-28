@@ -22,3 +22,290 @@
 #navbar-update li a:hover:not(.active) {
     background-color: rgb(23, 122, 122);
 }
+
+
+#wrap_update{
+    border: solid rgb(12, 6, 7);
+    height: 80vh;
+    width: 98.2%;
+    overflow: auto;
+    border-radius: 1%;
+    margin-left: .8%;
+    margin-top: .8%;
+}
+
+/***** section1-SubmitInformation *****/
+#section1-SubmitInformation_update{
+   float: left;
+   width: 29%;
+   margin-left: .2%;
+  
+}
+
+/* picture */
+#section1-SubmitInformation_update #section1{
+   margin: 1%;
+   padding: 1%;
+   padding-top: 3%;
+   border: solid rgb(12, 6, 7);
+   border-width: .1px;
+   background-color: rgb(203, 240, 255);
+}
+
+#section1-SubmitInformation_update #section1 #border {
+   border: none;
+   margin: auto;
+   margin-left: 1%;
+   width: 98%;
+   height: 48vh;
+   overflow: auto;
+   padding-top: .1%;
+   border-radius: 70px;
+   background-color: rgb(203, 240, 255);
+   content: 'Select picture';
+}
+
+#section1-SubmitInformation_update  #section1 #image{
+   width: 99%;
+   height: 47.3vh;
+   border-radius: 50px;
+   padding-left: .5%;
+}
+
+/* choose image*/
+#section1-SubmitInformation_update #section2{
+   margin: 1%;
+   padding: 1%;
+   padding-top: 1.5%;
+   border: solid rgb(12, 6, 7);
+   border-width: .1px;
+   background-color: rgb(203, 240, 255);
+}
+#section1-SubmitInformation_update  #section2 #border {
+   border:none;
+   list-style: none;
+   background: #cce5ff;
+   margin: auto;
+   margin-left: 10%;
+   width: 75%;
+   height: 4vh;
+   overflow: auto;
+   padding-top: 2%;
+   border-radius: 70px;
+   border-width: .1px;
+}
+
+#section1-SubmitInformation_update  #section2 #border  .file-input{
+   background-color: rgb(83, 172, 172);
+   margin-left: 5.5%;
+   border: solid rgb(12, 6, 7);
+   border-radius: 30px;
+   border-width: 1px;
+   width: 85%;
+   height: 3vh;
+   text-align: center;
+}
+
+#section1-SubmitInformation_update  #section2 #border .file-input::before {
+   content: 'Select picture';
+   display: inline-block;
+   cursor: pointer;
+   font-size: 100%;
+   padding: 2%;
+   padding-bottom: 1%;
+   border: solid rgb(12, 6, 7);
+   border-radius: 30px;
+   border-width: 1px;
+}
+
+#section1-SubmitInformation_update  #section2 #border  .file-input:hover {
+   background-color: rgb(23, 122, 122);
+   color: aliceblue;
+}
+
+#section1-SubmitInformation_update  #section2 #border .file-input::-webkit-file-upload-button {
+   visibility: hidden;
+   font-size: 1%;
+}
+
+
+/***** section2-SubmitInformation *****/
+#section2-SubmitInformation_update{
+   background-color: rgb(203, 240, 255);
+   border: solid rgb(12, 6, 7);
+   border-width: .1px;
+   float: right;
+   margin-right: .8%;
+   margin-top: .3%;
+   width: 69%;
+}
+
+#section2-SubmitInformation_update #section2-col1{
+   float: left;
+   width: 33.33%;
+}
+
+#section2-SubmitInformation_update #section2-col2{
+   float: left;
+   width: 33.33%;
+}
+
+#section2-SubmitInformation_update #section2-col3{
+   float: left;
+   width: 33.33%;
+}
+
+#section2-SubmitInformation_update li {
+   list-style-type: none;
+   margin-right: 0%;
+   overflow: hidden;
+}
+
+#section2-SubmitInformation_update label {
+   float: right;
+   margin-top: 17%;
+   margin-right: 2%;
+}
+
+#section2-SubmitInformation_update input {
+   width: 60%;
+   height: 5vh;
+   margin-right: 4%;
+   margin-top: 15%;
+   margin-bottom: 18%;
+   border: solid rgb(12, 6, 7);
+   text-align: center;
+   border-radius: 30px;
+   border-width: 1px;
+   float: right;
+   display: block;
+   background-color: rgb(44, 196, 196);
+}
+
+
+/***** section3-SubmitInformation *****/
+#section3-SubmitInformation_update{
+   background-color: rgb(203, 240, 255);
+   border: solid rgb(12, 6, 7);
+   border-width: .1px;
+   margin-right: .8%;
+   margin-top: .3%;
+   width: 69%;
+   float: right;
+}
+
+#section3-SubmitInformation_update #section2-col1{
+   float: left;
+   width: 50%;
+}
+
+#section3-SubmitInformation_update #section2-col2{
+   float: left;
+   width: 50%;
+}
+
+#section3-SubmitInformation_update li {
+   list-style-type: none;
+   margin-right: 0%;
+   overflow: hidden;
+}
+
+#section3-SubmitInformation_update label {
+   float: right;
+   margin-top: 1%;
+   margin-right: 2%;
+}
+
+#section3-SubmitInformation_update input {
+   width: 60%;
+   height: 5vh;
+   margin-right: 4%;
+   margin-bottom: 10%;
+   border: solid rgb(12, 6, 7);
+   text-align: center;
+   border-radius: 30px;
+   border-width: 1px;
+   float: right;
+   display: block;
+   background-color: rgb(44, 196, 196);
+}
+
+
+#section3-SubmitInformation_update  #name-profit{
+   float: right;
+   margin-top: 2%;
+   margin-right: 2%;
+}
+
+#section3-SubmitInformation_update #answer {
+   width: 60%;
+   height: 5vh;
+   margin-right: 4%;
+   border: solid rgb(12, 6, 7);
+   text-align: center;
+   border-radius: 30px;
+   border-width: 1px;
+   float: right;
+   display: block;
+   background-color: rgb(44, 196, 196);
+}
+
+
+/***** section4-SubmitInformation *****/
+#section4-SubmitInformation_update{
+   background-color: rgb(203, 240, 255);
+   border: solid rgb(12, 6, 7);
+   border-width: .1px;
+   margin-top: .1%;
+   width: 28.5%;
+   margin-left: .4%;
+   float: left;   
+}
+
+#section4-SubmitInformation_update label {
+   float: right;
+   margin-right: 1%;
+   margin-top: 9%;
+}
+
+#section4-SubmitInformation_update input {
+   width: 70%;
+   height: 15vh;
+   margin-right: 6%;
+   margin-top: 1%;
+   margin-bottom: 1%;
+   border: solid rgb(12, 6, 7);
+   text-align: center;
+   border-radius: 30px;
+   border-width: 1px;
+   float: right;
+   display: block;
+   background-color: rgb(44, 196, 196);
+}
+
+/* button */
+.button-SubmitInformation_update {
+   width: 90%;
+   height: 5vh;
+   margin-left: 5%;
+   border: solid rgb(12, 6, 7);
+   border-radius: 30px;
+   background-color: rgb(23, 122, 122);
+   border-width: thin;
+}
+
+.button-SubmitInformation_update:hover {
+   background-color: rgb(23, 122, 122);
+   color: aliceblue;
+}
+
+#sectionSubmit-SubmitInformation_update {
+   border:none;
+   background: white;
+   width: 40%;
+   margin: auto;
+   margin-top: 1%;
+   padding: .1%;
+   border-radius: 26px;
+   border-width: 2px;
+}
