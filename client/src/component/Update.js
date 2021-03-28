@@ -49,6 +49,7 @@ export default class Update extends Component {
             shoe_image: '',
             shoe_description: '',
             file: null,
+            calculate_profit : 0,
             validation:0
         }
     }
@@ -167,6 +168,7 @@ export default class Update extends Component {
                   shoe_profit: index.shoe_profit,
                   shoe_image: index.shoe_image,
                   file:index.shoe_image,
+                  calculate_profit : index.shoe_cost_sale-index.shoe_cost_buy,
                   shoe_description: index.shoe_description
              }) 
            }
@@ -188,7 +190,7 @@ export default class Update extends Component {
       shoe_sale_date:this.state.shoe_sale_date,
       shoe_cost_buy: this.state.shoe_cost_buy,
       shoe_cost_sale: this.state.shoe_cost_sale,
-      shoe_profit: this.state.shoe_profit,
+      shoe_profit: this.state.shoe_cost_sale - this.state.shoe_cost_buy,
       shoe_image: this.state.file,
       shoe_description: this.state.shoe_description
     };
@@ -225,9 +227,9 @@ export default class Update extends Component {
     
             
             <form onSubmit={this.handleSubmit}>
-              <div id="wrap">
+              <div id="wrap_update">
     
-                <div id="section1-SubmitInformation">
+                <div id="section1-SubmitInformation_update">
                   <div id = "section1" >
                     <div id = "border" >
                       <img id="image" src={this.state.shoe_image}/>
@@ -236,12 +238,12 @@ export default class Update extends Component {
                   <div id = "section2" >
                     <div id = "border" >
                       {/*<input class="file-input" type="file"  onChange={this.handleChange}/>*/}
-                      <input class="file-input" type="text"  onChange={this.handleChange}/>
+                      <input class="file-input" type="text"  placeholder = " عکس را وارد کنید url" onChange={this.handleChange}/>
                     </div>
                   </div>
                 </div>
     
-                <div id="section2-SubmitInformation">
+                <div id="section2-SubmitInformation_update">
                   <div id="section2-col1">
                     <ul>
                       <li>
@@ -330,7 +332,7 @@ export default class Update extends Component {
                   </div>
                 </div>
     
-                <div id="section3-SubmitInformation">
+                <div id="section3-SubmitInformation_update">
                   <div id="section2-col1">
                     <ul>
                       <li>
@@ -384,13 +386,13 @@ export default class Update extends Component {
                       </li>
                       <li>
                         <label id="name-profit" ><b>: سود</b></label> 
-                        <label id="answer"><b>??</b></label> 
+                        <label id="answer"><b>{this.state.shoe_cost_sale - this.state.shoe_cost_buy}</b></label> 
                       </li>
                     </ul>
                   </div>
                 </div>
     
-                <div id="section4-SubmitInformation">
+                <div id="section4-SubmitInformation_update">
                   <label  ><b>: توضیحات</b></label> 
                   <InputTextField 
                     name = "test"
@@ -404,8 +406,8 @@ export default class Update extends Component {
                 </div>
               </div>
     
-              <div id = "sectionSubmit-SubmitInformation" >
-                  <button  type="submit" class = "button-SubmitInformation"> به روز رسانی </button> 
+              <div id = "sectionSubmit-SubmitInformation_update" >
+                  <button  type="submit" class = "button-SubmitInformation_update"> به روز رسانی </button> 
                 </div>
     
             </form>
