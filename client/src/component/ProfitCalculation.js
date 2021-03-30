@@ -235,7 +235,7 @@ export default class ProfitCalculation extends Component {
                     array_model: model ,
                     array_code: code ,
                     array_profit: profit ,
-                    sum:this.state.sum+index.shoe_profity,
+                    sum:this.state.sum+index.shoe_profit,
                     start:0,
                     validation:0
                   }) 
