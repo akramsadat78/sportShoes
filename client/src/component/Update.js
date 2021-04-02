@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import InputTextField from './InputTextField';
 import '../css/Update.css';
-import axios from 'axios';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import { useHistory } from "react-router-dom";
-
 export default class Update extends Component {
  
     constructor(props){
@@ -153,7 +144,6 @@ export default class Update extends Component {
 
             result.map(index => {
               if ( (index.shoe_code == this.state.data) ){
-                alert( index.shoe_purchase_date)
                   this.setState({
                   shoe_name: index.shoe_name ,
                   shoe_model: index.shoe_model,
@@ -205,8 +195,7 @@ export default class Update extends Component {
   
     this.setState({
       validation : 1
-    }) 
-     
+    })  
 
   };
 
@@ -215,7 +204,6 @@ export default class Update extends Component {
 
       if (this.state.validation == 1) {
         this.props.history.push('/first')
-      //  history.push("/first")
       }
         return(
             <div>

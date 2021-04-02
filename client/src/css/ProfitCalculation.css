@@ -128,3 +128,34 @@
     border-radius: 26px;
     border-width: 2px;
 }
+
+/*table*/
+#wrap1_ProfitCalculation #table-to-xls {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #wrap1_ProfitCalculation  #table-to-xls td,#wrap1_ProfitCalculation #table-to-xls th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  #wrap1_ProfitCalculation #table-to-xls tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #wrap1_ProfitCalculation #table-to-xls tr:hover {background-color: #ddd;}
+  
+  #wrap1_ProfitCalculation #table-to-xls th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: rgb(13, 196, 196);
+    color: white;
+  }
+
+/*button excel*/
+#excel {
+     margin-left: 44%;
+     padding-top: 2%;
+} 
