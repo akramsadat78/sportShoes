@@ -165,6 +165,21 @@
     margin-right: 2%;
 }
 
+#section2-SubmitInformation #code {
+    width: 60%;
+    height: 5vh;
+    margin-right: 4%;
+    margin-top: 15%;
+    margin-bottom: 18%;
+    border: solid rgb(12, 6, 7);
+    text-align: center;
+    border-radius: 30px;
+    border-width: 1px;
+    float: right;
+    display: block;
+    background-color: rgb(44, 196, 196);
+}
+
 #section2-SubmitInformation input {
     width: 60%;
     height: 5vh;

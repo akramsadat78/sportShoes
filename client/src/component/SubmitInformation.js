@@ -40,6 +40,7 @@ export default class SubmitInformation extends Component {
       shoe_description: '',
       response: '',
       responseToPost: '',
+      prev_code:'',
       validation:0,
       file: null
     }
@@ -132,13 +133,32 @@ export default class SubmitInformation extends Component {
     })
   }
 
+  
+  componentDidMount() {
+    fetch('/information', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+
+        result.map(index => {
+            this.setState({
+                prev_code : index.shoe_code
+            }) 
+        })
+   })
+  }
   handleSubmit = async e => {
     e.preventDefault();
+  
 
     const obj = {
       shoe_name: this.state.shoe_name,
       shoe_model: this.state.shoe_model,
-      shoe_code: this.state.shoe_code,
+      shoe_code: Math.floor(this.state.prev_code)+ 1,
       shoe_color: this.state.shoe_color,
       shoe_size: this.state.shoe_size,
       shoe_count: this.state.shoe_count,
@@ -220,7 +240,8 @@ export default class SubmitInformation extends Component {
                 <ul>
                   <li>
                     <label  ><b>: کد کفش</b></label> 
-                    <InputTextField 
+                    <label id="code">{Math.floor(this.state.prev_code)+ 1}</label>
+                    {/*<InputTextField 
                       name = "test"
                       id = "test"
                       type = "text"
@@ -228,7 +249,7 @@ export default class SubmitInformation extends Component {
                       placeholder = "کد کفش"
                       val = {this.state.shoe_code}
                       _handleChange ={this.enterShoeCode}
-                    />
+                    />*/}
                   </li>
                   <li>
                     <label  ><b>: تعداد کفش</b></label>
