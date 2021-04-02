@@ -235,7 +235,7 @@ export default class ProfitCalculation extends Component {
                     array_model: model ,
                     array_code: code ,
                     array_profit: profit ,
-                    sum:this.state.sum+index.shoe_profity,
+                    sum:this.state.sum+index.shoe_profit,
                     start:0,
                     validation:0
                   }) 
@@ -288,16 +288,22 @@ export default class ProfitCalculation extends Component {
                      })  
               } 
               <tr>
-                  <th>{this.state.sum}</th>
+              <td>{this.state.sum}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  
               </tr>
           </table>
-          <ReactHTMLTableToExcel
+          <div id="excel">
+            <ReactHTMLTableToExcel
               id="test-table-xls-button"
               className="download-table-xls-button"
               table="table-to-xls"
-              filename="tablexls"
+              filename="Report"
               sheet="tablexls"
-              buttonText="Download as XLS"/>
+              buttonText=" Excel گرفتن"/>
+          </div>
         </div>
 
         <div id="wrap2_ProfitCalculation">
