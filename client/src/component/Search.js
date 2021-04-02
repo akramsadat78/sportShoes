@@ -81,11 +81,9 @@ export default class Search extends Component {
     var code ;
     
     body.map(index => {
-      alert("---")
       if(this.state.shoe_size != '' && this.state.shoe_color != ''){
         if(this.state.shoe_code != ''){
           if(this.state.shoe_name != ''){//name,model,code,color,size
-            alert("1")
             if ( (index.shoe_name == this.state.shoe_name) &&
                (index.shoe_model == this.state.shoe_model) &&
                (index.shoe_code == this.state.shoe_code) &&
@@ -102,7 +100,6 @@ export default class Search extends Component {
               })
             }
           }else{//model,code,color,size
-            alert("2")
             if ((index.shoe_model == this.state.shoe_model) &&
                (index.shoe_code == this.state.shoe_code) &&
                (index.shoe_color == this.state.shoe_color) &&
@@ -119,7 +116,6 @@ export default class Search extends Component {
             }  
           }   
         }else{
-          alert("3")
           if(this.state.shoe_name != ''){//name,model,color,size
             if ( (index.shoe_name == this.state.shoe_name) &&
                (index.shoe_model == this.state.shoe_model) &&
@@ -136,7 +132,6 @@ export default class Search extends Component {
               }) 
             }
           }else{//model,color,size
-            alert("4")
             if ((index.shoe_model == this.state.shoe_model) &&
                 (index.shoe_color == this.state.shoe_color) &&
                 (index.shoe_size == this.state.shoe_size) ){
@@ -155,7 +150,6 @@ export default class Search extends Component {
     }else if(this.state.shoe_size == '' && this.state.shoe_color != ''){
         if(this.state.shoe_code != ''){
           if(this.state.shoe_name != ''){//name,model,code,color
-            alert("5")
             if ( (index.shoe_name == this.state.shoe_name) &&
                (index.shoe_model == this.state.shoe_model) &&
                (index.shoe_code == this.state.shoe_code) &&
@@ -171,7 +165,6 @@ export default class Search extends Component {
               }) 
             }
           }else{//model,code,color
-            alert("6")
             if ((index.shoe_model == this.state.shoe_model) &&
                (index.shoe_code == this.state.shoe_code) &&
                (index.shoe_color == this.state.shoe_color) ){
@@ -187,7 +180,6 @@ export default class Search extends Component {
             }
           }
         }else {
-          alert("7")
           if(this.state.shoe_name != ''){//name,model,color
             if ( (index.shoe_name == this.state.shoe_name) &&
                (index.shoe_model == this.state.shoe_model) &&
@@ -203,7 +195,6 @@ export default class Search extends Component {
               }) 
             }
           }else{//model,color
-            alert("8")
             if ((index.shoe_model == this.state.shoe_model) &&
                 (index.shoe_color == this.state.shoe_color) ){
 
@@ -221,7 +212,6 @@ export default class Search extends Component {
       }else if(this.state.shoe_size != '' && this.state.shoe_color == ''){
         if(this.state.shoe_code != ''){
           if(this.state.shoe_name != ''){//name,model,code,size
-            alert("9")
             if ( (index.shoe_name == this.state.shoe_name) &&
                (index.shoe_model == this.state.shoe_model) &&
                (index.shoe_code == this.state.shoe_code) &&
@@ -237,7 +227,6 @@ export default class Search extends Component {
               }) 
            }
           }else{//model,code,size
-            alert("10")
             if ((index.shoe_model == this.state.shoe_model) &&
                (index.shoe_code == this.state.shoe_code) &&
                (index.shoe_size == this.state.shoe_size) ){
@@ -253,7 +242,6 @@ export default class Search extends Component {
             }
           }
         }else{
-          alert("11")
           if(this.state.shoe_name != ''){//name,model,size
             if ( (index.shoe_name == this.state.shoe_name) &&
                 (index.shoe_model == this.state.shoe_model) &&
@@ -269,7 +257,6 @@ export default class Search extends Component {
                 }) 
             }
           }else{//model,size
-            alert("12")
             if ((index.shoe_model == this.state.shoe_model) &&
                 (index.shoe_size == this.state.shoe_size) ){
 
@@ -285,7 +272,6 @@ export default class Search extends Component {
           }  
         }
       }else{
-        alert("13")
         if(this.state.shoe_code != ''){
           if(this.state.shoe_name != ''){//name,model,code
             if ( (index.shoe_name == this.state.shoe_name) &&
@@ -302,7 +288,6 @@ export default class Search extends Component {
               }) 
           }
           }else{//model,code
-            alert("14")
             if ( (index.shoe_model == this.state.shoe_model) &&
                (index.shoe_code == this.state.shoe_code) ){
 
@@ -317,7 +302,6 @@ export default class Search extends Component {
             }
           }
         }else{
-          alert("15")
           if(this.state.shoe_name != ''){//name,model
             if ( (index.shoe_name == this.state.shoe_name) &&
                 (index.shoe_model == this.state.shoe_model) ){
@@ -332,7 +316,6 @@ export default class Search extends Component {
                 }) 
             }
           }else{
-            alert("16")
             if ((index.shoe_model == this.state.shoe_model) ){
 
                 joined = this.state.array.concat(index.shoe_image);
@@ -381,7 +364,7 @@ export default class Search extends Component {
 
         <div id="wrap2">
         <form onSubmit={this.handleSubmit}>
-        <ul>
+          <ul>
             <li>
                <p  ><b>: مدل کفش</b></p> 
             </li>
@@ -396,11 +379,11 @@ export default class Search extends Component {
                 _handleChange ={this.enterShoeModel}
               />
             </li>
-            </ul>
-            <div class="line">
-              <hr/>
-            </div>
-            <ul>
+          </ul>
+          <div class="line">
+            <hr/>
+          </div>
+          <ul>
             <li>
               <p  ><b>: نام کفش</b></p> 
             </li>
@@ -414,11 +397,11 @@ export default class Search extends Component {
                 _handleChange ={this.enterShoeName}
               />
             </li>
-            </ul>
-            <div class="line">
+          </ul>
+          <div class="line">
               <hr/>
-            </div>
-        <ul>
+          </div>
+          <ul>
             <li>
                <p  ><b>: کد کفش</b></p> 
             </li>
@@ -433,11 +416,11 @@ export default class Search extends Component {
                 _handleChange ={this.enterShoeCode}
               />
             </li>
-            </ul>
-            <div class="line">
+          </ul>
+          <div class="line">
               <hr/>
-            </div>
-        <ul>
+          </div>
+          <ul>
             <li>
                <p  ><b>: رنگ کفش</b></p> 
             </li>
@@ -452,11 +435,11 @@ export default class Search extends Component {
                 _handleChange ={this.enterShoeColor}
               />
             </li>
-            </ul>
-            <div class="line">
+          </ul>
+          <div class="line">
               <hr/>
-            </div>
-        <ul>
+          </div>
+          <ul>
             <li>
                <p  ><b>: سایز کفش</b></p> 
             </li>
@@ -471,19 +454,16 @@ export default class Search extends Component {
                 _handleChange ={this.enterShoeSize}
               />
             </li>
-              </ul>
-              <div class="line">
+          </ul>
+          <div class="line">
               <hr/>
-            </div>
-              <div id = "sectionSubmit-search" >
+          </div>
+          <div id = "sectionSubmit-search" >
               <button  type="submit" class = "button-search"> ثبت </button> 
-            </div>
-
-              </form>
+          </div>
+        </form>
         </div>
-      
-     
       </div>
-      );
+    );
   }
 }
