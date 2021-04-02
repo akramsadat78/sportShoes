@@ -118,12 +118,10 @@ export default class ProfitCalculation extends Component {
     })
 
     const body = await response.json();
-    alert("start")
 
     body.map(index => {
 
       if(index.shoe_sale_date !=''){
-        alert(index.shoe_sale_date)
         shoeSaleDateDB = index.shoe_sale_date.split('-');
         var yearDB = Math.floor(shoeSaleDateDB[0]);
         var monthDB = Math.floor(shoeSaleDateDB[1]);
@@ -149,7 +147,6 @@ export default class ProfitCalculation extends Component {
                   validation:0
                 }) 
     
-                alert("hi")
               }
             }
           }
@@ -174,7 +171,6 @@ export default class ProfitCalculation extends Component {
                     validation:0
                   }) 
       
-                  alert("hi2")
                 }
               }
             }else if(monthDB == 1){
@@ -194,8 +190,6 @@ export default class ProfitCalculation extends Component {
                     start:0,
                     validation:0
                   }) 
-      
-                  alert("hi3")
                 }
               }
             }
@@ -219,7 +213,6 @@ export default class ProfitCalculation extends Component {
                     validation:0
                   }) 
       
-                  alert("hi4")
                 }
               }
             }else if(monthDB == month_sd){
@@ -239,8 +232,6 @@ export default class ProfitCalculation extends Component {
                     start:0,
                     validation:0
                   }) 
-      
-                  alert("hi5")
                 }
               }
             }
