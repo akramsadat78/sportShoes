@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../css/SubmitInformation.css';
 import InputTextField from './InputTextField';
+import DropdownSelect from './DropdownSelect';
+import DatePicker from '../componentdate/DatePicker';
 export default class SubmitInformation extends Component {
   constructor(props){
     super(props);
@@ -204,6 +206,8 @@ export default class SubmitInformation extends Component {
   };
   
   render() {
+    var arraysize_1_to_100 = Array.from(Array(101).keys()) // 0 to 100
+    var arraynumber_1_to_100 = Array.from(Array(101).keys()) // 0 to 100
 
     if (this.state.validation == 1) {
       this.props.history.push('/first')
@@ -238,78 +242,7 @@ export default class SubmitInformation extends Component {
             <div id="section2-SubmitInformation">
               <div id="section2-col1">
                 <ul>
-                  <li>
-                    <label  ><b>: کد کفش</b></label> 
-                    <label id="code">{Math.floor(this.state.prev_code)+ 1}</label>
-                    {/*<InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "text"
-                      required = "true"
-                      placeholder = "کد کفش"
-                      val = {this.state.shoe_code}
-                      _handleChange ={this.enterShoeCode}
-                    />*/}
-                  </li>
-                  <li>
-                    <label  ><b>: تعداد کفش</b></label>
-                    <InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "text"
-                      //required = "true"
-                      placeholder = "تعداد کفش"
-                      val = {this.state.shoe_count}
-                      _handleChange ={this.enterShoeCount}
-                    />
-                  </li>
-                </ul>
-              </div>
-            
-              <div id="section2-col2">
-                <ul>
-                  <li>
-                    <label  ><b>: مدل کفش</b></label>
-                    <InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "text"
-                      required = "true"
-                      placeholder = "مدل کفش"
-                      val = {this.state.shoe_model}
-                      _handleChange ={this.enterShoeModel}
-                    />
-                  </li>
-                  <li>
-                    <label  ><b>: سایز کفش</b></label>
-                    <InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "text"
-                      //required = "true"
-                      placeholder = "سایز کفش"
-                      val = {this.state.shoe_size}
-                      _handleChange ={this.enterShoeSize}
-                    />
-                  </li>
-                </ul>
-              </div>
-
-              <div id="section2-col3">
-                <ul>
-                  <li>
-                    <label  ><b>: نام کفش</b></label>
-                    <InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "text"
-                      required = "true"
-                      placeholder = "نام کفش"
-                      val = {this.state.shoe_name}
-                      _handleChange ={this.enterShoeName}
-                    />
-                  </li>
-                  <li>
+                <li>
                     <label  ><b>: رنگ کفش</b></label> 
                     <InputTextField 
                       name = "test"
@@ -321,11 +254,145 @@ export default class SubmitInformation extends Component {
                       _handleChange ={this.enterShoeColor}
                     />
                   </li>
+                  </ul>
+                  <ul>
+                  <li>
+                    <label><b>: کد کفش</b></label> 
+                    <label id="code">{Math.floor(this.state.prev_code)+ 1}</label>
+                    {/*<InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "text"
+                      required = "true"
+                      placeholder = "کد کفش"
+                      val = {this.state.shoe_code}
+                      _handleChange ={this.enterShoeCode}
+                    />*/}
+                  </li>
+                  
+                 {/* <li>
+                    <label  ><b>: تعداد کفش</b></label>
+                    <InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "text"
+                      //required = "true"
+                      placeholder = "تعداد کفش"
+                      val = {this.state.shoe_count}
+                      _handleChange ={this.enterShoeCount}
+                    />
+                 </li> */}
+                </ul>
+              </div>
+            
+              <div id="section2-col2">
+                <ul>
+                <li>
+                    <label  ><b>: برند کفش</b></label>
+                    <InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "text"
+                      required = "true"
+                      placeholder = "برند کفش"
+                      val = {this.state.shoe_model}
+                      _handleChange ={this.enterShoeModel}
+                    />
+                  </li>
+                  </ul>
+                  <ul>
+                <li>
+                    <label  id="name-shoe"  ><b>: نام کفش</b></label>
+                    <InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "text"
+                      required = "true"
+                      placeholder = "نام کفش"
+                      val = {this.state.shoe_name}
+                      _handleChange ={this.enterShoeName}
+                    />
+                  </li>
+                 {/* <li>
+                    <label  ><b>: سایز کفش</b></label>
+                    <InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "text"
+                      //required = "true"
+                      placeholder = "سایز کفش"
+                      val = {this.state.shoe_size}
+                      _handleChange ={this.enterShoeSize}
+                    />
+                 </li>*/}
                 </ul>
               </div>
             </div>
 
             <div id="section3-SubmitInformation">
+            <table id="table_inform">
+              <tr>
+                  <th>تعداد فروش</th>
+                  <th>هزینه فروش</th>
+                  <th>تاریخ فروش</th>
+                  <th>هزینه خرید</th>
+                  <th>تاریخ خرید</th>
+                  <th>تعداد کفش</th>
+                  <th>سایز کفش</th>
+              
+              </tr>
+
+              <tr>
+                  <td>0</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td> <DatePicker /></td>
+                  <td> <DatePicker /></td>
+                  <td>
+                  <DropdownSelect 
+                  name = "helloo"
+                  required = "false"
+                  lableName = "numbers"
+                  placeholder = "select numbers"
+                  val = {arraynumber_1_to_100}
+                  //_handleChange = { this._handleChange }
+                  />
+                  {/*<InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "text"
+                      //required = "true"
+                      placeholder = "تعداد کفش"
+                      val = {this.state.shoe_count}
+                      _handleChange ={this.enterShoeCount}
+                  />*/}
+                  </td>
+
+                  <td>
+                  <DropdownSelect 
+                  name = "helloo"
+                  required = "false"
+                  lableName = "numbers"
+                  placeholder = "select numbers"
+                  val = {arraysize_1_to_100}
+                  //_handleChange = { this._handleChange }
+                  />
+                  {/*
+                  <InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "text"
+                      //required = "true"
+                      placeholder = "سایز کفش"
+                      val = {this.state.shoe_size}
+                      _handleChange ={this.enterShoeSize}
+                 />
+                  */}
+                  </td>
+                  
+                  
+              </tr>
+          </table>
               <div id="section2-col1">
                 <ul>
                   <li>
