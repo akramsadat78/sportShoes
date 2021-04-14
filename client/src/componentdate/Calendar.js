@@ -133,8 +133,6 @@ export class Calendar extends Component {
         {children}
         <DaysViewHeading styles={styles} month={month}/>
         <DaysOfWeek styles={styles}/>
-        <label id="idlable">salam</label>
-        <label className={styles.id}>salam</label>
         {/*<div className={styles.dayPickerContainer}>*/}
         <div id="dayPickerContainer">
           {

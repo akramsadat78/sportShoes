@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../css/basic.css';
 // Day of week names for use in date-picker heading
-const dayOfWeekNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+const dayOfWeekNames = [ 'ج', 'پ', 'چ', 'س', 'د', 'ی','ش'];
 
 export default class DaysOfWeek extends Component {
   static propTypes = {

@@ -44,10 +44,59 @@ export default class SubmitInformation extends Component {
       responseToPost: '',
       prev_code:'',
       validation:0,
-      file: null
+      file: null,
+      dynamicEditorRowsIds: []
     }
     
   }
+
+  addDynamicRow() {
+    this.setState({
+      dynamicEditorRowsIds: [
+     ...this.state.dynamicEditorRowsIds, Math.random()
+     ]
+    });
+ }
+ 
+ removeDynamicRow(id) {
+    this.setState({
+      dynamicEditorRowsIds:
+        this.state.dynamicEditorRowsIds.filter(rowId =>
+          rowId !== id
+        )
+    })
+ }
+ 
+ getDynamicEditableRow(rowId) {
+   return (
+     <tr key={rowId}>
+               <td>
+                 <span>{rowId}</span>
+               </td>
+               <td>
+                 <button onClick={() => this.removeDynamicRow(rowId)}>REMOVE THIS ROW</button>
+               </td>
+             </tr>
+   )
+ }
+
+  handleChangeShoeSize  = event => {
+    this.setState({
+       shoe_size: event.currentTarget.value
+    });
+}
+  handleChangeShoeCount  = event => {
+    this.setState({
+       shoe_count: event.currentTarget.value
+    });
+}
+  handleCallbackenterShoePurchaseDate = (childData) =>{
+    this.setState({shoe_purchase_date: childData})
+}
+
+handleCallbackenterShoeSaleDate = (childData) =>{
+  this.setState({shoe_sale_date: childData})
+}
 
   enterShoeName(e) {
     this.setState({
@@ -155,7 +204,10 @@ export default class SubmitInformation extends Component {
   }
   handleSubmit = async e => {
     e.preventDefault();
-  
+  alert(this.state.shoe_purchase_date)
+  alert(this.state.shoe_sale_date)
+  alert(this.state.shoe_count)
+  alert(this.state.shoe_size)
 
     const obj = {
       shoe_name: this.state.shoe_name,
@@ -174,7 +226,7 @@ export default class SubmitInformation extends Component {
     };
 
     alert("form information enterd :) ")
-
+/*
     const response = await fetch('/information/add', {
       method: 'POST',
       headers: {
@@ -201,8 +253,8 @@ export default class SubmitInformation extends Component {
       shoe_image: '',
       shoe_description: '' ,
       validation:1    
-    })
-
+     })
+*/
   };
   
   render() {
@@ -234,7 +286,7 @@ export default class SubmitInformation extends Component {
               <div id = "section2" >
                 <div id = "border" >
                   {/*<input class="file-input" type="file"  onChange={this.handleChange}/>*/}
-                  <input class="file-input" placeholder = " عکس را وارد کنید url" type="text" required= "true"  onChange={this.handleChange}/>
+                  <input class="file-input" placeholder = " عکس را وارد کنید url" type="text" /*required= "true"*/  onChange={this.handleChange}/>
                 </div>
               </div>
             </div>
@@ -293,7 +345,7 @@ export default class SubmitInformation extends Component {
                       name = "test"
                       id = "test"
                       type = "text"
-                      required = "true"
+                      //1/required = "true"
                       placeholder = "برند کفش"
                       val = {this.state.shoe_model}
                       _handleChange ={this.enterShoeModel}
@@ -307,7 +359,7 @@ export default class SubmitInformation extends Component {
                       name = "test"
                       id = "test"
                       type = "text"
-                      required = "true"
+                      //1/required = "true"
                       placeholder = "نام کفش"
                       val = {this.state.shoe_name}
                       _handleChange ={this.enterShoeName}
@@ -331,7 +383,13 @@ export default class SubmitInformation extends Component {
 
             <div id="section3-SubmitInformation">
             <table id="table_inform">
-              <tr>
+          
+            {
+            this.state.dynamicEditorRowsIds.map(rowId => (
+              this.getDynamicEditableRow(rowId)  
+            ))
+          }
+          <tr>
                   <th>تعداد فروش</th>
                   <th>هزینه فروش</th>
                   <th>تاریخ فروش</th>
@@ -342,20 +400,35 @@ export default class SubmitInformation extends Component {
               
               </tr>
 
+          
+              
               <tr>
                   <td>0</td>
                   <td>-</td>
                   <td>-</td>
-                  <td> <DatePicker /></td>
-                  <td> <DatePicker /></td>
+                  <td>
+                     <DatePicker parentCallback = {this.handleCallbackenterShoeSaleDate}/>
+                     
+                  </td>
+                  <td> 
+                  <DatePicker parentCallback = {this.handleCallbackenterShoePurchaseDate}/>
+                  {/*<InputTextField 
+                      name = "test"
+                      id = "test"
+                      type = "Date"
+                      //1/required = "true"
+                      val = {this.state.shoe_purchase_date}
+                      _handleChange ={this.enterShoePurchaseDate}
+                  />*/}
+                  </td>
                   <td>
                   <DropdownSelect 
                   name = "helloo"
-                  required = "false"
+                  //1/required = "false"
                   lableName = "numbers"
-                  placeholder = "select numbers"
+                  placeholder = "تعداد کفش"
                   val = {arraynumber_1_to_100}
-                  //_handleChange = { this._handleChange }
+                  _handleChange = { this.handleChangeShoeCount }
                   />
                   {/*<InputTextField 
                       name = "test"
@@ -370,12 +443,12 @@ export default class SubmitInformation extends Component {
 
                   <td>
                   <DropdownSelect 
-                  name = "helloo"
-                  required = "false"
+                  name = "heoo"
+                  //1/required = "false"
                   lableName = "numbers"
-                  placeholder = "select numbers"
+                  placeholder = "سایز کفش"
                   val = {arraysize_1_to_100}
-                  //_handleChange = { this._handleChange }
+                  _handleChange = { this.handleChangeShoeSize }
                   />
                   {/*
                   <InputTextField 
@@ -392,7 +465,11 @@ export default class SubmitInformation extends Component {
                   
                   
               </tr>
+           
           </table>
+          <button onClick={ () => this.addDynamicRow() }>
+          {"ADD DYNAMIC ROW"}
+        </button>
               <div id="section2-col1">
                 <ul>
                   <li>
@@ -424,14 +501,7 @@ export default class SubmitInformation extends Component {
                 <ul>
                   <li>
                     <label  ><b>: تاریخ خرید</b></label> 
-                    <InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "Date"
-                      required = "true"
-                      val = {this.state.shoe_purchase_date}
-                      _handleChange ={this.enterShoePurchaseDate}
-                    />
+                    
                   </li>
                   <li>
                     <label  ><b>: هزینه خرید</b></label>
@@ -439,7 +509,7 @@ export default class SubmitInformation extends Component {
                       name = "test"
                       id = "test"
                       type = "text"
-                      required = "true"
+                     //1/ required = "true"
                       val = {this.state.shoe_cost_buy}
                       _handleChange ={this.enterShoeCostBuy}
                     />

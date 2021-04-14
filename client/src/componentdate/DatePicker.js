@@ -103,6 +103,7 @@ export default class DatePicker extends Component {
     this.setOpen(false);
     if (!this.state.inputValue)
       this.setState({ momentValue: null });
+    this.props.parentCallback(this.state.inputValue);
   }
 
   handleSelectDay(selectedDay) {
