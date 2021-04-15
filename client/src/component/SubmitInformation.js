@@ -20,7 +20,7 @@ export default class SubmitInformation extends Component {
     this.enterShoePurchaseDate = this.enterShoePurchaseDate.bind(this);
     this.enterShoeSaleDate = this.enterShoeSaleDate.bind(this);
     this.enterShoeCostBuy = this.enterShoeCostBuy.bind(this);
-    this.enterShoeCostSale = this.enterShoeCostSale.bind(this);
+    this.enterShoeCostSale2 = this.enterShoeCostSale2.bind(this);
     this.enterShoeProfit = this.enterShoeProfit.bind(this);
 
     this.enterShoeDescription = this.enterShoeDescription.bind(this);
@@ -45,20 +45,53 @@ export default class SubmitInformation extends Component {
       prev_code:'',
       validation:0,
       file: null,
-      dynamicEditorRowsIds: []
+      dynamicEditorRowsIds: [],
+      dynamic_size: [],
+      dynamic_count: [],
+      dynamic_purchase_date: [],
+      dynamic_cost_buy: []
     }
     
   }
-
-  addDynamicRow() {
+  
+  deletDynamicRow(){
+    alert("delete")
+    alert(this.state.dynamicEditorRowsIds.length)
     this.setState({
-      dynamicEditorRowsIds: [
-     ...this.state.dynamicEditorRowsIds, Math.random()
-     ]
+      dynamicEditorRowsIds:
+      this.state.dynamicEditorRowsIds.filter(rowId =>
+        rowId !== this.state.dynamicEditorRowsIds.length
+      )
+    });
+  }
+  addDynamicRow() {
+    alert(this.state.dynamicEditorRowsIds.length)
+
+    /*if (this.state.dynamicEditorRowsIds.length == 0) {
+      header = 
+      <tr>
+            <th>تعداد فروش</th>
+            <th>هزینه فروش</th>
+            <th>تاریخ فروش</th>
+            <th>هزینه خرید</th>
+            <th>تاریخ خرید</th>
+            <th>تعداد کفش</th>
+            <th>سایز کفش</th>
+          </tr>;
+    } else {
+      
+    }*/
+    this.setState({
+      dynamicEditorRowsIds: [...this.state.dynamicEditorRowsIds,this.state.dynamicEditorRowsIds.length+1 ]
     });
  }
  
  removeDynamicRow(id) {
+   alert("id")
+   alert(id)
+   alert(this.state.dynamicEditorRowsIds.filter(rowId =>
+    rowId !== 2
+  ))
     this.setState({
       dynamicEditorRowsIds:
         this.state.dynamicEditorRowsIds.filter(rowId =>
@@ -70,34 +103,80 @@ export default class SubmitInformation extends Component {
  getDynamicEditableRow(rowId) {
    return (
      <tr key={rowId}>
-               <td>
-                 <span>{rowId}</span>
-               </td>
-               <td>
-                 <button onClick={() => this.removeDynamicRow(rowId)}>REMOVE THIS ROW</button>
-               </td>
-             </tr>
+        <td>
+          <p>{rowId}</p>
+          <button onClick={() => this.removeDynamicRow(rowId)}>REMOVE THIS ROW</button>
+        </td>
+      </tr>
    )
  }
 
-  handleChangeShoeSize  = event => {
-    this.setState({
-       shoe_size: event.currentTarget.value
-    });
+  handleChangeShoeSize  = (event,val) => {
+    let dynamic_size = [ ...this.state.dynamic_size ];
+    dynamic_size[val-1] = event.currentTarget.value  ;
+  this.setState({
+    //shoe_sale_date: e.target.value,
+    dynamic_size
+  });
+    /*this.setState({
+      dynamic_size: [...this.state.dynamic_size,event.currentTarget.value ]
+    });*/
+    //shoe_size: event.currentTarget.value
 }
-  handleChangeShoeCount  = event => {
-    this.setState({
-       shoe_count: event.currentTarget.value
-    });
+  handleChangeShoeCount  = (event,val)  => {
+    let dynamic_count = [ ...this.state.dynamic_count ];
+    dynamic_count[val-1] = event.currentTarget.value  ;
+  this.setState({
+    //shoe_sale_date: e.target.value,
+    dynamic_count
+  });
+   /* this.setState({
+      dynamic_count: [...this.state.dynamic_count,event.currentTarget.value ]
+    });*/
+    // shoe_count: event.currentTarget.value
 }
-  handleCallbackenterShoePurchaseDate = (childData) =>{
-    this.setState({shoe_purchase_date: childData})
+  handleCallbackenterShoePurchaseDate = (childData,val) =>{
+  let dynamic_purchase_date = [ ...this.state.dynamic_purchase_date ];
+  dynamic_purchase_date[val-1] = childData ;
+  this.setState({
+    //shoe_sale_date: e.target.value,
+    dynamic_purchase_date
+  });
+   /* this.setState({
+      dynamic_purchase_date: [...this.state.dynamic_purchase_date,childData ]
+    })*/
+    //  shoe_purchase_date: childData
 }
 
+enterShoeCostSale2(e,val) {
+  let dynamic_cost_buy = [ ...this.state.dynamic_cost_buy ];
+  dynamic_cost_buy[val-1] = e.target.value ;
+  this.setState({
+    //shoe_sale_date: e.target.value,
+    dynamic_cost_buy
+  });
+}
+handleChangeShoeCostBuy(){
+  //alert("=====================")
+  this.setState({
+    
+    dynamic_cost_buy: [...this.state.dynamic_cost_buy,this.state.shoe_sale_date ]
+  
+    })
+    //  dynamic_cost_buy: [...this.state.dynamic_cost_buy,e.target.value ]
+    //shoe_sale_date: childData
+    //  shoe_cost_buy: e.target.value
+}
+/*
 handleCallbackenterShoeSaleDate = (childData) =>{
-  this.setState({shoe_sale_date: childData})
-}
+  this.setState({
+    dynamic_cost_buy: [...this.state.dynamic_cost_buy,childData ]
+    })
+    //shoe_sale_date: childData
+}*/
 
+
+/***************************************/
   enterShoeName(e) {
     this.setState({
       shoe_name: e.target.value
@@ -204,10 +283,25 @@ handleCallbackenterShoeSaleDate = (childData) =>{
   }
   handleSubmit = async e => {
     e.preventDefault();
-  alert(this.state.shoe_purchase_date)
+  alert("dynamic_cost_buy")
   alert(this.state.shoe_sale_date)
-  alert(this.state.shoe_count)
-  alert(this.state.shoe_size)
+  alert(this.state.dynamic_cost_buy[0])
+  alert(this.state.dynamic_cost_buy[1])
+  alert(this.state.dynamic_cost_buy[2])
+  alert("dynamic_purchase_date")
+  alert(this.state.dynamic_purchase_date[0])
+  alert(this.state.dynamic_purchase_date[1])
+  alert(this.state.dynamic_purchase_date[2])
+
+  alert("dynamic_count")
+  alert(this.state.dynamic_count[0])
+  alert(this.state.dynamic_count[1])
+  alert(this.state.dynamic_count[2])
+
+  alert("dynamic_size")
+  alert(this.state.dynamic_size[0])
+  alert(this.state.dynamic_size[1])
+  alert(this.state.dynamic_size[2])
 
     const obj = {
       shoe_name: this.state.shoe_name,
@@ -382,95 +476,93 @@ handleCallbackenterShoeSaleDate = (childData) =>{
             </div>
 
             <div id="section3-SubmitInformation">
-            <table id="table_inform">
           
-            {
-            this.state.dynamicEditorRowsIds.map(rowId => (
-              this.getDynamicEditableRow(rowId)  
-            ))
-          }
-          <tr>
-                  <th>تعداد فروش</th>
-                  <th>هزینه فروش</th>
-                  <th>تاریخ فروش</th>
-                  <th>هزینه خرید</th>
-                  <th>تاریخ خرید</th>
-                  <th>تعداد کفش</th>
-                  <th>سایز کفش</th>
-              
-              </tr>
-
-          
-              
-              <tr>
-                  <td>0</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>
-                     <DatePicker parentCallback = {this.handleCallbackenterShoeSaleDate}/>
-                     
-                  </td>
-                  <td> 
-                  <DatePicker parentCallback = {this.handleCallbackenterShoePurchaseDate}/>
-                  {/*<InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "Date"
-                      //1/required = "true"
-                      val = {this.state.shoe_purchase_date}
-                      _handleChange ={this.enterShoePurchaseDate}
-                  />*/}
-                  </td>
-                  <td>
-                  <DropdownSelect 
-                  name = "helloo"
-                  //1/required = "false"
-                  lableName = "numbers"
-                  placeholder = "تعداد کفش"
-                  val = {arraynumber_1_to_100}
-                  _handleChange = { this.handleChangeShoeCount }
-                  />
-                  {/*<InputTextField 
+            <div id = "border-table" >
+               <table id="table_inform">
+               <thead>
+               <tr>
+               
+            {/*<th>تعداد فروش</th>
+            <th>هزینه فروش</th>
+            <th>تاریخ فروش</th>*/}
+            <th>هزینه خرید</th>
+            <th>تاریخ خرید</th>
+            <th>تعداد کفش</th>
+            <th>سایز کفش</th>
+          </tr>
+                </thead>
+                
+                <tbody>
+                    {
+                        this.state.dynamicEditorRowsIds.map((item) => (
+                         
+                                 
+                               
+                          <tr>
+                           
+                            
+                           
+                   
+                            {/*this.getDynamicEditableRow(item)*/}
+                           
+                         {/* <td>0</td>
+                          <td>-</td>
+                         <td>-</td>*/}
+                          <td>
+                            {/*<DatePicker parentCallback = {this.handleCallbackenterShoeSaleDate}/>*/}
+                            {/*<InputTextField 
+                            name = "test"
+                            id = "test"
+                            type = "text"
+                            //1/ required = "true"
+                           // val = {this.state.dynamic_cost_buy[0]}
+                            _handleChange ={this.handleChangeShoeCostBuy}
+                            />*/}
+                             <InputTextField 
                       name = "test"
                       id = "test"
                       type = "text"
                       //required = "true"
-                      placeholder = "تعداد کفش"
-                      val = {this.state.shoe_count}
-                      _handleChange ={this.enterShoeCount}
-                  />*/}
-                  </td>
-
-                  <td>
-                  <DropdownSelect 
-                  name = "heoo"
-                  //1/required = "false"
-                  lableName = "numbers"
-                  placeholder = "سایز کفش"
-                  val = {arraysize_1_to_100}
-                  _handleChange = { this.handleChangeShoeSize }
-                  />
-                  {/*
-                  <InputTextField 
-                      name = "test"
-                      id = "test"
-                      type = "text"
-                      //required = "true"
-                      placeholder = "سایز کفش"
-                      val = {this.state.shoe_size}
-                      _handleChange ={this.enterShoeSize}
-                 />
-                  */}
-                  </td>
-                  
-                  
-              </tr>
-           
-          </table>
-          <button onClick={ () => this.addDynamicRow() }>
-          {"ADD DYNAMIC ROW"}
-        </button>
-              <div id="section2-col1">
+                      //val = {this.state.shoe_cost_sale}
+                      _handleChange ={e =>  this.enterShoeCostSale2(e,item)}
+                    />
+                          </td>
+                          <td> 
+                            <DatePicker parentCallback = {childData =>  this.handleCallbackenterShoePurchaseDate(childData,item) }/>
+                          </td>
+                          <td>
+                            <DropdownSelect 
+                            name = "helloo"
+                            //1/required = "false"
+                            lableName = "numbers"
+                            placeholder = "تعداد کفش"
+                            val = {arraynumber_1_to_100}
+                            _handleChange = {event =>  this.handleChangeShoeCount(event,item) }
+                            />
+                          </td>
+                          <td>
+                            <DropdownSelect 
+                            name = "heoo"
+                            //1/required = "false"
+                            lableName = "numbers"
+                            placeholder = "سایز کفش"
+                            val = {arraysize_1_to_100}
+                            _handleChange = {event =>  this.handleChangeShoeSize(event,item) }
+                            /> 
+                          </td>
+                        </tr>
+                        ))
+                    }
+                </tbody>
+        
+              </table>
+              
+              </div>
+              <label onClick={ () => this.addDynamicRow() }><b>{"اضافه کردن سطر"}</b></label>
+              <label onClick={ () => this.deletDynamicRow() }><b>{"پاک کردن سطر"}</b></label>
+          
+             
+              {/*<div id="section2-col1">
                 <ul>
                   <li>
                     <label  ><b>: تاریخ فروش</b></label>
@@ -495,9 +587,9 @@ handleCallbackenterShoeSaleDate = (childData) =>{
                     />
                   </li>
                 </ul>
-              </div>
+                  </div>*/}
             
-              <div id="section2-col2">
+              {/*<div id="section2-col2">
                 <ul>
                   <li>
                     <label  ><b>: تاریخ خرید</b></label> 
@@ -516,6 +608,7 @@ handleCallbackenterShoeSaleDate = (childData) =>{
                   </li>
                 </ul>
               </div>
+                */}
             </div>
 
             <div id="section4-SubmitInformation">
