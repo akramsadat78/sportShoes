@@ -16,22 +16,22 @@ let Shoe = new Schema({
     type: String
   },
   shoe_size: {
-    type: Number
+    type: Array
   },
   shoe_count: {
-    type: Number
+    type: Array
   },
   shoe_purchase_date: {
-    type: String
+    type: Array
   },
   shoe_sale_date: {
-    type: String
+    type: Array
   },
   shoe_cost_buy: {
-    type: Number
+    type: Array
   },
   shoe_cost_sale: {
-    type: Number
+    type: Array
   },
   shoe_profit: {
     type: Number
