@@ -14,12 +14,12 @@ export default class SubmitInformation extends Component {
     this.enterShoeModel = this.enterShoeModel.bind(this);
     this.enterShoeCode = this.enterShoeCode.bind(this);
     this.enterShoeColor = this.enterShoeColor.bind(this);
-    this.enterShoeSize = this.enterShoeSize.bind(this);
-    this.enterShoeCount = this.enterShoeCount.bind(this);
+    //this.enterShoeSize = this.enterShoeSize.bind(this);
+    //this.enterShoeCount = this.enterShoeCount.bind(this);
 
-    this.enterShoePurchaseDate = this.enterShoePurchaseDate.bind(this);
-    this.enterShoeSaleDate = this.enterShoeSaleDate.bind(this);
-    this.enterShoeCostBuy = this.enterShoeCostBuy.bind(this);
+    //this.enterShoePurchaseDate = this.enterShoePurchaseDate.bind(this);
+    //this.enterShoeSaleDate = this.enterShoeSaleDate.bind(this);
+    //this.enterShoeCostBuy = this.enterShoeCostBuy.bind(this);
     this.enterShoeCostSale2 = this.enterShoeCostSale2.bind(this);
     this.enterShoeProfit = this.enterShoeProfit.bind(this);
 
@@ -31,12 +31,12 @@ export default class SubmitInformation extends Component {
       shoe_model: '',
       shoe_code: '',
       shoe_color: '',
-      shoe_size: '',
-      shoe_count: '',
-      shoe_purchase_date: '',
-      shoe_sale_date: '',
-      shoe_cost_buy: '',
-      shoe_cost_sale: '',
+     // shoe_size: '',
+      //shoe_count: '',
+      //shoe_purchase_date: '',
+      //shoe_sale_date: '',
+      //shoe_cost_buy: '',
+      //shoe_cost_sale: '',
       shoe_profit: '',
       shoe_image: '',
       shoe_description: '',
@@ -48,8 +48,11 @@ export default class SubmitInformation extends Component {
       dynamicEditorRowsIds: [],
       dynamic_size: [],
       dynamic_count: [],
+      dynamic_temp_purchase_date: [],
       dynamic_purchase_date: [],
-      dynamic_cost_buy: []
+      dynamic_cost_buy: [],
+      dynamic_sale_date:[],
+      dynamic_cost_sale:[]
     }
     
   }
@@ -201,12 +204,12 @@ handleCallbackenterShoeSaleDate = (childData) =>{
     });
   }
   
-  enterShoeSize(e) {
+  /*enterShoeSize(e) {
     this.setState({
       shoe_size: e.target.value
     });
   }
-   
+   */
   enterShoeCount(e) {
     this.setState({
       shoe_count: e.target.value
@@ -303,24 +306,31 @@ handleCallbackenterShoeSaleDate = (childData) =>{
   alert(this.state.dynamic_size[1])
   alert(this.state.dynamic_size[2])
 
+  
     const obj = {
       shoe_name: this.state.shoe_name,
       shoe_model: this.state.shoe_model,
       shoe_code: Math.floor(this.state.prev_code)+ 1,
       shoe_color: this.state.shoe_color,
-      shoe_size: this.state.shoe_size,
-      shoe_count: this.state.shoe_count,
-      shoe_purchase_date:this.state.shoe_purchase_date,
-      shoe_sale_date:this.state.shoe_sale_date,
+     // shoe_size: this.state.shoe_size,
+      shoe_size:this.state.dynamic_size,
+      shoe_count: this.state.dynamic_count,
+      shoe_purchase_date:this.state.dynamic_purchase_date,
+      shoe_sale_date:this.state.dynamic_sale_date,
+      shoe_cost_buy: this.state.dynamic_cost_buy,
+      shoe_cost_sale: this.state.dynamic_cost_sale,
+     // shoe_count: this.state.shoe_count,
+      //shoe_purchase_date:this.state.shoe_purchase_date,
+      /*shoe_sale_date:this.state.shoe_sale_date,
       shoe_cost_buy: this.state.shoe_cost_buy,
-      shoe_cost_sale: this.state.shoe_cost_sale,
+      shoe_cost_sale: this.state.shoe_cost_sale,*/
       shoe_profit: this.state.shoe_profit,
       shoe_image: this.state.file,
       shoe_description: this.state.shoe_description
     };
 
     alert("form information enterd :) ")
-/*
+
     const response = await fetch('/information/add', {
       method: 'POST',
       headers: {
@@ -338,6 +348,7 @@ handleCallbackenterShoeSaleDate = (childData) =>{
       shoe_code: '',
       shoe_color: '',
       shoe_size: '',
+      //dynamic_size:'',
       shoe_count: '',
       shoe_purchase_date: '',
       shoe_sale_date: '',
@@ -348,12 +359,13 @@ handleCallbackenterShoeSaleDate = (childData) =>{
       shoe_description: '' ,
       validation:1    
      })
-*/
+
   };
   
+  
   render() {
-    var arraysize_1_to_100 = Array.from(Array(101).keys()) // 0 to 100
-    var arraynumber_1_to_100 = Array.from(Array(101).keys()) // 0 to 100
+    var arraysize_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+    var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
 
     if (this.state.validation == 1) {
       this.props.history.push('/first')

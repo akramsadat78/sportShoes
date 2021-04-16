@@ -9,6 +9,13 @@ import '../css/basic.css';
 export const outsideClickIgnoreClass = 'ignore--click--outside';
 
 export default class DatePicker extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+        data: this.props.dataParentToChild
+    }
+}
   static propTypes = {
     value: PropTypes.object,
     defaultValue: PropTypes.object,
@@ -155,6 +162,7 @@ export default class DatePicker extends Component {
     return (
       <div>
         <input
+           placeholder ={this.state.data}
           className={className}
           type="text"
           ref="input"

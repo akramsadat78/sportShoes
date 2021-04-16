@@ -9,9 +9,9 @@ const DropdownSelect = ({ required, name,placeholder, lableName, _handleChange, 
          name = { name }
          onChange = { _handleChange }
          required = { required } >
-         <option value = "" > {placeholder} </option> 
+         <option value = ""   > {placeholder} </option> 
          {val.map((values, i) =>
-                < option value = { i }key = { values } > { values } </option>
+                < option value = { i+1 }key = { values+1 } > { values+1 } </option>
           )} 
         </select>
 
