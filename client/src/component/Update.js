@@ -176,8 +176,10 @@ export default class Update extends Component {
   }
 
   click(index,numberShoe) {
-    alert(numberShoe)
-
+    if(this.state.dynamic_count[index-1] == null){
+      alert("کفشی برای ویرایش وارد نشده است")
+    }else{
+    alert(this.state.dynamic_count[index-1])
    let range=Math.floor(numberShoe);
     this.setState({
    
@@ -186,6 +188,7 @@ export default class Update extends Component {
     current_count:range,
     indexrow:index
     });
+  }
     
   }
   changeShoeSaleNumber(e,val) {
@@ -466,9 +469,10 @@ var show;
       })
 show=
 <div>
-<p>inside_row[1] = {this.state.inside_row[1]}</p>
+{/*<p>inside_row[1] = {this.state.inside_row[1]}</p>
 <p>indexrow ={this.state.indexrow}</p>
-<p>sum = {sum}</p>
+    <p>sum = {sum}</p>*/}
+<div id = "border-table" >
 <table id="table_inform">
                <thead>
                <tr>
@@ -524,7 +528,7 @@ show=
                 </tbody>
         
               </table>
-
+</div>
               </div>
       }
         return(
@@ -548,7 +552,7 @@ show=
                   <div id = "section2" >
                     <div id = "border" >
                       {/*<input class="file-input" type="file"  onChange={this.handleChange}/>*/}
-                      <input class="file-input" type="text"  placeholder = " عکس را وارد کنید url" onChange={this.handleChange}/>
+                      <input class="file-input" type="text"  placeholder = {" عکس را وارد کنید url"} onChange={this.handleChange}/>
                     </div>
                   </div>
                 </div>
@@ -650,9 +654,9 @@ show=
                <thead>
                <tr>
                <th>انتخاب سطر</th>
-            <th>سود </th>
+            {/*<th>سود </th>
             <th>هزینه فروش</th>
-            <th>تاریخ فروش</th>
+            <th>تاریخ فروش</th>*/}
             <th>هزینه خرید</th>
             <th>تاریخ خرید</th>
             <th>تعداد کفش</th>
@@ -699,10 +703,13 @@ show=
                          <DatePicker  parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+1) }/>
                           
                     </td>*/}
-                     <td onClick={() => { this.click(index+1,this.state.dynamic_count[index])}}>-</td>
+                     <td onClick={() => { this.click(index+1,this.state.dynamic_count[index])}}>
+                     <label id="edit">ویرایش </label> 
+                
+                     </td>
+                            {/*<td>-</td>
                             <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>-</td>*/}
                           <td>
                             {/*<DatePicker parentCallback = {this.handleCallbackenterShoeSaleDate}/>*/}
                             {/*<InputTextField 
@@ -758,10 +765,11 @@ show=
         
               </table>
              
-              {show}
               </div>
+              <div id="lableEdit">
               <label onClick={ () => this.addDynamicRow() }><b>{"اضافه کردن سطر"}</b></label>
               <label onClick={ () => this.deletDynamicRow() }><b>{"پاک کردن سطر"}</b></label>
+              </div>
                   {/*<div id="section2-col1">
                     <ul>
                       <li>
@@ -821,6 +829,9 @@ show=
                 </div>*/}
                 </div>
     
+                <div id="section5-SubmitInformation_update">
+              {show}
+              </div>
                 <div id="section4-SubmitInformation_update">
                   <label  ><b>: توضیحات</b></label> 
                   <InputTextField 
