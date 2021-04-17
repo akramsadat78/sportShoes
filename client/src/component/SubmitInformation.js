@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/SubmitInformation.css';
 import InputTextField from './InputTextField';
 import DropdownSelect from './DropdownSelect';
+import DropdownSelectName from './DropdownSelectName';
 import DatePicker from '../componentdate/DatePicker';
 export default class SubmitInformation extends Component {
   constructor(props){
@@ -52,7 +53,8 @@ export default class SubmitInformation extends Component {
       dynamic_purchase_date: [],
       dynamic_cost_buy: [],
       dynamic_sale_date:[],
-      dynamic_cost_sale:[]
+      dynamic_cost_sale:[],
+      arraymodel:['Nike','Pama','Adidas','Reebook','Skechers','Asics','Puma']
     }
     
   }
@@ -133,11 +135,20 @@ export default class SubmitInformation extends Component {
     //shoe_sale_date: e.target.value,
     dynamic_count
   });
+
+  
    /* this.setState({
       dynamic_count: [...this.state.dynamic_count,event.currentTarget.value ]
     });*/
     // shoe_count: event.currentTarget.value
 }
+
+handleChangeArraymodel  = (event)  => {
+  this.setState({
+    shoe_model: event.currentTarget.value
+  });
+}
+
   handleCallbackenterShoePurchaseDate = (childData,val) =>{
   let dynamic_purchase_date = [ ...this.state.dynamic_purchase_date ];
   dynamic_purchase_date[val-1] = childData ;
@@ -286,7 +297,9 @@ handleCallbackenterShoeSaleDate = (childData) =>{
   }
   handleSubmit = async e => {
     e.preventDefault();
-  alert("dynamic_cost_buy")
+    alert("shoe-model")
+  alert(this.state.shoe_model)
+  /*alert("dynamic_cost_buy")
   alert(this.state.shoe_sale_date)
   alert(this.state.dynamic_cost_buy[0])
   alert(this.state.dynamic_cost_buy[1])
@@ -304,7 +317,7 @@ handleCallbackenterShoeSaleDate = (childData) =>{
   alert("dynamic_size")
   alert(this.state.dynamic_size[0])
   alert(this.state.dynamic_size[1])
-  alert(this.state.dynamic_size[2])
+  alert(this.state.dynamic_size[2])*/
 
   
     const obj = {
@@ -366,6 +379,7 @@ handleCallbackenterShoeSaleDate = (childData) =>{
   render() {
     var arraysize_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
     var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+
 
     if (this.state.validation == 1) {
       this.props.history.push('/first')
@@ -447,7 +461,7 @@ handleCallbackenterShoeSaleDate = (childData) =>{
                 <ul>
                 <li>
                     <label  ><b>: برند کفش</b></label>
-                    <InputTextField 
+                    {/*<InputTextField 
                       name = "test"
                       id = "test"
                       type = "text"
@@ -455,7 +469,18 @@ handleCallbackenterShoeSaleDate = (childData) =>{
                       placeholder = "برند کفش"
                       val = {this.state.shoe_model}
                       _handleChange ={this.enterShoeModel}
-                    />
+                    />*/}
+                    <div id="selectModel">
+                    <DropdownSelectName 
+                     name = "heoo"
+                     
+                            //1/required = "false"
+                     lableName = "برند"
+                     placeholder = "برند کفش"
+                     val = {this.state.arraymodel}
+                      _handleChange = {event =>  this.handleChangeArraymodel(event) }
+                      />
+                      </div>
                   </li>
                   </ul>
                   <ul>

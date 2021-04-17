@@ -170,7 +170,7 @@
 }
 
 #section2-SubmitInformation #code {
-    width: 70%;
+    width: 66%;
     height: 5vh;
     margin-right: 6.5%;
     margin-top: 2%;
@@ -185,7 +185,7 @@
 }
 
 #section2-SubmitInformation input {
-    width: 70%;
+    width: 65%;
     height: 5vh;
     margin-right: 4%;
     margin-top: 2%;
@@ -200,6 +200,25 @@
 }
 
 
+
+#section2-SubmitInformation  #selectModel select {
+    width: 66%;
+    height: 6vh;
+    margin-right: 4%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    border: solid rgb(12, 6, 7);
+    text-align: center;
+    border-radius: 30px;
+    border-width: 1px;
+    float: right;
+    display: block;
+    background-color: rgb(44, 196, 196);
+}
+
+#section2-SubmitInformation  #selectModel select option {
+    background-color: rgb(201, 209, 224);
+}
 /***** section3-SubmitInformation *****/
 #section3-SubmitInformation{
     background-color: rgb(203, 240, 255);
