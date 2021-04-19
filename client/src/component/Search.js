@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../css/Search.css';
+import DropdownSelectName from './DropdownSelectName';
 import InputTextField from './InputTextField';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -16,6 +17,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { color } from '@material-ui/system';
 
 
 export default class Search extends Component {
@@ -62,9 +64,30 @@ export default class Search extends Component {
     }
     
   }
-  handleToggleSize(value,index,clickedSize) {
+
+  
+handleChangeArraymodel  = (event)  => {
+  this.setState({
+    shoe_name: event.currentTarget.value
+  });
+}
+
+handleChangeArrayname = (event)  => {
+  this.setState({
+    shoe_model: event.currentTarget.value
+  });
+}
+
+  handleToggleSize(event,clickedSize) {
+    alert(event.currentTarget.value)
+    let value = event.currentTarget.value
     alert(this.state.save_color)
-    if( clickedSize == 1){
+    alert(clickedSize)
+    this.setState({
+      save_size:value,
+      clickedSize:1
+    });
+    //if( clickedSize == 1){
     fetch('/information', {
       method: 'GET',
       headers: {
@@ -75,24 +98,59 @@ export default class Search extends Component {
       .then(result => {
 
         result.map(index => {
+          if((index.shoe_model == this.state.save_model) ){
+            if( (index.shoe_name == this.state.save_name) ){
+              if( (index.shoe_color == this.state.save_color) ){
+                
+                index.shoe_size.map((size) => {
+                  if( (size == value) ){ 
+                    if( clickedSize == 1){
+                      alert("clickedSize1")
+                    this.setState({
+                      save_size:size,
+                      clickedSize: 0
+                     });
+                    }else{
+                      alert("clickedSize0")
+                      this.setState({
+                        save_size:size
+                       });
+                    }
+                  }
+                })
+              }
+            }
+          }
             
+           /* alert(index.shoe_size)
+            alert(value)
             if( (index.shoe_size == value) && (index.shoe_color == this.state.save_color) ){
+              alert("yes")
               alert(index.shoe_size)
             this.setState({
               save_size:index.shoe_size,
               clickedSize: 0
             });
-          }
+          }*/
         })
    })
-  }else{
+  /*}else{
     alert("یک مورد انتخاب شده است")
-  }
+  }*/
 
  }
-  handleToggleColor(value,index,clickedColor) {
+  handleToggleColor(event,clickedColor) {
+    alert(event.currentTarget.value)
+    let value = event.currentTarget.value
     alert(this.state.save_name)
-    if( clickedColor == 1){
+    /*this.setState({
+      arrayShoeSize:[],
+      save_color:color,
+      save_size:'',
+      clickedColor:1,
+      clickedSize:1
+    });*/
+    //if( clickedColor == 1){
     fetch('/information', {
       method: 'GET',
       headers: {
@@ -104,7 +162,28 @@ export default class Search extends Component {
 
         result.map(index => {
             
-            if( (index.shoe_color == value) && (index.shoe_name == this.state.save_name) ){
+          if((index.shoe_model == this.state.save_model) ){
+            if( (index.shoe_name == this.state.save_name) ){
+              if( (index.shoe_color == value)){
+                index.shoe_size.map((value) => {
+                alert(value)
+               // if( clickedColor == 1){
+                this.setState({
+                  arrayShoeSize: [...this.state.arrayShoeSize,value],
+                  save_color:index.shoe_color,
+                  clickedColor: 0
+                });
+              /*}else{
+                this.setState({
+                  arrayShoeSize: [...this.state.arrayShoeSize,value],
+                  save_color:index.shoe_color
+                });
+              }*/
+              })
+            }
+            }
+          }
+           /* if( (index.shoe_color == value) && (index.shoe_name == this.state.save_name) ){
               alert(index.shoe_size)
               index.shoe_size.map((value) => {
                alert(value)
@@ -115,17 +194,29 @@ export default class Search extends Component {
                 });
               })
              
-          }
+          }*/
         })
    })
-  }else{
+  /*}else{
     alert("یک مورد انتخاب شده است")
-  }
+  }*/
 
  }
-  handleToggleName(value,index,clickedName) {
+  handleToggleName(event,clickedName) {
+    alert(event.currentTarget.value)
+    let value = event.currentTarget.value
     alert(this.state.save_model)
-    if( clickedName == 1){
+    this.setState({
+      arrayShoeColor:[],
+      arrayShoeSize:[],
+      save_name:value,
+      save_color:'',
+      save_size:'',
+      clickedName:1,
+      clickedColor:1,
+      clickedSize:1
+    });
+    //if( clickedName == 1){
     fetch('/information', {
       method: 'GET',
       headers: {
@@ -139,22 +230,103 @@ export default class Search extends Component {
             
             if( (index.shoe_name == value) && (index.shoe_model == this.state.save_model) ){
               alert(index.shoe_color)
+              if( clickedName == 1){
+                alert("clickedName1")
             this.setState({
               arrayShoeColor: [...this.state.arrayShoeColor,index.shoe_color],
               save_name:index.shoe_name,
               clickedName : 0
             });
+          }else{
+            alert("clickedName0")
+            this.setState({
+              arrayShoeColor: [...this.state.arrayShoeColor,index.shoe_color],
+              save_name:index.shoe_name
+            });
+          }
           }
         })
    })
-  }else{
+ /* }else{
     alert("یک مورد انتخاب شده است")
-  }
+    
+  }*/
 
  }
-  handleToggle(value,index,clickedModel) {
-    alert(value)
-    if( clickedModel == 1){
+  handleToggle(event,clickedModel) {
+    alert(event.currentTarget.value)
+
+    let value = event.currentTarget.value
+    alert("check")
+    alert(this.state.clickedModel)
+
+    this.setState({
+      arrayShoeName: [],
+      arrayShoeColor:[],
+      arrayShoeSize:[],
+      save_model:value,
+      save_name:'',
+      save_color:'',
+      save_size:'',
+      clickedModel : 1,
+      clickedName:1,
+      clickedColor:1,
+      clickedSize:1
+    });
+
+   // if( clickedModel == 1){
+
+      /*this.setState({
+        arrayShoeName: [],
+        arrayShoeColor:[],
+        arrayShoeSize:[],
+        save_model:value,
+        save_name:'',
+        save_color:'',
+        save_size:'',
+        clickedModel : 1,
+        clickedName:1,
+        clickedColor:1,
+        clickedSize:1
+      });*/
+
+    fetch('/information', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+
+        result.map(index => {
+            
+            if( index.shoe_model == value){
+              alert(index.shoe_name)
+              if( clickedModel == 1){
+                alert("clickedModel=1")
+            this.setState({
+              arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
+              save_model:index.shoe_model,
+              clickedModel : 0
+            });
+            }else{
+              alert("clickedModel=0")
+              this.setState({
+                arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
+                save_model:index.shoe_model
+              });
+            }
+          }
+        })
+   })
+    this.setState({
+      detail: 1
+    });
+  /*}else{
+
+    
+    alert("یک مورد انتخاب شده است")
     fetch('/information', {
       method: 'GET',
       headers: {
@@ -170,18 +342,14 @@ export default class Search extends Component {
               alert(index.shoe_name)
             this.setState({
               arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
-              save_model:index.shoe_model,
-              clickedModel : 0
+              save_model:index.shoe_model
             });
           }
         })
    })
-    this.setState({
-      detail: index
-    });
-  }else{
-    alert("یک مورد انتخاب شده است")
-  }
+
+   
+  }*/
 
  }
   enterShoeName(e) {
@@ -527,16 +695,9 @@ export default class Search extends Component {
 
     show=
     <div>
-      <p>{sum}</p>
-      <p>{this.state.arrayShoeName.length}</p>
-      {this.state.arrayShoeName.map((value,index) => {
-        <li>
-          <label>value</label>
-        </li>
-      })
-
-      }
+      
     </div>
+
     return (
       <div>
         <ul id="navbar">
@@ -558,32 +719,85 @@ export default class Search extends Component {
           }
         </div>
 
-        <div id="wrap2">
-      
+        <div id="wrap3">
+<div id="wrap2">
+                <DropdownSelectName 
+                     name = "heoo"
+                     
+                            //1/required = "false"
+                     lableName = "برند"
+                     placeholder = "برند کفش"
+                     val = {this.state.arraymodel}
+                      _handleChange = {event => this.handleToggle(event,this.state.clickedModel)}
+                      />
+
+                    <DropdownSelectName 
+                     name = "heoo"
+                     
+                            //1/required = "false"
+                     lableName = "نام"
+                     placeholder = "نام کفش"
+                     val = {this.state.arrayShoeName}
+                      _handleChange = {event => this.handleToggleName(event,this.state.clickedName) }
+                      />
+
+                    <DropdownSelectName 
+                     name = "heoo"
+                     
+                            //1/required = "false"
+                     lableName = "رنگ"
+                     placeholder = "رنگ کفش"
+                     val = {this.state.arrayShoeColor}
+                      _handleChange = {event => this.handleToggleColor(event,this.state.clickedColor) }
+                      />
+
+                      <DropdownSelectName 
+                     name = "heoo"
+                     
+                            //1/required = "false"
+                     lableName = "سایز"
+                     placeholder = "سایز کفش"
+                     val = {this.state.arrayShoeSize}
+                      _handleChange = {event => this.handleToggleSize(event,this.state.clickedSize) }
+                      />
+                      {/*<p>{this.state.arrayShoeName.length}</p>
       {this.state.arraymodel.map((value,index) => {
        
 
         return (
           <li>
-            <label onClick={ () => this.handleToggle(value,index,this.state.clickedModel) }><b>{value}</b></label>
+ 
+
+            <label class="container">
+            <input type="checkbox"  onClick={ () => this.handleToggle(value,index,this.state.clickedModel) }/>
+            <span class="checkmark"></span>
+              <b>{value}</b>
+              </label>
             
             </li>
         );
       })}
       <hr/>
+      
       {this.state.arrayShoeName.map((value,index) => {
         return (
         <li>
-          <label onClick={ () => this.handleToggleName(value,index,this.state.clickedName) } ><b>{value}</b></label>
+          <label class="container"  >
+          <input type="checkbox"  onClick={ () => this.handleToggleName(value,index,this.state.clickedName) }/>
+            <span class="checkmark"></span>
+            <b>{value}</b></label>
         </li>
         );
       })
-      }
+    }
        <hr/>
       {this.state.arrayShoeColor.map((value,index) => {
         return (
         <li>
-          <label onClick={ () => this.handleToggleColor(value,index,this.state.clickedColor) } ><b>{value}</b></label>
+          <label class="container"   >
+          <input type="checkbox"  onClick={ () => this.handleToggleColor(value,index,this.state.clickedColor) }/>
+            <span class="checkmark"></span>
+            <b>{value}</b></label>
         </li>
         );
       })
@@ -593,18 +807,26 @@ export default class Search extends Component {
        {this.state.arrayShoeSize.map((value,index) => {
         return (
           <li>
-            <label onClick={ () => this.handleToggleSize(value,index,this.state.clickedSize) }><b>{value}</b></label>
+            <label class="container" >
+            <input type="checkbox"  onClick={ () => this.handleToggleSize(value,index,this.state.clickedSize) }/>
+            <span class="checkmark"></span>
+              <b>{value}</b></label>
           </li>
           );
         })
       }
        <hr/>
       {/*show*/}
+
+      </div>
       <form onSubmit={this.handleSubmit}>
       <div id = "sectionSubmit-search" >
               <button  type="submit" class = "button-search"> ثبت </button> 
           </div>
       </form>
+      </div>
+      
+      
         {/*<form onSubmit={this.handleSubmit}>
           <ul>
             <li>
@@ -703,8 +925,8 @@ export default class Search extends Component {
           <div id = "sectionSubmit-search" >
               <button  type="submit" class = "button-search"> ثبت </button> 
           </div>
-        </form>*/}
-        </div>
+    </form>*/}
+        
       </div>
     );
   }

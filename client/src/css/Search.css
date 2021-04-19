@@ -58,13 +58,12 @@
 /* wrap2 */
 #wrap2{
     float: right;
-    width: 25%;
-    border: solid rgb(12, 6, 7);
-    margin-right: .5%;
-    height: 90vh;
+    width: 95%;
+    margin-right: 2%;
+    margin-top: 5%;
+    height: 47vh;
     overflow: auto;
     border-radius: 1%;
-    margin-top: .5%;
     border-width: 2px;
 }
 
@@ -97,12 +96,14 @@
 
 /* button */
 .button-search {
-    width: 100%;
+    width: 90%;
     height: 5vh;
     border: solid rgb(12, 6, 7);
     border-radius: 30px;
     background-color: rgb(44, 196, 196);
     border-width: thin;
+    margin-top: 5%;
+    margin-left: 5%;
 }
 
 .button-search:hover {
@@ -119,5 +120,83 @@
     margin-bottom: 2%;
     padding: .1%;
     border-radius: 26px;
+    border-width: 2px;
+}
+
+/* The container */
+.container {
+    
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: rgb(187, 216, 235);
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: rgb(101, 133, 236);
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: rgb(16, 122, 172);
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  /* wrap3 */
+#wrap3{
+    float: right;
+    width: 25%;
+    border: solid rgb(12, 6, 7);
+    margin-right: .5%;
+    height: 60vh;
+    overflow: auto;
+    border-radius: 1%;
+    margin-top: 8%;
     border-width: 2px;
 }
