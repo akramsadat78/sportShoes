@@ -159,11 +159,13 @@ export default class DatePicker extends Component {
       [outsideClickIgnoreClass]: isOpen
     });
 
+
     return (
       <div>
         <input
            placeholder ={this.state.data}
           className={className}
+          required="true"
           type="text"
           ref="input"
           disabled={disabled}
