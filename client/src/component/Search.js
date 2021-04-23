@@ -1,36 +1,18 @@
 import React, { Component } from 'react';
 import '../css/Search.css';
+import DropdownSelect from './DropdownSelect';
 import DropdownSelectName from './DropdownSelectName';
-import InputTextField from './InputTextField';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-import { color } from '@material-ui/system';
-
-
 export default class Search extends Component {
   constructor(props){
     super(props);
 
     this.onSubmit = this.handleSubmit.bind(this);
-
-    this.enterShoeName = this.enterShoeName.bind(this);
-    this.enterShoeModel = this.enterShoeModel.bind(this);
-    this.enterShoeCode = this.enterShoeCode.bind(this);
-    this.enterShoeColor = this.enterShoeColor.bind(this);
-    this.enterShoeSize = this.enterShoeSize.bind(this);
 
     this.state = {
       shoe_name: '',
@@ -51,7 +33,6 @@ export default class Search extends Component {
       detail:0,
       arrayShoeName:[],
       arrayShoeColor:[],
-      arrayShoeSize:[],
       save_model:'',
       save_name:'',
       save_color:'',
@@ -59,98 +40,22 @@ export default class Search extends Component {
       clickedModel: 1,
       clickedName:1,
       clickedColor:1,
-      clickedSize:1
-      
+      clickedSize:1,
+      searchSize : '',
+      arraySize : [],
+      array_code_size : ''
     }
     
   }
 
-  
-handleChangeArraymodel  = (event)  => {
-  this.setState({
-    shoe_name: event.currentTarget.value
-  });
-}
-
-handleChangeArrayname = (event)  => {
-  this.setState({
-    shoe_model: event.currentTarget.value
-  });
-}
-
-  handleToggleSize(event,clickedSize) {
-    alert(event.currentTarget.value)
-    let value = event.currentTarget.value
-    alert(this.state.save_color)
-    alert(clickedSize)
+  handelSearchSize(event) {
     this.setState({
-      save_size:value,
-      clickedSize:1
-    });
-    //if( clickedSize == 1){
-    fetch('/information', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then(response => response.json())
-      .then(result => {
+      searchSize: event.currentTarget.value
+    }); 
+  }
 
-        result.map(index => {
-          if((index.shoe_model == this.state.save_model) ){
-            if( (index.shoe_name == this.state.save_name) ){
-              if( (index.shoe_color == this.state.save_color) ){
-                
-                index.shoe_size.map((size) => {
-                  if( (size == value) ){ 
-                    if( clickedSize == 1){
-                      alert("clickedSize1")
-                    this.setState({
-                      save_size:size,
-                      clickedSize: 0
-                     });
-                    }else{
-                      alert("clickedSize0")
-                      this.setState({
-                        save_size:size
-                       });
-                    }
-                  }
-                })
-              }
-            }
-          }
-            
-           /* alert(index.shoe_size)
-            alert(value)
-            if( (index.shoe_size == value) && (index.shoe_color == this.state.save_color) ){
-              alert("yes")
-              alert(index.shoe_size)
-            this.setState({
-              save_size:index.shoe_size,
-              clickedSize: 0
-            });
-          }*/
-        })
-   })
-  /*}else{
-    alert("یک مورد انتخاب شده است")
-  }*/
-
- }
   handleToggleColor(event,clickedColor) {
-    alert(event.currentTarget.value)
     let value = event.currentTarget.value
-    alert(this.state.save_name)
-    /*this.setState({
-      arrayShoeSize:[],
-      save_color:color,
-      save_size:'',
-      clickedColor:1,
-      clickedSize:1
-    });*/
-    //if( clickedColor == 1){
     fetch('/information', {
       method: 'GET',
       headers: {
@@ -166,49 +71,23 @@ handleChangeArrayname = (event)  => {
             if( (index.shoe_name == this.state.save_name) ){
               if( (index.shoe_color == value)){
                 index.shoe_size.map((value) => {
-                alert(value)
-               // if( clickedColor == 1){
-                this.setState({
-                  arrayShoeSize: [...this.state.arrayShoeSize,value],
-                  save_color:index.shoe_color,
-                  clickedColor: 0
-                });
-              /*}else{
-                this.setState({
-                  arrayShoeSize: [...this.state.arrayShoeSize,value],
-                  save_color:index.shoe_color
-                });
-              }*/
-              })
-            }
+                  this.setState({
+                    save_color:index.shoe_color,
+                    clickedColor: 0
+                  });
+                })
+              }
             }
           }
-           /* if( (index.shoe_color == value) && (index.shoe_name == this.state.save_name) ){
-              alert(index.shoe_size)
-              index.shoe_size.map((value) => {
-               alert(value)
-                this.setState({
-                  arrayShoeSize: [...this.state.arrayShoeSize,value],
-                  save_color:index.shoe_color,
-                  clickedColor: 0
-                });
-              })
-             
-          }*/
+          
         })
-   })
-  /*}else{
-    alert("یک مورد انتخاب شده است")
-  }*/
+    })
+  }
 
- }
   handleToggleName(event,clickedName) {
-    alert(event.currentTarget.value)
     let value = event.currentTarget.value
-    alert(this.state.save_model)
     this.setState({
       arrayShoeColor:[],
-      arrayShoeSize:[],
       save_name:value,
       save_color:'',
       save_size:'',
@@ -216,7 +95,7 @@ handleChangeArrayname = (event)  => {
       clickedColor:1,
       clickedSize:1
     });
-    //if( clickedName == 1){
+
     fetch('/information', {
       method: 'GET',
       headers: {
@@ -227,43 +106,30 @@ handleChangeArrayname = (event)  => {
       .then(result => {
 
         result.map(index => {
-            
-            if( (index.shoe_name == value) && (index.shoe_model == this.state.save_model) ){
-              alert(index.shoe_color)
-              if( clickedName == 1){
-                alert("clickedName1")
-            this.setState({
-              arrayShoeColor: [...this.state.arrayShoeColor,index.shoe_color],
-              save_name:index.shoe_name,
-              clickedName : 0
-            });
-          }else{
-            alert("clickedName0")
-            this.setState({
-              arrayShoeColor: [...this.state.arrayShoeColor,index.shoe_color],
-              save_name:index.shoe_name
-            });
-          }
+          if( (index.shoe_name == value) && (index.shoe_model == this.state.save_model) ){
+            if( clickedName == 1){
+              this.setState({
+                arrayShoeColor: [...this.state.arrayShoeColor,index.shoe_color],
+                save_name:index.shoe_name,
+                clickedName : 0
+              });
+            }else{
+              this.setState({
+                arrayShoeColor: [...this.state.arrayShoeColor,index.shoe_color],
+                save_name:index.shoe_name
+              });
+            }
           }
         })
    })
- /* }else{
-    alert("یک مورد انتخاب شده است")
-    
-  }*/
+  }
 
- }
   handleToggle(event,clickedModel) {
-    alert(event.currentTarget.value)
-
     let value = event.currentTarget.value
-    alert("check")
-    alert(this.state.clickedModel)
 
     this.setState({
       arrayShoeName: [],
       arrayShoeColor:[],
-      arrayShoeSize:[],
       save_model:value,
       save_name:'',
       save_color:'',
@@ -274,22 +140,6 @@ handleChangeArrayname = (event)  => {
       clickedSize:1
     });
 
-   // if( clickedModel == 1){
-
-      /*this.setState({
-        arrayShoeName: [],
-        arrayShoeColor:[],
-        arrayShoeSize:[],
-        save_model:value,
-        save_name:'',
-        save_color:'',
-        save_size:'',
-        clickedModel : 1,
-        clickedName:1,
-        clickedColor:1,
-        clickedSize:1
-      });*/
-
     fetch('/information', {
       method: 'GET',
       headers: {
@@ -302,118 +152,58 @@ handleChangeArrayname = (event)  => {
         result.map(index => {
             
             if( index.shoe_model == value){
-              alert(index.shoe_name)
               if( clickedModel == 1){
-                alert("clickedModel=1")
-            this.setState({
-              arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
-              save_model:index.shoe_model,
-              clickedModel : 0
-            });
-            }else{
-              alert("clickedModel=0")
-              this.setState({
-                arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
-                save_model:index.shoe_model
-              });
+                this.setState({
+                  arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
+                  save_model:index.shoe_model,
+                  clickedModel : 0
+                });
+              }else{
+                this.setState({
+                  arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
+                  save_model:index.shoe_model
+                });
+              }
             }
-          }
         })
-   })
+      })
+
     this.setState({
       detail: 1
     });
-  /*}else{
-
-    
-    alert("یک مورد انتخاب شده است")
-    fetch('/information', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then(response => response.json())
-      .then(result => {
-
-        result.map(index => {
-            
-            if( index.shoe_model == value){
-              alert(index.shoe_name)
-            this.setState({
-              arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
-              save_model:index.shoe_model
-            });
-          }
-        })
-   })
-
-   
-  }*/
 
  }
-  enterShoeName(e) {
-    this.setState({
-      shoe_name: e.target.value
-    });
-  }
-
-  enterShoeModel(e) {
-    this.setState({
-      shoe_model: e.target.value
-    });
-  }
   
-  enterShoeCode(e) {
-    this.setState({
-      shoe_code: e.target.value
-    });
-  }
+  handleSubmitSize = async e => {
+    e.preventDefault();
 
-  enterShoeColor(e) {
-    this.setState({
-      shoe_color: e.target.value
-    });
-  }
-  
-  enterShoeSize(e) {
-    this.setState({
-      shoe_size: e.target.value
-    });
-  }
-
-  componentDidMount() {
-   /* fetch('/information', {
+    const response = await fetch('/information', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
-      .then(response => response.json())
-      .then(result => {
 
-            result.map(index => {
-             
-                  this.setState({
-                  arrayShowModel: [...this.state.arrayShowModel,index.shoe_model]
-                  }) 
-           
+    const body = await response.json(); 
+    
+    body.map(index => {
+      index.shoe_size.map((item,index2) => {
+        if(this.state.searchSize == item){
+          
+          this.setState({
+            arraySize: [...this.state.arraySize,index.shoe_image],
+            array_code_size : [...this.state.array_code_size,index.shoe_code]
+          })
+            
+        }
       })
-   })
-*/
-   
-  }
+    })
+  
+  };
+
+
   handleSubmit = async e => {
     e.preventDefault();
-
-    alert("model")
-    alert(this.state.save_model)
-    alert("name")
-    alert(this.state.save_name)
-    alert("color")
-    alert(this.state.save_color)
-    alert("size")
-    alert(this.state.save_size)
 
     const response = await fetch('/information', {
       method: 'GET',
@@ -426,16 +216,28 @@ handleChangeArrayname = (event)  => {
     var joined ;
     var code ;
     
-    body.map(index => {/*
-      if(this.state.shoe_size != '' && this.state.shoe_color != ''){
-        if(this.state.shoe_code != ''){
-          if(this.state.shoe_name != ''){//name,model,code,color,size
-            if ( (index.shoe_name == this.state.shoe_name) &&
-               (index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) &&
-               (index.shoe_color == this.state.shoe_color) &&
-               (index.shoe_size == this.state.shoe_size) ){
+    body.map(index => {
+      
+      if(this.state.save_model != ''  && this.state.save_name != '' && this.state.save_color != '' ){
+        
+        if(this.state.save_model == index.shoe_model  && this.state.save_name == index.shoe_name 
+            && this.state.save_color == index.shoe_color ){
+            
+                joined = this.state.array.concat(index.shoe_image);
+                code = this.state.array_code.concat(index.shoe_code);
+  
+                this.setState({
+                  validation : 1,
+                  array: joined,
+                  array_code : code
+                })
+            
+          }
 
+        }else if(this.state.save_model != ''  && this.state.save_name != ''  ){
+
+          if(this.state.save_model == index.shoe_model  && this.state.save_name == index.shoe_name  ){
+            
               joined = this.state.array.concat(index.shoe_image);
               code = this.state.array_code.concat(index.shoe_code);
 
@@ -444,262 +246,40 @@ handleChangeArrayname = (event)  => {
                 array: joined,
                 array_code : code
               })
-            }
-          }else{//model,code,color,size
-            if ((index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) &&
-               (index.shoe_color == this.state.shoe_color) &&
-               (index.shoe_size == this.state.shoe_size) ){
-
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined,
-                array_code : code
-              })      
-            }  
-          }   
-        }else{
-          if(this.state.shoe_name != ''){//name,model,color,size
-            if ( (index.shoe_name == this.state.shoe_name) &&
-               (index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_color == this.state.shoe_color) &&
-               (index.shoe_size == this.state.shoe_size) ){
-
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined,
-                array_code : code
-              }) 
-            }
-          }else{//model,color,size
-            if ((index.shoe_model == this.state.shoe_model) &&
-                (index.shoe_color == this.state.shoe_color) &&
-                (index.shoe_size == this.state.shoe_size) ){
-
-                joined = this.state.array.concat(index.shoe_image);
-                code = this.state.array_code.concat(index.shoe_code);
-
-                this.setState({
-                  validation : 1,
-                  array: joined,
-                  array_code : code
-                }) 
-            }
+          
           }
-      }
-    }else if(this.state.shoe_size == '' && this.state.shoe_color != ''){
-        if(this.state.shoe_code != ''){
-          if(this.state.shoe_name != ''){//name,model,code,color
-            if ( (index.shoe_name == this.state.shoe_name) &&
-               (index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) &&
-               (index.shoe_color == this.state.shoe_color) ){
 
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
+        }else if(this.state.save_model != ''  ){
 
-              this.setState({
-                validation : 1,
-                array: joined,
-                array_code : code
-              }) 
-            }
-          }else{//model,code,color
-            if ((index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) &&
-               (index.shoe_color == this.state.shoe_color) ){
+          if(this.state.save_model == index.shoe_model ){
+        
+            joined = this.state.array.concat(index.shoe_image);
+            code = this.state.array_code.concat(index.shoe_code);
 
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined,
-                array_code : code
-              }) 
-            }
+            this.setState({
+              validation : 1,
+              array: joined,
+              array_code : code
+            })
+      
           }
-        }else {
-          if(this.state.shoe_name != ''){//name,model,color
-            if ( (index.shoe_name == this.state.shoe_name) &&
-               (index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_color == this.state.shoe_color) ){
 
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined,
-                array_code : code
-              }) 
-            }
-          }else{//model,color
-            if ((index.shoe_model == this.state.shoe_model) &&
-                (index.shoe_color == this.state.shoe_color) ){
-
-                joined = this.state.array.concat(index.shoe_image);
-                code = this.state.array_code.concat(index.shoe_code);
-
-                this.setState({
-                  validation : 1,
-                  array: joined,
-                  array_code : code
-                }) 
-            }
-          }
         }
-      }else if(this.state.shoe_size != '' && this.state.shoe_color == ''){
-        if(this.state.shoe_code != ''){
-          if(this.state.shoe_name != ''){//name,model,code,size
-            if ( (index.shoe_name == this.state.shoe_name) &&
-               (index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) &&
-               (index.shoe_size == this.state.shoe_size) ){
 
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined ,
-                array_code : code
-              }) 
-           }
-          }else{//model,code,size
-            if ((index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) &&
-               (index.shoe_size == this.state.shoe_size) ){
-
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined ,
-                array_code : code
-              }) 
-            }
-          }
-        }else{
-          if(this.state.shoe_name != ''){//name,model,size
-            if ( (index.shoe_name == this.state.shoe_name) &&
-                (index.shoe_model == this.state.shoe_model) &&
-                (index.shoe_size == this.state.shoe_size) ){
-
-                joined = this.state.array.concat(index.shoe_image);
-                code = this.state.array_code.concat(index.shoe_code);
-
-                this.setState({
-                  validation : 1,
-                  array: joined ,
-                  array_code : code
-                }) 
-            }
-          }else{//model,size
-            if ((index.shoe_model == this.state.shoe_model) &&
-                (index.shoe_size == this.state.shoe_size) ){
-
-                joined = this.state.array.concat(index.shoe_image);
-                code = this.state.array_code.concat(index.shoe_code);
-
-                this.setState({
-                 validation : 1,
-                 array: joined ,
-                 array_code : code
-                }) 
-            }
-          }  
-        }
-      }else{
-        if(this.state.shoe_code != ''){
-          if(this.state.shoe_name != ''){//name,model,code
-            if ( (index.shoe_name == this.state.shoe_name) &&
-               (index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) ){
-
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined ,
-                array_code : code
-              }) 
-          }
-          }else{//model,code
-            if ( (index.shoe_model == this.state.shoe_model) &&
-               (index.shoe_code == this.state.shoe_code) ){
-
-              joined = this.state.array.concat(index.shoe_image);
-              code = this.state.array_code.concat(index.shoe_code);
-
-              this.setState({
-                validation : 1,
-                array: joined ,
-                array_code : code
-              }) 
-            }
-          }
-        }else{
-          if(this.state.shoe_name != ''){//name,model
-            if ( (index.shoe_name == this.state.shoe_name) &&
-                (index.shoe_model == this.state.shoe_model) ){
-
-                joined = this.state.array.concat(index.shoe_image);
-                code = this.state.array_code.concat(index.shoe_code);
-
-                this.setState({
-                  validation : 1,
-                  array: joined ,
-                  array_code : code
-                }) 
-            }
-          }else{
-            if ((index.shoe_model == this.state.shoe_model) ){
-
-                joined = this.state.array.concat(index.shoe_image);
-                code = this.state.array_code.concat(index.shoe_code);
-
-                this.setState({
-                  validation : 1,
-                  array: joined ,
-                  array_code : code
-                }) 
-            }
-          }
-         
-        }
-      }*/
     })
-     
-     if(this.state.validation == 0){
-      alert("not found!!");
+      
+    if(this.state.validation == 0){
+      alert("گزینه ای انتخاب نشده است");
     }
 
   };
   
   render() {
-  
-    var show;
-    var sum=0;
-    if(this.state.detail != 0){
-     sum = this.state.detail; 
-    }
-
-    show=
-    <div>
-      
-    </div>
-
+    var arraysize_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+    
     return (
       <div>
+
         <ul id="navbar">
           <li><a href="/first">کفش ورزشی</a></li>
           <li><a href="#">=></a></li>
@@ -707,226 +287,79 @@ handleChangeArrayname = (event)  => {
         </ul>
                 
         <div id="wrap1">
+
           {this.state.array.map((item, index) => (
-          
-                <div id = "border_update" >
-                  <Link to={ `/shoe${this.state.array_code[index]}` }>
-                    <img id="image" src={item}/>
-                  </Link>
-                </div>
-          
-             )) 
-          }
+            <div id = "border_update" >
+              <Link to={ `/shoe${this.state.array_code[index]}` }>
+                <img id="image" src={item}/>
+              </Link>
+            </div>
+      
+          ))}
+
+          {this.state.arraySize.map((item, index) => (
+            <div id = "border_update" >
+              <Link to={ `/shoe${this.state.array_code_size[index]}` }>
+                <img id="image" src={item}/>
+              </Link>
+            </div>
+            ))}
+
         </div>
 
         <div id="wrap3">
-<div id="wrap2">
-                <DropdownSelectName 
-                     name = "heoo"
-                     
-                            //1/required = "false"
-                     lableName = "برند"
-                     placeholder = "برند کفش"
-                     val = {this.state.arraymodel}
-                      _handleChange = {event => this.handleToggle(event,this.state.clickedModel)}
-                      />
+          <div id="wrap2">
+            <DropdownSelectName 
+              name = "heoo"
+              lableName = "برند"
+              placeholder = "برند کفش"
+              val = {this.state.arraymodel}
+              _handleChange = {event => this.handleToggle(event,this.state.clickedModel)}
+              />
 
-                    <DropdownSelectName 
-                     name = "heoo"
-                     
-                            //1/required = "false"
-                     lableName = "نام"
-                     placeholder = "نام کفش"
-                     val = {this.state.arrayShoeName}
-                      _handleChange = {event => this.handleToggleName(event,this.state.clickedName) }
-                      />
+            <DropdownSelectName 
+              name = "heoo"
+              lableName = "نام"
+              placeholder = "نام کفش"
+              val = {this.state.arrayShoeName}
+              _handleChange = {event => this.handleToggleName(event,this.state.clickedName) }
+              />
 
-                    <DropdownSelectName 
-                     name = "heoo"
-                     
-                            //1/required = "false"
-                     lableName = "رنگ"
-                     placeholder = "رنگ کفش"
-                     val = {this.state.arrayShoeColor}
-                      _handleChange = {event => this.handleToggleColor(event,this.state.clickedColor) }
-                      />
+            <DropdownSelectName 
+              name = "heoo"
+              lableName = "رنگ"
+              placeholder = "رنگ کفش"
+              val = {this.state.arrayShoeColor}
+              _handleChange = {event => this.handleToggleColor(event,this.state.clickedColor) }
+              />
+          </div>
 
-                      <DropdownSelectName 
-                     name = "heoo"
-                     
-                            //1/required = "false"
-                     lableName = "سایز"
-                     placeholder = "سایز کفش"
-                     val = {this.state.arrayShoeSize}
-                      _handleChange = {event => this.handleToggleSize(event,this.state.clickedSize) }
-                      />
-                      {/*<p>{this.state.arrayShoeName.length}</p>
-      {this.state.arraymodel.map((value,index) => {
-       
-
-        return (
-          <li>
- 
-
-            <label class="container">
-            <input type="checkbox"  onClick={ () => this.handleToggle(value,index,this.state.clickedModel) }/>
-            <span class="checkmark"></span>
-              <b>{value}</b>
-              </label>
-            
-            </li>
-        );
-      })}
-      <hr/>
-      
-      {this.state.arrayShoeName.map((value,index) => {
-        return (
-        <li>
-          <label class="container"  >
-          <input type="checkbox"  onClick={ () => this.handleToggleName(value,index,this.state.clickedName) }/>
-            <span class="checkmark"></span>
-            <b>{value}</b></label>
-        </li>
-        );
-      })
-    }
-       <hr/>
-      {this.state.arrayShoeColor.map((value,index) => {
-        return (
-        <li>
-          <label class="container"   >
-          <input type="checkbox"  onClick={ () => this.handleToggleColor(value,index,this.state.clickedColor) }/>
-            <span class="checkmark"></span>
-            <b>{value}</b></label>
-        </li>
-        );
-      })
-      }
-       <hr/>
-    <p>{this.state.arrayShoeSize.length}</p>
-       {this.state.arrayShoeSize.map((value,index) => {
-        return (
-          <li>
-            <label class="container" >
-            <input type="checkbox"  onClick={ () => this.handleToggleSize(value,index,this.state.clickedSize) }/>
-            <span class="checkmark"></span>
-              <b>{value}</b></label>
-          </li>
-          );
-        })
-      }
-       <hr/>
-      {/*show*/}
-
-      </div>
-      <form onSubmit={this.handleSubmit}>
-      <div id = "sectionSubmit-search" >
+          <form onSubmit={this.handleSubmit}>
+            <div id = "sectionSubmit-search" >
               <button  type="submit" class = "button-search"> ثبت </button> 
+            </div>
+          </form>
+
+        </div>
+
+        <div id="wrap4">
+          <div id="wrap5">
+            <DropdownSelect 
+              name = "heoo"
+              lableName = "numbers"
+              placeholder = "سایز کفش"
+              val = {arraysize_1_to_100}
+              _handleChange = {event =>  this.handelSearchSize(event) }
+              /> 
           </div>
-      </form>
-      </div>
-      
-      
-        {/*<form onSubmit={this.handleSubmit}>
-          <ul>
-            <li>
-               <p  ><b>: مدل کفش</b></p> 
-            </li>
-            <li>
-              <InputTextField 
-                name = "test"
-                id = "test"
-                type = "text"
-                required = "true"
-                placeholder = "مدل کفش"
-                val = {this.state.shoe_model}
-                _handleChange ={this.enterShoeModel}
-              />
-            </li>
-          </ul>
-          <div class="line">
-            <hr/>
-          </div>
-          <ul>
-            <li>
-              <p  ><b>: نام کفش</b></p> 
-            </li>
-            <li>
-              <InputTextField 
-                name = "test"
-                id = "test"
-                type = "text"
-                placeholder = "نام کفش"
-                val = {this.state.shoe_name}
-                _handleChange ={this.enterShoeName}
-              />
-            </li>
-          </ul>
-          <div class="line">
-              <hr/>
-          </div>
-          <ul>
-            <li>
-               <p  ><b>: کد کفش</b></p> 
-            </li>
-            <li>
-              <InputTextField 
-                name = "test"
-                id = "test"
-                type = "text"
-                //required = "true"
-                placeholder = "کد کفش"
-                val = {this.state.shoe_code}
-                _handleChange ={this.enterShoeCode}
-              />
-            </li>
-          </ul>
-          <div class="line">
-              <hr/>
-          </div>
-          <ul>
-            <li>
-               <p  ><b>: رنگ کفش</b></p> 
-            </li>
-            <li>
-              <InputTextField 
-                name = "test"
-                id = "test"
-                type = "text"
-               // required = "true"
-                placeholder = "رنگ کفش"
-                val = {this.state.shoe_color}
-                _handleChange ={this.enterShoeColor}
-              />
-            </li>
-          </ul>
-          <div class="line">
-              <hr/>
-          </div>
-          <ul>
-            <li>
-               <p  ><b>: سایز کفش</b></p> 
-            </li>
-            <li>
-              <InputTextField 
-                name = "test"
-                id = "test"
-                type = "text"
-               // required = "true"
-                placeholder = "سایز کفش"
-                val = {this.state.shoe_size}
-                _handleChange ={this.enterShoeSize}
-              />
-            </li>
-          </ul>
-          <div class="line">
-              <hr/>
-          </div>
-          <div id = "sectionSubmit-search" >
+
+          <form onSubmit={this.handleSubmitSize}>
+            <div id = "sectionSubmit-search" >
               <button  type="submit" class = "button-search"> ثبت </button> 
-          </div>
-    </form>*/}
-        
+            </div>
+          </form>
+        </div>
+
       </div>
     );
   }
