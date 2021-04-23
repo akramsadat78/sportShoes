@@ -8,7 +8,7 @@ import '../css/basic.css';
 
 export const outsideClickIgnoreClass = 'ignore--click--outside';
 
-export default class DatePicker extends Component {
+export default class DatePickerDetail extends Component {
 
   constructor(props){
     super(props);
@@ -160,12 +160,12 @@ export default class DatePicker extends Component {
     });
 
 
+
     return (
       <div>
         <input
            placeholder ={this.state.data}
           className={className}
-          required="true"
           type="text"
           ref="input"
           disabled={disabled}

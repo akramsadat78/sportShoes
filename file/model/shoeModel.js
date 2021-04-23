@@ -34,7 +34,7 @@ let Shoe = new Schema({
     type: Array
   },
   shoe_profit: {
-    type: Number
+    type: Array
   },
   shoe_image: {
     type: String

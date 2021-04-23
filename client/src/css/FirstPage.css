@@ -54,6 +54,7 @@
 /*picture*/
 
 #wrap_first_page{
+    background-color:  rgb(193, 230, 230);
     float: left;
     width: 83%;
     margin-left: 8.4%;
