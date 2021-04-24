@@ -84,6 +84,7 @@ export default class Search extends Component {
     })
   }
 
+
   handleToggleName(event,clickedName) {
     let value = event.currentTarget.value
     this.setState({
@@ -150,19 +151,55 @@ export default class Search extends Component {
       .then(result => {
 
         result.map(index => {
-            
+            var check_duplicate = 0
+
             if( index.shoe_model == value){
               if( clickedModel == 1){
-                this.setState({
-                  arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
-                  save_model:index.shoe_model,
-                  clickedModel : 0
-                });
+
+
+                this.state.arrayShoeName.map((item,ind) =>{
+                  if( item == index.shoe_name){
+                    check_duplicate = 1
+                  }else{
+                    check_duplicate = 0
+                  }
+                })
+
+                if(check_duplicate == 1){
+                  this.setState({
+                    save_model:index.shoe_model,
+                    clickedModel : 0
+                  });
+                }else{
+                  this.setState({
+                    arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
+                    save_model:index.shoe_model,
+                    clickedModel : 0
+                  });
+                }
+  
               }else{
-                this.setState({
-                  arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
-                  save_model:index.shoe_model
-                });
+
+                this.state.arrayShoeName.map((item,ind) =>{
+                  if( item == index.shoe_color){
+                    check_duplicate = 1
+                  }else{
+                    check_duplicate = 0
+                  }
+                })
+
+                if(check_duplicate == 1){
+                  this.setState({
+                    arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
+                    save_model:index.shoe_model
+                  });
+                }else{
+                  this.setState({
+                    arrayShoeName: [...this.state.arrayShoeName,index.shoe_name],
+                    save_model:index.shoe_model
+                  });
+                }
+
               }
             }
         })
