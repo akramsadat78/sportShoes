@@ -12,6 +12,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "jalali-react-datepicker": "^1.2.1",
+    "persian": "^1.0.1",
+    "persianjs": "^0.4.0",
     "rc-queue-anim": "^1.8.5",
     "rc-tween-one": "^2.7.3",
     "react": "^17.0.1",
