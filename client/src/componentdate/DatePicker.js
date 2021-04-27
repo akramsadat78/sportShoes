@@ -186,12 +186,15 @@ export default class DatePicker extends Component {
           if(dd >= dayInputDate ){//correct
             this.props.parentCallback(this.state.inputValue);
           }else{
+            this.setState({ inputValue: '' });
             alert("تاریخ درست وارد نشده است")
           }
         }else{
+          this.setState({ inputValue: '' });
           alert("تاریخ درست وارد نشده است")
         }
       }else{
+        this.setState({ inputValue: '' });
         alert("تاریخ درست وارد نشده است")
       }
 

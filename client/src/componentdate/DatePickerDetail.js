@@ -13,7 +13,8 @@ export default class DatePickerDetail extends Component {
   constructor(props){
     super(props);
     this.state = {
-        data: this.props.dataParentToChild
+        data: this.props.dataParentToChild,
+        currentDateTime: new Date().toLocaleDateString('fa-IR')
     }
 }
   static propTypes = {
@@ -108,9 +109,96 @@ export default class DatePickerDetail extends Component {
 
   handleClickOutsideCalendar() {
     this.setOpen(false);
+
+    
+    var currentDate = this.state.currentDateTime.split('/');
+    var yearDate = currentDate[0];
+    var monthDate = currentDate[1];
+    var dayDate = currentDate[2];
+
+    var persianNumber = [ "۰","۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"]
+    
+
+    //correct year
+    var yearlength = yearDate.length
+    var itr = Array.from(Array(yearlength).keys())
+    var pow = yearlength
+    var yd = 0
+
+    itr.map((item, index) => { 
+      var y = yearDate.charAt(index)
+      pow = pow -1
+      persianNumber.map((itemp, indexp) => {  
+        if(  y == itemp){
+          yd = indexp*Math.pow(10,pow) + yd
+        }
+      })
+    })
+
+    // convert month
+    var monthlength = monthDate.length
+    itr = Array.from(Array(monthlength).keys())
+    pow = monthlength
+    var md = 0
+
+    itr.map((item, index) => {  
+      var m = monthDate.charAt(index)
+      pow = pow -1
+      persianNumber.map((itemp, indexp) => { 
+        if(  m == itemp){
+          md = indexp*Math.pow(10,pow) + md
+        }
+      })
+    })
+    
+     // convert day
+     var monthday = dayDate.length
+     itr = Array.from(Array(monthday).keys())
+     pow = monthday
+     var dd = 0
+ 
+     itr.map((item, index) => {  
+       var d = dayDate.charAt(index)
+       pow = pow -1
+       persianNumber.map((itemp, indexp) => { 
+         if(  d == itemp){
+           dd = indexp*Math.pow(10,pow) + dd
+         }
+       })
+     })
+     
+    if (this.state.inputValue != null){
+      var inputDate = this.state.inputValue.split('/');
+      var yearInputDate = Math.floor(inputDate[0]);
+      var monthInputDate = Math.floor(inputDate[1]);
+      var dayInputDate = Math.floor(inputDate[2]);
+
+
+      if( yd > yearInputDate ){//correct
+        this.props.parentCallback(this.state.inputValue);
+      }else if (yd == yearInputDate ){
+        if(md > monthInputDate ){//correct
+          this.props.parentCallback(this.state.inputValue);
+        }else if(md == monthInputDate ){
+          if(dd >= dayInputDate ){//correct
+            this.props.parentCallback(this.state.inputValue);
+          }else{
+            this.setState({ inputValue: '' });
+            alert("تاریخ درست وارد نشده است")
+          }
+        }else{
+          this.setState({ inputValue: '' });
+          alert("تاریخ درست وارد نشده است")
+        }
+      }else{
+        this.setState({ inputValue: '' });
+        alert("تاریخ درست وارد نشده است")
+      }
+
+    }
+
     if (!this.state.inputValue)
       this.setState({ momentValue: null });
-    this.props.parentCallback(this.state.inputValue);
   }
 
   handleSelectDay(selectedDay) {
