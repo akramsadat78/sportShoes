@@ -21,6 +21,7 @@ export default class ProfitCalculation extends Component {
         array_model:[],
         array_code:[],
         array_profit:[],
+        array_size:[],
         start:1,
         validation:0,
         sum:0,
@@ -173,6 +174,7 @@ export default class ProfitCalculation extends Component {
       var code ;
       var profit ;
       var shoeSaleDateDB;
+      var size ;
       
       const response = await fetch('/information', {
         method: 'GET',
@@ -185,7 +187,22 @@ export default class ProfitCalculation extends Component {
 
       body.map(index => {
 
+        var count = 0  ;
+        var save_count = 0  ;
+        var counter = 0;
+
         index.shoe_sale_date.map((item,ind) =>{
+         
+          if ( ind == 0 ){
+            count = index.shoe_count[counter];
+            counter = counter + 1;
+          }else if ( ind == count ){
+            save_count = count;
+            count = index.shoe_count[counter];
+            count = count + save_count;
+            counter = counter + 1;
+          }
+
           if( item != null){
 
             shoeSaleDateDB = item.split('/');
@@ -202,12 +219,14 @@ export default class ProfitCalculation extends Component {
                   model = this.state.array_model.concat(index.shoe_model);
                   code = this.state.array_code.concat(index.shoe_code);
                   profit = this.state.array_profit.concat(index.shoe_profit[ind]);
+                  size =  this.state.array_size.concat(index.shoe_size[counter-1]);
       
                   this.setState({
                     array_name: name ,
                     array_model: model ,
                     array_code: code ,
                     array_profit: profit ,
+                    array_size: size,
                     sum:this.state.sum+index.shoe_profit[ind],
                     start:0,
                     validation:0
@@ -226,12 +245,14 @@ export default class ProfitCalculation extends Component {
                     model = this.state.array_model.concat(index.shoe_model);
                     code = this.state.array_code.concat(index.shoe_code);
                     profit = this.state.array_profit.concat(index.shoe_profit[ind]);
+                    size =  this.state.array_size.concat(index.shoe_size[counter-1]);
         
                     this.setState({
                       array_name: name ,
                       array_model: model ,
                       array_code: code ,
                       array_profit: profit ,
+                      array_size: size ,
                       sum:this.state.sum+index.shoe_profit[ind],
                       start:0,
                       validation:0
@@ -246,12 +267,14 @@ export default class ProfitCalculation extends Component {
                     model = this.state.array_model.concat(index.shoe_model);
                     code = this.state.array_code.concat(index.shoe_code);
                     profit = this.state.array_profit.concat(index.shoe_profit[ind]);
+                    size =  this.state.array_size.concat(index.shoe_size[counter-1]);
         
                     this.setState({
                       array_name: name ,
                       array_model: model ,
                       array_code: code ,
                       array_profit: profit ,
+                      array_size: size,
                       sum:this.state.sum+index.shoe_profit[ind],
                       start:0,
                       validation:0
@@ -268,12 +291,14 @@ export default class ProfitCalculation extends Component {
                     model = this.state.array_model.concat(index.shoe_model);
                     code = this.state.array_code.concat(index.shoe_code);
                     profit = this.state.array_profit.concat(index.shoe_profit[ind]);
+                    size =  this.state.array_size.concat(index.shoe_size[counter-1]);
         
                     this.setState({
                       array_name: name ,
                       array_model: model ,
                       array_code: code ,
                       array_profit: profit ,
+                      array_size: size,
                       sum:this.state.sum+index.shoe_profit[ind],
                       start:0,
                       validation:0
@@ -284,16 +309,24 @@ export default class ProfitCalculation extends Component {
               }else if(monthDB == month_sd){
                 if(dayDB<=day_sd){
                   if((yearDB==year_pd) && (yearDB==year_sd)){
+                    
+                    alert("enter")
+                    alert(index.shoe_size[counter-1])
+                    alert(item)
+                    alert(index.shoe_profit[ind])
+
                     name = this.state.array_name.concat(index.shoe_name);
                     model = this.state.array_model.concat(index.shoe_model);
                     code = this.state.array_code.concat(index.shoe_code);
                     profit = this.state.array_profit.concat(index.shoe_profit[ind]);
+                    size =  this.state.array_size.concat(index.shoe_size[counter-1]);
         
                     this.setState({
                       array_name: name ,
                       array_model: model ,
                       array_code: code ,
                       array_profit: profit ,
+                      array_size: size,
                       sum:this.state.sum+index.shoe_profit[ind],
                       start:0,
                       validation:0
@@ -326,23 +359,26 @@ export default class ProfitCalculation extends Component {
         <table id="table-to-xls">
           <tr>
               <th>سود</th>
-              <th>کد کفش</th>
+              <th>سایز کفش</th>
               <th>مدل کفش</th>
               <th>نام کفش</th>
+              <th>کد کفش</th>
           </tr>
 
           { this.state.array_name.map((item, index) => {  
             return <tr key={index}>
                     <td> {this.state.array_profit[index]} </td> 
-                    <td> {this.state.array_code[index]} </td>  
+                    <td> {this.state.array_size[index]} </td> 
                     <td> {this.state.array_model[index]} </td>  
                     <td> {item} </td>
+                    <td> {this.state.array_code[index]} </td>  
                   </tr>  
             })  
           } 
 
           <tr>
             <td>{this.state.sum}</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
