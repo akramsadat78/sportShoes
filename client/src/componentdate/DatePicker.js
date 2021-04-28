@@ -14,7 +14,7 @@ export default class DatePicker extends Component {
   constructor(props){
     super(props);
     this.state = {
-        data: this.props.dataParentToChild,
+       // data: this.props.dataParentToChild,
         currentDateTime: new Date().toLocaleDateString('fa-IR')
     }
 }
@@ -254,7 +254,7 @@ export default class DatePicker extends Component {
     return (
       <div>
         <input
-           placeholder ={this.state.data}
+           placeholder ={this.props.dataParentToChild}
           className={className}
           required="true"
           type="text"
