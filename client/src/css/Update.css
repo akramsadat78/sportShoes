@@ -268,8 +268,8 @@
    color: aliceblue;
 }
 
-#section3-SubmitInformation_update input {
-   width: 60%;
+#section3-SubmitInformation_update label {
+   width: 85%;
     height: 5vh;
     margin-right: 4%;
     margin-top: 8%;
@@ -304,7 +304,7 @@
 }
 
 #section3-SubmitInformation_update  #table_inform td #edit {
-   width: 75%;
+   width: 85%;
    height: 5vh;
    border: solid rgb(12, 6, 7);
    text-align: center;
@@ -551,6 +551,18 @@
    background-color: rgb(44, 196, 196);
 }
 
+
+#section5-SubmitInformation_update  #table_inform label{
+   width: 75%;
+   height: 4vh;
+   border: solid rgb(12, 6, 7);
+   text-align: center;
+   border-radius: 30px;
+   border-width: 1px;
+   display: block;
+   background-color: rgb(44, 196, 196);
+}
+
 /***********************************/
 
 #section5-SubmitInformation_update  #name-profit{
@@ -587,4 +599,9 @@
 #section5-SubmitInformation_update select option {
    background-color: rgb(201, 209, 224);
 }
+
+
+/*profit lable*/
+
+
 

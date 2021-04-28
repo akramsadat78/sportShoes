@@ -49,7 +49,10 @@ export default class Update extends Component {
       current_count:0,
       indexrow:0,
       first_cost_sale : 0,
-      arraymodel:['Nike','Pama','Adidas','Reebook','Skechers','Asics','Puma']
+      arraymodel:['Nike','Pama','Adidas','Reebook','Skechers','Asics','Puma'],
+      checkWriteDate:[],
+      checkWriteCost:[],
+      changing:true
     }
   }
 
@@ -92,10 +95,16 @@ export default class Update extends Component {
   }
 
   handleCallbackenterShoeSaleDate = (childData,val) =>{
+
     let dynamic_sale_date = [ ...this.state.dynamic_sale_date ];
     dynamic_sale_date[val] = childData ;
+
+    let checkWriteCost = [ ...this.state.checkWriteCost ];
+    checkWriteCost[val] = 1;
+
     this.setState({
-      dynamic_sale_date
+      dynamic_sale_date,
+      checkWriteCost
     });
   }
 
@@ -137,9 +146,14 @@ export default class Update extends Component {
 
     let dynamic_profit = [ ...this.state.dynamic_profit ];
     dynamic_profit[val] = e.target.value - this.state.first_cost_sale;
+
+    let checkWriteDate = [ ...this.state.checkWriteDate ];
+    checkWriteDate[val] = 1;
+
     this.setState({
       dynamic_cost_sale,
-      dynamic_profit
+      dynamic_profit,
+      checkWriteDate
     });
   }
 
@@ -229,43 +243,85 @@ export default class Update extends Component {
     })
   }
     
+  deleteProfit(ind){
+    let dynamic_profit = [ ...this.state.dynamic_profit ];
+    dynamic_profit[ind] = '';
+    this.setState({
+      dynamic_profit
+    })
+  }
   handleSubmit = async e => {
     e.preventDefault();
-    const obj = {
-      shoe_name: this.state.shoe_name,
-      shoe_model: this.state.shoe_model,
-      shoe_code: this.state.shoe_code,
-      shoe_color: this.state.shoe_color,
-      shoe_size: this.state.dynamic_size,
-      shoe_count: this.state.dynamic_count,
-      shoe_purchase_date:this.state.dynamic_purchase_date,
-      shoe_sale_date:this.state.dynamic_sale_date,
-      shoe_cost_buy: this.state.dynamic_cost_buy,
-      shoe_cost_sale: this.state.dynamic_cost_sale,
-      shoe_profit: this.state.dynamic_profit,
-      shoe_image: this.state.file,
-      shoe_description: this.state.shoe_description
-    };
 
-    const response = await fetch('/information/update', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(obj) ,
-    });
+    let dateIsEntered = true;
+    let costIsEntered = true;
 
-    alert("به روز رسانی انجام شد")
+    //check not empty sale date for cost that is entered
+    this.state.checkWriteDate.map((item,index) => {
+      if( item == 1){
 
-    this.setState({
-      validation : 1
-    })  
+        if(this.state.dynamic_cost_sale[index]  == '' ){
+          this.bind.deleteProfit(index); 
+        }
 
+        if(((this.state.dynamic_sale_date[index] == null) ||( this.state.dynamic_sale_date[index] == '')) && this.state.dynamic_cost_sale[index]  != '' ){
+          alert("تاریخ فروش کفش را وارد کنید");
+          dateIsEntered = false;
+        }
+
+      }
+      
+    })
+    
+    //check not empty cost input for sale date that is entered
+    this.state.checkWriteCost.map((item,index) => {
+      if( item == 1){
+
+        if(((this.state.dynamic_cost_sale[index] == null) || (this.state.dynamic_cost_sale[index] == '')) && this.state.dynamic_sale_date[index]  != '' ){
+          alert("هزینه فروش کفش را وارد کنید");
+          costIsEntered = false;
+        }
+
+      }
+      
+    })
+    
+    if( (costIsEntered == true) && (dateIsEntered == true)){
+      const obj = {
+        shoe_name: this.state.shoe_name,
+        shoe_model: this.state.shoe_model,
+        shoe_code: this.state.shoe_code,
+        shoe_color: this.state.shoe_color,
+        shoe_size: this.state.dynamic_size,
+        shoe_count: this.state.dynamic_count,
+        shoe_purchase_date:this.state.dynamic_purchase_date,
+        shoe_sale_date:this.state.dynamic_sale_date,
+        shoe_cost_buy: this.state.dynamic_cost_buy,
+        shoe_cost_sale: this.state.dynamic_cost_sale,
+        shoe_profit: this.state.dynamic_profit,
+        shoe_image: this.state.file,
+        shoe_description: this.state.shoe_description
+      };
+
+      const response = await fetch('/information/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(obj) ,
+      });
+
+      alert("به روز رسانی انجام شد")
+
+      this.setState({
+        validation : 1
+      })  
+    }
   };
 
  
   render() { 
-    var arraysize_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+    var arraysize_1_to_100 = Array.from(Array(60).keys()) // 0 to 100
     var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
     var show;
 
@@ -298,28 +354,42 @@ export default class Update extends Component {
                 {this.state.inside_row.map((item,index) =>
                   <tr>
                     <td> 
-                      <InputTextField 
-                        name = "test"
-                        id = "test"
-                        type = "text"
-                        placeholder = {this.state.dynamic_profit[index+sum]}
-                        _handleChange ={e =>  this.changeShoeProfit(e,index+sum)}
-                      />
+                      <label>{this.state.dynamic_profit[index+sum]}</label>
                     </td>
                     <td> 
-                      <InputTextField 
-                        name = "test"
-                        id = "test"
-                        type = "text"
-                        placeholder = {this.state.dynamic_cost_sale[index+sum]}
-                        //required = "true"
-                        //val = {this.state.shoe_cost_sale}
-                        _handleChange ={e =>  this.changeShoeCostSale(e,index+sum)}
-                      />
+                      {
+                        <div>
+                          {(
+
+                            ((this.state.changing==true) && 
+                            ((this.state.dynamic_cost_sale[index+sum] == null) || (this.state.dynamic_cost_sale[index+sum] == '')))
+                            
+                            ) ? (
+                            <InputTextField 
+                            name = "test"
+                            id = "test"
+                            type = "text"
+                            placeholder = {this.state.dynamic_cost_sale[index+sum]}
+                            //required = "true"
+                            //val = {this.state.shoe_cost_sale}
+                            _handleChange ={e =>  this.changeShoeCostSale(e,index+sum)}
+                            />
+                          ) : (
+                            <label>{this.state.dynamic_cost_sale[index+sum]}</label>
+                          )}
+                      </div>
+                      }
+                      
                     </td>
                     <td>
-                      <DatePickerDetail  dataParentToChild = {this.state.dynamic_sale_date[index+sum]} parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+sum) }/>   
-                    </td>
+                      <div>
+                        {((this.state.dynamic_cost_sale[index+sum] == null) || (this.state.dynamic_cost_sale[index+sum] == '')) ? (
+                          <DatePickerDetail  dataParentToChild = {this.state.dynamic_sale_date[index+sum]} parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+sum) }/>   
+                            ) : (
+                          <label>{this.state.dynamic_sale_date[index+sum]}</label>
+                        )}
+                      </div>
+                     </td>
                     <td>
                       {index+1}
                     </td>
@@ -368,6 +438,7 @@ export default class Update extends Component {
                       name = "test"
                       id = "test"
                       type = "text"
+                      required = "true"
                       placeholder = "رنگ کفش"
                       val = {this.state.shoe_color}
                       _handleChange ={this.changeShoeColor}
@@ -405,7 +476,7 @@ export default class Update extends Component {
                       name = "test"
                       id = "test"
                       type = "text"
-                      //1/required = "true"
+                      required = "true"
                       placeholder = "نام کفش"
                       val = {this.state.shoe_name}
                       _handleChange ={this.changeShoeName}
@@ -435,41 +506,23 @@ export default class Update extends Component {
                     {this.state.dynamic_array.map((item,index) =>
                       <tr>
                         <td onClick={() => { this.click(index+1,this.state.dynamic_count[index],this.state.dynamic_cost_buy[index])}}>
-                          <label id="edit">ویرایش </label> 
+                          <label id="edit">جزئیات </label> 
                         </td>
 
                         <td>
-                          <InputTextField 
-                          name = "test"
-                          id = "test"
-                          type = "text"
-                          placeholder = {this.state.dynamic_cost_buy[index]}
-                          _handleChange ={e =>  this.changeShoeCostBuy(e,index+1)}
-                          />
+                          <label>{this.state.dynamic_cost_buy[index]}</label>
                         </td>
 
                         <td> 
-                          <DatePickerDetail dataParentToChild = {this.state.dynamic_purchase_date[index]} parentCallback = {childData =>  this.handleCallbackenterShoePurchaseDate(childData,index+1) }/>
+                          <label>{this.state.dynamic_purchase_date[index]} </label>
                         </td>
 
                         <td>
-                          <DropdownSelect 
-                            name = "helloo"
-                            lableName = "numbers"
-                            placeholder = {this.state.dynamic_count[index]}
-                            val = {arraynumber_1_to_100}
-                            _handleChange = {event =>  this.handleChangeShoeCount(event,index+1) }
-                            />
+                          <label>{this.state.dynamic_count[index]}</label>
                         </td>
 
                         <td>
-                          <DropdownSelect 
-                          name = "heoo"
-                          lableName = "numbers"
-                          placeholder = {this.state.dynamic_size[index]}
-                          val = {arraysize_1_to_100}
-                          _handleChange = {event =>  this.handleChangeShoeSize(event,index+1) }
-                          /> 
+                          <label>{this.state.dynamic_size[index]}</label>
                         </td>
                       </tr>
                     )} 
