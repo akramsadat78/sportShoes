@@ -23,6 +23,7 @@ export default class Search extends Component {
       response: '',
       responseToPost: '',
       validation:0,
+      validationsize:0,
       array:[],
       array_code:[],
       counter:0,
@@ -229,12 +230,17 @@ export default class Search extends Component {
           
           this.setState({
             arraySize: [...this.state.arraySize,index.shoe_image],
-            array_code_size : [...this.state.array_code_size,index.shoe_code]
+            array_code_size : [...this.state.array_code_size,index.shoe_code],
+            validationsize : 1
           })
             
         }
       })
     })
+
+    if(this.state.validationsize == 0){
+      alert("سایز کفش انتخاب نشده است");
+    }
   
   };
 
@@ -312,7 +318,7 @@ export default class Search extends Component {
   };
   
   render() {
-    var arraysize_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+    var arraysize_1_to_100 = Array.from(Array(60).keys()) // 0 to 100
     
     return (
       <div>
