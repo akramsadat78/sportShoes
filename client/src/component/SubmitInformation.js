@@ -192,7 +192,7 @@ export default class SubmitInformation extends Component {
   
   render() {
 
-    var arraysize_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+    var arraysize_1_to_100 = Array.from(Array(60).keys()) // 0 to 100
     var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
 
     if (this.state.validation == 1) {
