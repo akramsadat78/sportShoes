@@ -4,10 +4,8 @@ const shoeRoutes = express.Router();
 let Shoe = require('../model/shoeModel');
 
 // create a new doqument
-shoeRoutes.route('/add').post(function (req, res) {
-  console.log("+++++++++++++++++++++++++ add new shoe +++++++++++++++++++++++++",req.body) 
+shoeRoutes.route('/add').post(function (req, res) { 
   let shoe = new Shoe(req.body);
-  console.log(shoe)
   shoe.save()
         .then(() => res.json({
             message: "Created account successfully"
@@ -20,7 +18,6 @@ shoeRoutes.route('/add').post(function (req, res) {
 
 //get information
 shoeRoutes.route('/').get(function (req, res) {
-    console.log("+++++++++++++++++++++++++ get information +++++++++++++++++++++++++") 
     Shoe.find(function(err, shoes){
     if(err){
       console.log(err);
@@ -33,18 +30,14 @@ shoeRoutes.route('/').get(function (req, res) {
 
 // Defined edit route
 shoeRoutes.route('/edit/:shoe_code').get(function (req, res) {
-  console.log("+++++++++++++++++++++++++ edit +++++++++++++++++++++++++") 
   let id = req.params.shoe_code;
-  console.log("+++++++++++++++++++++++++",id)
   Shoe.find(id, function (err, shoe){
       res.json(shoe);
-      console.log("+++++++++++++++++++++++++",shoe)
   });
 });
 
 // update 
-shoeRoutes.route('/update').post(function (req, res) {
-  console.log("+++++++++++++++++++++++++ update +++++++++++++++++++++++++",req.body) 
+shoeRoutes.route('/update').post(function (req, res) { 
   Shoe.find(function(err, shoes){
     if(err){
       console.log(err);

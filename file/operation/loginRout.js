@@ -5,9 +5,7 @@ let Login = require('../model/loginModel');
 
 // create a new doqument
 loginRoutes.route('/add').post(function (req, res) {
-  console.log("+++++++++++++++++++++++++ add new login +++++++++++++++++++++++++",req.body) 
   let login = new Login(req.body);
-  console.log(login)
   login.save()
         .then(() => res.json({
             message: "Created account successfully"
@@ -20,7 +18,6 @@ loginRoutes.route('/add').post(function (req, res) {
 
 //get information
 loginRoutes.route('/').get(function (req, res) {
-    console.log("+++++++++++++++++++++++++ get information +++++++++++++++++++++++++") 
     Login.find(function(err, logins){
     if(err){
       console.log(err);
