@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import InputTextField from './InputTextField';
 import '../css/Update.css';
-import DropdownSelect from './DropdownSelect';
 import DatePickerDetail from '../componentdate/DatePickerDetail';
 import DropdownSelectName from './DropdownSelectName';
 
@@ -42,8 +41,10 @@ export default class Update extends Component {
       dynamic_cost_sale:[],
       dynamic_sale_number:[],
       dynamic_profit : [],
+      dynamic_profit_save:[],
       dynamic_array:[],
       inside_row:[],
+      save_purchase_date:[],
       detail:0,
       test:[],
       current_count:0,
@@ -97,15 +98,35 @@ export default class Update extends Component {
   handleCallbackenterShoeSaleDate = (childData,val) =>{
 
     let dynamic_sale_date = [ ...this.state.dynamic_sale_date ];
-    dynamic_sale_date[val] = childData ;
 
-    let checkWriteCost = [ ...this.state.checkWriteCost ];
-    checkWriteCost[val] = 1;
+    if( childData  == '' ){
+      
+      dynamic_sale_date[val] = '' ;
 
-    this.setState({
-      dynamic_sale_date,
-      checkWriteCost
-    });
+      this.setState({
+        dynamic_sale_date
+      });
+
+    }else{
+
+      if( this.state.save_purchase_date[val] <= childData ){
+     
+      dynamic_sale_date[val] = childData ;
+
+      let checkWriteCost = [ ...this.state.checkWriteCost ];
+      checkWriteCost[val] = 1;
+
+      this.setState({
+        dynamic_sale_date,
+        checkWriteCost
+      });
+
+    }else{
+      alert("تاریخ فروش درست نیست")
+    }
+      
+    }
+
   }
 
   handleCallbackenterShoePurchaseDate = (childData,val) =>{ 
@@ -141,20 +162,36 @@ export default class Update extends Component {
   }
 
   changeShoeCostSale(e,val) {
+
     let dynamic_cost_sale = [ ...this.state.dynamic_cost_sale ];
-    dynamic_cost_sale[val] = e.target.value ;
-
     let dynamic_profit = [ ...this.state.dynamic_profit ];
-    dynamic_profit[val] = e.target.value - this.state.first_cost_sale;
 
-    let checkWriteDate = [ ...this.state.checkWriteDate ];
-    checkWriteDate[val] = 1;
+    if( e.target.value  == '' ){
 
-    this.setState({
-      dynamic_cost_sale,
-      dynamic_profit,
-      checkWriteDate
-    });
+      dynamic_cost_sale[val] = '' ;
+      dynamic_profit[val] = '';
+
+      this.setState({
+        dynamic_cost_sale,
+        dynamic_profit
+      });
+
+    }else{
+      
+      dynamic_cost_sale[val] = e.target.value ;
+      dynamic_profit[val] = e.target.value - this.state.first_cost_sale;
+
+      let checkWriteDate = [ ...this.state.checkWriteDate ];
+      checkWriteDate[val] = 1;
+
+      this.setState({
+        dynamic_cost_sale,
+        dynamic_profit,
+        checkWriteDate
+      });
+
+    }
+
   }
 
   changeShoeProfit(e,val) {
@@ -215,9 +252,19 @@ export default class Update extends Component {
         result.map(index => {
           if ( (index.shoe_code == this.state.data) ){
               let sum=0;
-              index.shoe_count.map((item,index) =>
-                  sum = Math.floor(item) + sum
-              )
+              index.shoe_count.map((item,count1) => {
+                sum = Math.floor(item) + sum;
+
+                var itr = Array.from(Array(Math.floor(item)).keys())
+                itr.map((item,count2) => {
+                  this.state.save_purchase_date = [...this.state.save_purchase_date, index.shoe_purchase_date[count1] ]
+                })
+
+                this.setState({
+                save_purchase_date : this.state.save_purchase_date
+               }) 
+
+              })
 
               this.setState({
                 shoe_name: index.shoe_name ,
@@ -231,6 +278,7 @@ export default class Update extends Component {
                 dynamic_cost_buy: index.shoe_cost_buy,
                 dynamic_cost_sale: index.shoe_cost_sale,
                 dynamic_profit: index.shoe_profit,
+                dynamic_profit_save: index.shoe_profit,
                 shoe_image: index.shoe_image,
                 file:index.shoe_image,
                 calculate_profit : index.shoe_cost_sale-index.shoe_cost_buy,
@@ -243,13 +291,7 @@ export default class Update extends Component {
     })
   }
     
-  deleteProfit(ind){
-    let dynamic_profit = [ ...this.state.dynamic_profit ];
-    dynamic_profit[ind] = '';
-    this.setState({
-      dynamic_profit
-    })
-  }
+  
   handleSubmit = async e => {
     e.preventDefault();
 
@@ -260,12 +302,8 @@ export default class Update extends Component {
     this.state.checkWriteDate.map((item,index) => {
       if( item == 1){
 
-        if(this.state.dynamic_cost_sale[index]  == '' ){
-          this.bind.deleteProfit(index); 
-        }
-
         if(((this.state.dynamic_sale_date[index] == null) ||( this.state.dynamic_sale_date[index] == '')) && this.state.dynamic_cost_sale[index]  != '' ){
-          alert("تاریخ فروش کفش را وارد کنید");
+          alert("تاریخ فروش کفش را وارد یا تصحیح کنید");
           dateIsEntered = false;
         }
 
@@ -321,8 +359,7 @@ export default class Update extends Component {
 
  
   render() { 
-    var arraysize_1_to_100 = Array.from(Array(60).keys()) // 0 to 100
-    var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+
     var show;
 
     if (this.state.validation == 1) {
@@ -359,23 +396,17 @@ export default class Update extends Component {
                     <td> 
                       {
                         <div>
-                          {(
-
-                            ((this.state.changing==true) && 
-                            ((this.state.dynamic_cost_sale[index+sum] == null) || (this.state.dynamic_cost_sale[index+sum] == '')))
-                            
+                          {(((this.state.dynamic_profit_save[index+sum] == null) || (this.state.dynamic_profit_save[index+sum] == '')) 
                             ) ? (
-                            <InputTextField 
-                            name = "test"
-                            id = "test"
-                            type = "text"
-                            placeholder = {this.state.dynamic_cost_sale[index+sum]}
-                            //required = "true"
-                            //val = {this.state.shoe_cost_sale}
-                            _handleChange ={e =>  this.changeShoeCostSale(e,index+sum)}
-                            />
-                          ) : (
-                            <label>{this.state.dynamic_cost_sale[index+sum]}</label>
+                              <InputTextField 
+                              name = "test"
+                              id = "test"
+                              type = "number"
+                              placeholder = {this.state.dynamic_cost_sale[index+sum]}
+                              _handleChange ={e =>  this.changeShoeCostSale(e,index+sum)}
+                              />
+                            ) : (
+                              <label>{this.state.dynamic_cost_sale[index+sum]}</label>
                           )}
                       </div>
                       }
@@ -383,10 +414,11 @@ export default class Update extends Component {
                     </td>
                     <td>
                       <div>
-                        {((this.state.dynamic_cost_sale[index+sum] == null) || (this.state.dynamic_cost_sale[index+sum] == '')) ? (
-                          <DatePickerDetail  dataParentToChild = {this.state.dynamic_sale_date[index+sum]} parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+sum) }/>   
-                            ) : (
-                          <label>{this.state.dynamic_sale_date[index+sum]}</label>
+                        {( (this.state.dynamic_profit_save[index+sum] == null) || (this.state.dynamic_profit_save[index+sum] == '')
+                          ) ? (
+                            <DatePickerDetail  dataParentToChild = {this.state.dynamic_sale_date[index+sum]} parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+sum) }/>   
+                          ) : (
+                            <label>{this.state.dynamic_sale_date[index+sum]}</label>
                         )}
                       </div>
                      </td>
