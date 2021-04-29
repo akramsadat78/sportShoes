@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 5000;
-const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('./file/database/mongo');
 const loginRoute = require('./file/operation/loginRout');
@@ -11,7 +10,6 @@ const path = require('path');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 mongoose.connect(config.DB, {
   useNewUrlParser: true,

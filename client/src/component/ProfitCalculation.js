@@ -7,9 +7,6 @@ export default class ProfitCalculation extends Component {
     super(props)  
     this.onSubmit = this.handleSubmit.bind(this);
 
-    this.enterShoePurchaseDate = this.enterShoePurchaseDate.bind(this);
-    this.enterShoeSaleDate = this.enterShoeSaleDate.bind(this);
-
     this.state = {
         shoe_name: '',
         shoe_model: '',
@@ -91,67 +88,6 @@ export default class ProfitCalculation extends Component {
     
     this.setState({
       dynamic_purchase_date : childData
-    });
-  }
-
-  enterShoePurchaseDate(e) {
-    this.setState({
-      shoe_purchase_date: e.target.value
-    });
-  }
-
-  enterShoeSaleDate(e) {
-    var entered_purchase_date = this.state.shoe_purchase_date.split('-');
-    var yearPurchaseDate =  Math.floor(entered_purchase_date[0]);
-    var monthPurchaseDate = Math.floor( entered_purchase_date[1]);
-    var dayPurchaseDate = Math.floor( entered_purchase_date[2]);
-
-    var entered_sale_date = e.target.value.split('-');
-    var yearSaleDate =  Math.floor(entered_sale_date[0]);
-    var monthSaleDate =  Math.floor(entered_sale_date[1]);
-    var daySaleDate =  Math.floor(entered_sale_date[2]);
-
-    //range 1 month
-    if(monthPurchaseDate == 12){//month 12
-      if(monthSaleDate == 12){
-        if(daySaleDate > dayPurchaseDate){
-          if(yearPurchaseDate == yearSaleDate){
-            this.setState({
-              validation:1
-            });
-          }
-        }
-      }else if(monthSaleDate == 1){
-        if(daySaleDate <= dayPurchaseDate ){
-          if((yearPurchaseDate+1) == yearSaleDate){
-            this.setState({
-              validation:1
-            });
-          }
-        }
-      }
-    }else{//other month
-      if(monthSaleDate == monthPurchaseDate){
-        if(daySaleDate > dayPurchaseDate ){
-          if(yearPurchaseDate == yearSaleDate){
-            this.setState({
-              validation:1
-            });
-          }
-        }
-      }else if(monthSaleDate == (monthPurchaseDate+1)){
-        if(daySaleDate <= dayPurchaseDate ){
-          if(yearPurchaseDate == yearSaleDate){
-            this.setState({
-              validation:1
-            });
-          }
-        }
-      }
-    }
-    
-    this.setState({
-      shoe_sale_date: e.target.value
     });
   }
 

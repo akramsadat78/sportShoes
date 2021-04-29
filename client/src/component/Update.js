@@ -12,10 +12,7 @@ export default class Update extends Component {
     this.onSubmit = this.handleSubmit.bind(this);
   
     this.click = this.click.bind(this);
-    this.changeShoeSaleNumber = this.changeShoeSaleNumber.bind(this);
-    this.changeShoeCostBuy = this.changeShoeCostBuy.bind(this);
     this.changeShoeCostSale = this.changeShoeCostSale.bind(this);
-    this.changeShoeProfit = this.changeShoeProfit.bind(this);
     this.changeShoeDescription = this.changeShoeDescription.bind(this);
     this.changeShoeName = this.changeShoeName.bind(this);
     this.changeShoeColor = this.changeShoeColor.bind(this);
@@ -153,13 +150,6 @@ export default class Update extends Component {
     }
   }
 
-  changeShoeSaleNumber(e,val) {
-    let dynamic_sale_number = [ ...this.state.dynamic_sale_number ];
-    dynamic_sale_number[val] = e.target.value ;
-    this.setState({
-      dynamic_sale_number
-    });
-  }
 
   changeShoeCostSale(e,val) {
 
@@ -192,22 +182,6 @@ export default class Update extends Component {
 
     }
 
-  }
-
-  changeShoeProfit(e,val) {
-    let dynamic_profit = [ ...this.state.dynamic_profit ];
-    dynamic_profit[val-1] = e.target.value ;
-    this.setState({
-      dynamic_profit
-    });
-  }
-
-  changeShoeCostBuy(e,val) {
-    let dynamic_cost_buy = [ ...this.state.dynamic_cost_buy ];
-    dynamic_cost_buy[val-1] = e.target.value ;
-    this.setState({
-      dynamic_cost_buy
-    });
   }
 
   handleChangeShoeCostBuy(){
