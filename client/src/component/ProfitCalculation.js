@@ -88,6 +88,7 @@ export default class ProfitCalculation extends Component {
   }
 
   handleCallbackenterShoePurchaseDate = (childData) =>{
+    
     this.setState({
       dynamic_purchase_date : childData
     });
@@ -228,8 +229,7 @@ export default class ProfitCalculation extends Component {
                     array_profit: profit ,
                     array_size: size,
                     sum:this.state.sum+index.shoe_profit[ind],
-                    start:0,
-                    validation:0
+                    start:0
                   }) 
       
                 }
@@ -254,8 +254,7 @@ export default class ProfitCalculation extends Component {
                       array_profit: profit ,
                       array_size: size ,
                       sum:this.state.sum+index.shoe_profit[ind],
-                      start:0,
-                      validation:0
+                      start:0
                     }) 
         
                   }
@@ -276,8 +275,7 @@ export default class ProfitCalculation extends Component {
                       array_profit: profit ,
                       array_size: size,
                       sum:this.state.sum+index.shoe_profit[ind],
-                      start:0,
-                      validation:0
+                      start:0
                     }) 
                   }
                 }
@@ -300,8 +298,7 @@ export default class ProfitCalculation extends Component {
                       array_profit: profit ,
                       array_size: size,
                       sum:this.state.sum+index.shoe_profit[ind],
-                      start:0,
-                      validation:0
+                      start:0
                     }) 
         
                   }
@@ -309,12 +306,6 @@ export default class ProfitCalculation extends Component {
               }else if(monthDB == month_sd){
                 if(dayDB<=day_sd){
                   if((yearDB==year_pd) && (yearDB==year_sd)){
-                    
-                    alert("enter")
-                    alert(index.shoe_size[counter-1])
-                    alert(item)
-                    alert(index.shoe_profit[ind])
-
                     name = this.state.array_name.concat(index.shoe_name);
                     model = this.state.array_model.concat(index.shoe_model);
                     code = this.state.array_code.concat(index.shoe_code);
@@ -328,8 +319,7 @@ export default class ProfitCalculation extends Component {
                       array_profit: profit ,
                       array_size: size,
                       sum:this.state.sum+index.shoe_profit[ind],
-                      start:0,
-                      validation:0
+                      start:0
                     }) 
                   }
                 }
@@ -341,7 +331,7 @@ export default class ProfitCalculation extends Component {
       });
 
     }else{
-      alert("لطفا بازه یک ماهه را وارد کنید")
+      alert(" بازه یک ماهه را به درستی وارد کنید")
     }
   };
   
@@ -428,7 +418,7 @@ export default class ProfitCalculation extends Component {
           </div>
 
           <div id="info">
-            <p>لطفا بازه یک ماهه را وارد کنید</p>
+            <p> بازه یک ماهه وارد کنید</p>
           </div>
           
           <div id = "sectionSubmit_ProfitCalculation" >
