@@ -89,7 +89,7 @@ export default class SignUpComponent extends Component {
 
               <InputTextField 
                 name = "psw"
-                type = "text"
+                type = "number"
                 required = "true"
                 placeholder = "رمز عبور"
                 val = {this.state.password}
