@@ -95,7 +95,7 @@ export default class LoginComponent extends Component {
               <InputTextField 
                 name = "psw"
                 id = "input-loginpage"
-                type = "text"
+                type = "number"
                 required = "true"
                 placeholder = "رمز عبور"
                 val = {this.state.password}
