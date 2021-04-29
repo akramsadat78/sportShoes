@@ -302,7 +302,7 @@ export default class SubmitInformation extends Component {
                           <InputTextField 
                           name = "test"
                           id = "test"
-                          type = "text"
+                          type = "number"
                           required = "true"
                           _handleChange ={e =>  this.enterShoeCostSale(e,item)}
                           />
