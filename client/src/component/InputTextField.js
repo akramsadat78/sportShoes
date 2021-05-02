@@ -2,13 +2,14 @@
 import React from 'react';
 
 /* input tag */
-const InputTextField = ({ name,id, type, required,placeholder ,val, _handleChange }) => (
+const InputTextField = ({ name,id,min, type, required,placeholder ,val, _handleChange }) => (
 
     <div >
     <input 
     type = { type }
     id ={id}
     name = { name }
+    min = {min}
     placeholder = { placeholder }
     autoComplete = "off"
     value = {val}
