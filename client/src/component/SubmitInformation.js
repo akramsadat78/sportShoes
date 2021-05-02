@@ -8,91 +8,51 @@ export default class SubmitInformation extends Component {
   constructor(props){
     super(props);
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleImage = this.handleImage.bind(this);
     this.onSubmit = this.handleSubmit.bind(this);
 
     this.enterShoeName = this.enterShoeName.bind(this);
     this.enterShoeColor = this.enterShoeColor.bind(this);
-    this.enterShoeCostSale = this.enterShoeCostSale.bind(this);
+    this.enterShoeCostBuy = this.enterShoeCostBuy.bind(this);
     this.enterShoeDescription = this.enterShoeDescription.bind(this);
 
     this.state = {
-      shoe_name: '',
-      shoe_model: '',
-      shoe_code: '',
-      shoe_color: '',
-      shoe_profit: '',
-      shoe_image: '',
-      shoe_description: '',
-      response: '',
-      responseToPost: '',
-      prev_code:'',
-      validation:0,
-      file: null,
-      dynamicEditorRowsIds: [],
-      dynamic_size: [],
-      dynamic_count: [],
-      dynamic_temp_purchase_date: [],
-      dynamic_purchase_date: [],
-      dynamic_cost_buy: [],
-      dynamic_sale_date:[],
-      dynamic_cost_sale:[],
-      dynamic_profit : [],
-      arraymodel:['Nike','Pama','Adidas','Reebook','Skechers','Asics','Puma']
+      shoe_name: '',//shoe_name in DB
+      shoe_model: '',//shoe_model in DB
+      shoe_code: '',//shoe_code in DB
+      shoe_color: '',//shoe_color in DB
+      shoe_profit: '',//shoe_profit in DB
+      shoe_image: '',//shoe_image in DB
+      shoe_description: '',//shoe_description in DB
+      arraymodel:['Nike','Pama','Adidas','Reebook','Skechers','Asics','Puma'],
+      prev_code:'',//save previous code in DB 
+      validation:0,//check if information is valid or not
+      file: null,//save image
+      dynamicRowsIds: [1],//row number of table
+      dynamic_size: [],//keep size that is  selected
+      dynamic_count: [],//keep count that is  selected
+      dynamic_purchase_date: [],//keep purchase_date that is chosen
+      dynamic_cost_buy: [],//keep cost_buy that is written
+      dynamic_sale_date:[],//sale_date is empty 
+      dynamic_cost_sale:[],//cost_sale is empty 
+      dynamic_profit : [],//profit is empty 
+      responseToPost: ''
+      
     }
     
   }
   
-  deletDynamicRow(){
+  /* part enter image */
+  handleImage(event) {
     this.setState({
-      dynamicEditorRowsIds:
-      this.state.dynamicEditorRowsIds.filter(rowId =>
-        rowId !== this.state.dynamicEditorRowsIds.length
-      )
-    });
+      file : event.target.value
+    })
   }
 
-  addDynamicRow() {
-    this.setState({
-      dynamicEditorRowsIds: [...this.state.dynamicEditorRowsIds,this.state.dynamicEditorRowsIds.length+1 ]
-    });
-  }
- 
-  handleChangeShoeSize  = (event,val) => {
-    let dynamic_size = [ ...this.state.dynamic_size ];
-    dynamic_size[val-1] = event.currentTarget.value  ;
-    this.setState({
-      dynamic_size
-    });
-  }
-
-  handleChangeShoeCount  = (event,val)  => {
-    let dynamic_count = [ ...this.state.dynamic_count ];
-    dynamic_count[val-1] = event.currentTarget.value  ;
-    this.setState({
-      dynamic_count
-    });
-  }
-
-  handleChangeArraymodel  = (event)  => {
+  /* part enter model,name,color */
+  handleEnterArraymodel  = (event)  => {
     this.setState({
       shoe_model: event.currentTarget.value
-    });
-  }
-
-  handleCallbackenterShoePurchaseDate = (childData,val) =>{
-    let dynamic_purchase_date = [ ...this.state.dynamic_purchase_date ];
-    dynamic_purchase_date[val-1] = childData ;
-    this.setState({
-      dynamic_purchase_date
-    });
-  }
-
-  enterShoeCostSale(e,val) {
-    let dynamic_cost_buy = [ ...this.state.dynamic_cost_buy ];
-    dynamic_cost_buy[val-1] = e.target.value ;
-    this.setState({
-      dynamic_cost_buy
     });
   }
 
@@ -108,18 +68,63 @@ export default class SubmitInformation extends Component {
     });
   }
 
+   /* part enter size,count,purchaseDate,costSale */
+   enterShoeSize  = (event,val) => {
+    let dynamic_size = [ ...this.state.dynamic_size ];
+    dynamic_size[val-1] = event.currentTarget.value  ;
+    this.setState({
+      dynamic_size
+    });
+  }
+
+  enterShoeCount  = (event,val)  => {
+    let dynamic_count = [ ...this.state.dynamic_count ];
+    dynamic_count[val-1] = event.currentTarget.value  ;
+    this.setState({
+      dynamic_count
+    });
+  }
+
+  CallbackenterShoePurchaseDate = (childData,val) =>{
+    let dynamic_purchase_date = [ ...this.state.dynamic_purchase_date ];
+    dynamic_purchase_date[val-1] = childData ;
+    this.setState({
+      dynamic_purchase_date
+    });
+  }
+
+  enterShoeCostBuy(e,val) {
+    let dynamic_cost_buy = [ ...this.state.dynamic_cost_buy ];
+    dynamic_cost_buy[val-1] = e.target.value ;
+    this.setState({
+      dynamic_cost_buy
+    });
+  }
+  
+  /*part enter description*/
   enterShoeDescription(e) {
     this.setState({
       shoe_description: e.target.value
     });
   }
-  
-  handleChange(event) {
+
+  /* add and delet row in table*/
+  deletDynamicRow(){
     this.setState({
-      file : event.target.value
-    })
+      dynamicRowsIds:
+      this.state.dynamicRowsIds.filter(rowId =>
+        rowId !== this.state.dynamicRowsIds.length
+      )
+    });
   }
 
+  addDynamicRow() {
+    this.setState({
+      dynamicRowsIds: [...this.state.dynamicRowsIds,this.state.dynamicRowsIds.length+1 ]
+    });
+  }
+
+  /* get data(previous code) from DB*/
   componentDidMount() {
     fetch('/information', {
       method: 'GET',
@@ -138,6 +143,7 @@ export default class SubmitInformation extends Component {
      })
   }
 
+  /* submit information */
   handleSubmit = async e => {
     e.preventDefault();
    
@@ -192,9 +198,10 @@ export default class SubmitInformation extends Component {
   
   render() {
 
-    var arraysize_1_to_100 = Array.from(Array(60).keys()) // 0 to 100
-    var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 0 to 100
+    var arraysize_1_to_60 = Array.from(Array(60).keys()) // 1 to 60
+    var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 1 to 100
 
+    //go to first page after enter information
     if (this.state.validation == 1) {
       this.props.history.push('/first')
     }
@@ -211,6 +218,7 @@ export default class SubmitInformation extends Component {
         <form onSubmit={this.handleSubmit}>
           <div id="wrap">
 
+            {/*part enter image*/}
             <div id="section1-SubmitInformation">
               <div id = "section1" >
                 <div id = "border" >
@@ -219,13 +227,13 @@ export default class SubmitInformation extends Component {
               </div>
               <div id = "section2" >
                 <div id = "border" >
-                  <input class="file-input" placeholder = " عکس را وارد کنید url" type="text" required= "true"  onChange={this.handleChange}/>
+                  <input class="file-input" placeholder = " عکس را وارد کنید url" type="text" required= "true"  onChange={this.handleImage}/>
                 </div>
               </div>
             </div>
 
             <div id="section2-SubmitInformation">
-              {/*کد کفش و رنگ کفش*/}
+              {/*part enter color and code*/}
               <div id="section2-col1">
                 <ul>
                   <li>
@@ -248,7 +256,7 @@ export default class SubmitInformation extends Component {
                   </li>
                 </ul>
               </div>
-              {/* برند کفش و نام کفش*/}
+             {/*part enter name and model*/}
               <div id="section2-col2">
                 <ul>
                   <li>
@@ -260,7 +268,7 @@ export default class SubmitInformation extends Component {
                       lableName = "برند"
                       placeholder = "برند کفش"
                       val = {this.state.arraymodel}
-                      _handleChange = {event =>  this.handleChangeArraymodel(event) }
+                      _handleChange = {event =>  this.handleEnterArraymodel(event) }
                       />
                     </div>
                   </li>
@@ -281,7 +289,8 @@ export default class SubmitInformation extends Component {
                 </ul>
               </div>
             </div>
-            {/*سایز و تعداد کفش و هزینه و قیمت خرید */}
+
+            {/* part enter size,count,purcheseDate,costSale */}
             <div id="section3-SubmitInformation">
           
               <div id = "border-table" >
@@ -296,19 +305,20 @@ export default class SubmitInformation extends Component {
                   </thead>
                 
                   <tbody>
-                    {this.state.dynamicEditorRowsIds.map((item) => (
+                    {this.state.dynamicRowsIds.map((item) => (
                       <tr>
                         <td>
                           <InputTextField 
                           name = "test"
                           id = "test"
                           type = "number"
+                          min="0"
                           required = "true"
-                          _handleChange ={e =>  this.enterShoeCostSale(e,item)}
+                          _handleChange ={e =>  this.enterShoeCostBuy(e,item)}
                           />
                         </td>
                         <td> 
-                          <DatePicker parentCallback = {childData =>  this.handleCallbackenterShoePurchaseDate(childData,item) }/>
+                          <DatePicker parentCallback = {childData =>  this.CallbackenterShoePurchaseDate(childData,item) }/>
                         </td>
                         <td>
                           <DropdownSelect 
@@ -317,7 +327,7 @@ export default class SubmitInformation extends Component {
                           lableName = "numbers"
                           placeholder = "تعداد کفش"
                           val = {arraynumber_1_to_100}
-                          _handleChange = {event =>  this.handleChangeShoeCount(event,item) }
+                          _handleChange = {event =>  this.enterShoeCount(event,item) }
                           />
                         </td>
                         <td>
@@ -326,8 +336,8 @@ export default class SubmitInformation extends Component {
                           required = "true"
                           lableName = "numbers"
                           placeholder = "سایز کفش"
-                          val = {arraysize_1_to_100}
-                          _handleChange = {event =>  this.handleChangeShoeSize(event,item) }
+                          val = {arraysize_1_to_60}
+                          _handleChange = {event =>  this.enterShoeSize(event,item) }
                           /> 
                         </td>
                       </tr>
@@ -341,7 +351,7 @@ export default class SubmitInformation extends Component {
               <label onClick={ () => this.deletDynamicRow() }><b>{"پاک کردن سطر"}</b></label>
 
             </div>
-            {/*توضیحات */}
+            {/*enter description */}
             <div id="section4-SubmitInformation">
               <label  ><b>: توضیحات</b></label> 
               <InputTextField 
@@ -354,7 +364,7 @@ export default class SubmitInformation extends Component {
               />
             </div>
           </div>
-          {/*فرستادن فرم اطلاعات */}
+         
           <div id = "sectionSubmit-SubmitInformation" >
             <button  type="submit" class = "button-SubmitInformation"> ثبت </button> 
           </div>
