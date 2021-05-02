@@ -263,11 +263,29 @@
     height: 4vh;
 }
 
+
 #section3-SubmitInformation_update #lableEdit :hover {
    background-color: rgb(23, 122, 122);
    color: aliceblue;
 }
 
+#section3-SubmitInformation_update #border-table  #table_inform #lables #not_allowed label {
+   cursor: not-allowed;
+   background-color: rgb(23, 122, 122);
+
+}
+#section3-SubmitInformation_update #lableEdit label {
+   float: right;
+    margin-top: .8%;
+    width: 30%;
+    margin-right: 13%;
+    border: solid rgb(12, 6, 7);
+    text-align: center;
+    border-radius: 30px;
+    border-width: 1px;
+    background-color: rgb(44, 196, 196);
+    height: 4vh;
+}
 #section3-SubmitInformation_update label {
    width: 85%;
     height: 5vh;
@@ -318,6 +336,7 @@
    background-color: rgb(23, 122, 122);
    color: aliceblue;
 }
+
 #section3-SubmitInformation_update #table_inform td,#section3-SubmitInformation_update #table_inform th {
    border: 1px solid #ddd;
    padding: 8px;

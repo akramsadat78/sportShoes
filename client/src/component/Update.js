@@ -3,12 +3,14 @@ import InputTextField from './InputTextField';
 import '../css/Update.css';
 import DatePickerDetail from '../componentdate/DatePickerDetail';
 import DropdownSelectName from './DropdownSelectName';
+import DropdownSelect from './DropdownSelect';
+import DatePicker from '../componentdate/DatePicker';
 
 export default class Update extends Component {
  
   constructor(props){
     super(props);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeImage = this.handleChangeImage.bind(this);
     this.onSubmit = this.handleSubmit.bind(this);
   
     this.click = this.click.bind(this);
@@ -18,54 +20,55 @@ export default class Update extends Component {
     this.changeShoeColor = this.changeShoeColor.bind(this);
 
     this.state = {
-      data: this.props.dataParentToChild,
-      shoe_name: '',
-      shoe_model: '',
-      shoe_code: '',
-      shoe_color: '',
-      shoe_profit: '',
-      shoe_image: '',
-      shoe_description: '',
-      file: null,
-      calculate_profit : 0,
-      validation:0,
-      dynamicEditorRowsIds: [],
-      dynamic_size: [],
-      dynamic_count: [],
-      dynamic_purchase_date: [],
-      dynamic_cost_buy: [],
-      dynamic_sale_date:[],
-      dynamic_cost_sale:[],
-      dynamic_sale_number:[],
-      dynamic_profit : [],
+      code_shoe_selected: this.props.dataParentToChild,//code of selected shoe
+      shoe_name: '',//shoe_name in DB
+      shoe_model: '',//shoe_model in DB
+      shoe_code: '',//shoe_code in DB
+      shoe_color: '',//shoe_color in DB
+      shoe_profit: '',//shoe_profit in DB
+      shoe_image: '',//shoe_image in DB
+      shoe_description: '',//shoe_description in DB
+      file: null,//save change image
+      calculate_profit : 0,//calculate profit
+      validation:0,//check if update is done or not
+      dynamic_size: [],//keep size that is  selected
+      dynamic_count: [],//keep count that is  selected
+      dynamic_purchase_date: [],//keep purchase_date that is chosen
+      dynamic_cost_buy: [],//keep cost_buy that is written
+      dynamic_sale_date:[],//keepsale_date that is chosen
+      dynamic_cost_sale:[],//keep cost_buy that is written
+      dynamic_profit : [],//if user is deleted all data of cost in box , we should delete profit otherwise calculate it
       dynamic_profit_save:[],
-      dynamic_array:[],
-      inside_row:[],
-      save_purchase_date:[],
-      detail:0,
-      test:[],
-      current_count:0,
-      indexrow:0,
-      first_cost_sale : 0,
+      dynamicRowsIds:[],//row number of table
+      staticRowsIds : '',//row number of table => first table in submition part 
+      inside_row:[],//keep count of each row of table
+      first_purchase_date:[],//save purchase date for compare with sale date
+      first_cost_sale : 0,//save cost sale for compare with cost buy
+      detail:0,//show detail of each shoe if detail=1
+      indexrow:0,//keep indexrow of first table
       arraymodel:['Nike','Pama','Adidas','Reebook','Skechers','Asics','Puma'],
-      checkWriteDate:[],
-      checkWriteCost:[],
-      changing:true
+      checkWriteDate:[],//if cost is entered => check sale date enter too
+      checkWriteCost:[]//if date is entered => check cost enter too
     }
   }
 
-  deletDynamicRow(){
+  /*part change image */
+  handleChangeImage(event) {
     this.setState({
-      dynamic_array:
-      this.state.dynamic_array.filter(rowId =>
-        rowId !== this.state.dynamic_array.length
-      )
+      file : event.target.value
+    })
+  }
+
+  /* part change model,name,color */
+  changeShoeName(e) {
+    this.setState({
+      shoe_name: e.target.value
     });
   }
 
-  addDynamicRow() {
+  changeShoeColor(e) {
     this.setState({
-      dynamic_array: [...this.state.dynamic_array,this.state.dynamic_array.length+1 ]
+      shoe_color: e.target.value
     });
   }
 
@@ -75,9 +78,10 @@ export default class Update extends Component {
     });
   }
 
+  /* part enter size,count,purchaseDate,costSale */
   handleChangeShoeSize  = (event,val) => {
     let dynamic_size = [ ...this.state.dynamic_size ];
-    dynamic_size[val-1] = event.currentTarget.value  ;
+    dynamic_size[val] = event.currentTarget.value  ;
     this.setState({
       dynamic_size
     });
@@ -85,78 +89,156 @@ export default class Update extends Component {
 
   handleChangeShoeCount  = (event,val)  => {
     let dynamic_count = [ ...this.state.dynamic_count ];
-    dynamic_count[val-1] = event.currentTarget.value  ;
+    dynamic_count[val] = event.currentTarget.value  ;
   
     this.setState({
       dynamic_count
     });
   }
 
-  handleCallbackenterShoeSaleDate = (childData,val) =>{
-
-    let dynamic_sale_date = [ ...this.state.dynamic_sale_date ];
-
-    if( childData  == '' ){
-      
-      dynamic_sale_date[val] = '' ;
-
-      this.setState({
-        dynamic_sale_date
-      });
-
-    }else{
-
-      if( this.state.save_purchase_date[val] <= childData ){
-     
-      dynamic_sale_date[val] = childData ;
-
-      let checkWriteCost = [ ...this.state.checkWriteCost ];
-      checkWriteCost[val] = 1;
-
-      this.setState({
-        dynamic_sale_date,
-        checkWriteCost
-      });
-
-    }else{
-      alert("تاریخ فروش درست نیست")
-    }
-      
-    }
-
+  handleChangeShoeCostBuy = (event,val)  =>{
+    let dynamic_cost_buy = [ ...this.state.dynamic_cost_buy ];
+    dynamic_cost_buy[val] = event.target.value ;
+    this.setState({
+      dynamic_cost_buy
+    });
   }
+
 
   handleCallbackenterShoePurchaseDate = (childData,val) =>{ 
     let dynamic_purchase_date = [ ...this.state.dynamic_purchase_date ];
-    dynamic_purchase_date[val-1] = childData ;
+    dynamic_purchase_date[val] = childData ;
     this.setState({
       dynamic_purchase_date
     });
   }
 
+  /*part enter description*/
+  changeShoeDescription(e) {
+    this.setState({
+      shoe_description: e.target.value
+    });
+  }
+
+  /* add and delet row in table*/
+  deletDynamicRow(){
+    this.setState({
+      dynamicRowsIds:
+      this.state.dynamicRowsIds.filter(rowId =>
+        rowId !== this.state.dynamicRowsIds.length
+      )
+    });
+  }
+
+  addDynamicRow() {
+    this.setState({
+      dynamicRowsIds: [...this.state.dynamicRowsIds,this.state.dynamicRowsIds.length+1 ]
+    });
+  }
+
+  /* see details */
   click(index,numberShoe,costSale) {
 
     if(this.state.dynamic_count[index-1] == null){
       alert("کفشی برای ویرایش وارد نشده است")
     }else{
-      let range=Math.floor(numberShoe);
+      let range=Math.floor(numberShoe);//keep count of each row of table
       this.setState({
         first_cost_sale : costSale,
         detail:1,
         inside_row : Array.from(Array(range).keys()) ,
-        current_count:range,
         indexrow:index
       });
     }
   }
 
+  /* part enter SaleDate,CostSale */
+  handleCallbackenterShoeSaleDate = (childData,val) =>{
+    let dynamic_sale_date = [ ...this.state.dynamic_sale_date ];
+
+    if( childData  == '' ){//user is deleted all data of date in box
+      dynamic_sale_date[val] = '' ;
+
+      this.setState({
+        dynamic_sale_date
+      });
+    }else{//user chose date
+
+      var entered_purchase_date = this.state.first_purchase_date[val].split('/');
+      var yearPurchaseDate =  Math.floor(entered_purchase_date[0]);
+      var monthPurchaseDate = Math.floor( entered_purchase_date[1]);
+      var dayPurchaseDate = Math.floor( entered_purchase_date[2]);
+
+      var entered_sale_date = childData.split('/');//end date
+      var yearSaleDate =  Math.floor(entered_sale_date[0]);
+      var monthSaleDate =  Math.floor(entered_sale_date[1]);
+      var daySaleDate =  Math.floor(entered_sale_date[2]);
+
+      if(yearPurchaseDate == yearSaleDate){//same year
+        if(monthSaleDate == monthPurchaseDate){//same month
+          if(daySaleDate >= dayPurchaseDate){//correct
+            dynamic_sale_date[val] = childData ;
+
+            let checkWriteCost = [ ...this.state.checkWriteCost ];
+            checkWriteCost[val] = 1;
+
+            this.setState({
+              dynamic_sale_date,
+              checkWriteCost
+            });
+          }else{
+            dynamic_sale_date[val] = '' ;
+
+            this.setState({
+              dynamic_sale_date
+            });
+            alert("تاریخ فروش درست نیست")
+          }
+        }else if(monthSaleDate > monthPurchaseDate){//future month => correct
+          dynamic_sale_date[val] = childData ;
+
+          let checkWriteCost = [ ...this.state.checkWriteCost ];
+          checkWriteCost[val] = 1;
+
+          this.setState({
+            dynamic_sale_date,
+            checkWriteCost
+          });
+        }else{//prev month => incoorect
+          dynamic_sale_date[val] = '' ;
+
+          this.setState({
+            dynamic_sale_date
+          });
+          alert("تاریخ فروش درست نیست")
+        }
+      }else if(yearPurchaseDate < yearSaleDate){//future year => correct
+        dynamic_sale_date[val] = childData ;
+
+        let checkWriteCost = [ ...this.state.checkWriteCost ];
+        checkWriteCost[val] = 1;
+
+        this.setState({
+          dynamic_sale_date,
+          checkWriteCost
+        });
+      }else{//prev year => incorrect
+        dynamic_sale_date[val] = '' ;
+
+        this.setState({
+          dynamic_sale_date
+        });
+        alert("تاریخ فروش درست نیست")
+      }
+
+    }
+  }
 
   changeShoeCostSale(e,val) {
-
     let dynamic_cost_sale = [ ...this.state.dynamic_cost_sale ];
     let dynamic_profit = [ ...this.state.dynamic_profit ];
 
-    if( e.target.value  == '' ){
+    if( e.target.value  == '' ){//user is deleted all data of cost in box
 
       dynamic_cost_sale[val] = '' ;
       dynamic_profit[val] = '';
@@ -166,8 +248,7 @@ export default class Update extends Component {
         dynamic_profit
       });
 
-    }else{
-      
+    }else{//user enter cost
       dynamic_cost_sale[val] = e.target.value ;
       dynamic_profit[val] = e.target.value - this.state.first_cost_sale;
 
@@ -184,36 +265,7 @@ export default class Update extends Component {
 
   }
 
-  handleChangeShoeCostBuy(){
-    this.setState({
-      dynamic_cost_buy: [...this.state.dynamic_cost_buy,this.state.shoe_sale_date ]
-    })
-  }
-
-  changeShoeDescription(e) {
-    this.setState({
-      shoe_description: e.target.value
-    });
-  }
-
-  handleChange(event) {
-    this.setState({
-      file : event.target.value
-    })
-  }
-
-  changeShoeName(e) {
-    this.setState({
-      shoe_name: e.target.value
-    });
-  }
-
-  changeShoeColor(e) {
-    this.setState({
-      shoe_color: e.target.value
-    });
-  }
-
+  /* get data(for selected shoe) from DB*/
   componentDidMount() {
     fetch('/information', {
       method: 'GET',
@@ -224,18 +276,17 @@ export default class Update extends Component {
       .then(response => response.json())
       .then(result => {
         result.map(index => {
-          if ( (index.shoe_code == this.state.data) ){
-              let sum=0;
+          if ( (index.shoe_code == this.state.code_shoe_selected) ){
               index.shoe_count.map((item,count1) => {
-                sum = Math.floor(item) + sum;
+                //as much as item first_purchase_date = shoe_purchase_date[count1]
 
                 var itr = Array.from(Array(Math.floor(item)).keys())
                 itr.map((item,count2) => {
-                  this.state.save_purchase_date = [...this.state.save_purchase_date, index.shoe_purchase_date[count1] ]
+                  this.state.first_purchase_date = [...this.state.first_purchase_date, index.shoe_purchase_date[count1] ]
                 })
 
                 this.setState({
-                save_purchase_date : this.state.save_purchase_date
+                  first_purchase_date : this.state.first_purchase_date
                }) 
 
               })
@@ -257,22 +308,22 @@ export default class Update extends Component {
                 file:index.shoe_image,
                 calculate_profit : index.shoe_cost_sale-index.shoe_cost_buy,
                 shoe_description: index.shoe_description,
-                dynamic_array:index.shoe_count,
-                test: Array.from(Array(Math.floor(sum)).keys())
+                dynamicRowsIds:index.shoe_count,
+                staticRowsIds: index.shoe_count.length
               }) 
           }
        })
     })
   }
     
-  
+  /* submit information(update) */
   handleSubmit = async e => {
     e.preventDefault();
 
     let dateIsEntered = true;
     let costIsEntered = true;
 
-    //check not empty sale date for cost that is entered
+    //check not empty sale date if cost is entered
     this.state.checkWriteDate.map((item,index) => {
       if( item == 1){
 
@@ -285,7 +336,7 @@ export default class Update extends Component {
       
     })
     
-    //check not empty cost input for sale date that is entered
+    //check not empty cost input if sale date is entered
     this.state.checkWriteCost.map((item,index) => {
       if( item == 1){
 
@@ -298,6 +349,7 @@ export default class Update extends Component {
       
     })
     
+    //if two cost and sale date are entred
     if( (costIsEntered == true) && (dateIsEntered == true)){
       const obj = {
         shoe_name: this.state.shoe_name,
@@ -334,13 +386,18 @@ export default class Update extends Component {
  
   render() { 
 
+    var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 1 to 100
+    var arraysize_1_to_60 = Array.from(Array(60).keys()) // 1 to 60
     var show;
 
+    //go to first page after update information
     if (this.state.validation == 1) {
       this.props.history.push('/first')
     }
 
+
     if(this.state.detail == 1){
+      //count range for each row of detail
       let sum=0;
       this.state.dynamic_count.map((item,index) => {
         if (index < (this.state.indexrow-1)) {
@@ -348,6 +405,7 @@ export default class Update extends Component {
         }
       })
       
+      //detail
       show=
         <div>
           <div id = "border-table" >
@@ -376,7 +434,7 @@ export default class Update extends Component {
                               name = "test"
                               id = "test"
                               type = "number"
-                              placeholder = {this.state.dynamic_cost_sale[index+sum]}
+                              min = "0"
                               _handleChange ={e =>  this.changeShoeCostSale(e,index+sum)}
                               />
                             ) : (
@@ -390,7 +448,7 @@ export default class Update extends Component {
                       <div>
                         {( (this.state.dynamic_profit_save[index+sum] == null) || (this.state.dynamic_profit_save[index+sum] == '')
                           ) ? (
-                            <DatePickerDetail  dataParentToChild = {this.state.dynamic_sale_date[index+sum]} parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+sum) }/>   
+                            <DatePickerDetail  parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+sum) }/>   
                           ) : (
                             <label>{this.state.dynamic_sale_date[index+sum]}</label>
                         )}
@@ -420,22 +478,22 @@ export default class Update extends Component {
         <form onSubmit={this.handleSubmit}>
           <div id="wrap_update">
 
+            {/*part change image*/}
             <div id="section1-SubmitInformation_update">
               <div id = "section1" >
                 <div id = "border" >
-                  <img id="image" src={this.state.shoe_image}/>
+                  <img id="image" src={this.state.file}/>
                 </div>
               </div>
               <div id = "section2" >
                 <div id = "border" >
-                  <input class="file-input" type="text"  placeholder = {" عکس را وارد کنید url"} onChange={this.handleChange}/>
+                  <input class="file-input" type="text"  placeholder = {" عکس را وارد کنید url"} onChange={this.handleChangeImage}/>
                 </div>
               </div>
             </div>
            
             <div id="section2-SubmitInformation_update">
-
-               {/*رنگ و کدکفش */}
+              {/*part change color and code*/}
               <div id="section2-col1">
                 <ul>
                   <li>
@@ -458,9 +516,8 @@ export default class Update extends Component {
                   </li>
                 </ul>
               </div>
-        
+               {/*part change name and model*/}
               <div id="section2-col2">
-                 {/*برند و نام کفش */}
                 <ul>
                   <li>
                     <label  ><b>: برند کفش</b></label>
@@ -493,6 +550,7 @@ export default class Update extends Component {
                 
             </div>
 
+             {/* part see and enter size,count,purcheseDate,costSale */}
             <div id="section3-SubmitInformation_update">
                     
               <div id = "border-table" >
@@ -509,26 +567,94 @@ export default class Update extends Component {
                   </thead>
                   
                   <tbody>
-                    {this.state.dynamic_array.map((item,index) =>
+                    {this.state.dynamicRowsIds.map((item,index) =>
                       <tr>
-                        <td onClick={() => { this.click(index+1,this.state.dynamic_count[index],this.state.dynamic_cost_buy[index])}}>
-                          <label id="edit">جزئیات </label> 
+                        <td >
+                        {
+                            <div id="lables">
+                              {((index<this.state.staticRowsIds) 
+                                ) ? (
+                                  <label id="edit" onClick={() => { this.click(index+1,this.state.dynamic_count[index],this.state.dynamic_cost_buy[index])}}>جزئیات </label> 
+                                ) : (
+                                  <div  id="not_allowed">
+                                    <label > جزئیات</label>
+                                  </div>
+                              )}
+                            </div>
+                          }
                         </td>
 
                         <td>
-                          <label>{this.state.dynamic_cost_buy[index]}</label>
+                          {
+                            <div>
+                              {((index<this.state.staticRowsIds) 
+                                ) ? (
+                                  <label>{this.state.dynamic_cost_buy[index]}</label>
+                                ) : (
+                                  <InputTextField 
+                                  name = "test"
+                                  id = "test"
+                                  type = "number"
+                                  min = "0"
+                                  required = "true"
+                                  _handleChange ={e =>  this.handleChangeShoeCostBuy(e,index)}
+                                  />
+                              )}
+                            </div>
+                          }
                         </td>
 
                         <td> 
-                          <label>{this.state.dynamic_purchase_date[index]} </label>
+                          {
+                            <div>
+                              {((index<this.state.staticRowsIds) 
+                                ) ? (
+                                  <label>{this.state.dynamic_purchase_date[index]} </label>
+                                ) : (
+                                  <DatePicker parentCallback = {childData =>  this.handleCallbackenterShoePurchaseDate(childData,index) }/>
+                              )}
+                            </div>
+                          }
                         </td>
 
                         <td>
-                          <label>{this.state.dynamic_count[index]}</label>
+                          {
+                            <div>
+                              {((index<this.state.staticRowsIds) 
+                                ) ? (
+                                  <label>{this.state.dynamic_count[index]}</label>
+                                ) : (
+                                  <DropdownSelect 
+                                  name = "helloo"
+                                  required = "true"
+                                  lableName = "numbers"
+                                  placeholder = "تعداد کفش"
+                                  val = {arraynumber_1_to_100}
+                                  _handleChange = {event =>  this.handleChangeShoeCount(event,index) }
+                                  />
+                                )}
+                            </div>
+                          }
                         </td>
 
                         <td>
-                          <label>{this.state.dynamic_size[index]}</label>
+                          {
+                            <div>
+                              {((index<this.state.staticRowsIds) 
+                                ) ? (
+                                  <label>{this.state.dynamic_size[index]}</label>
+                                ) : (
+                                  <DropdownSelect 
+                                  name = "heoo"
+                                  required = "true"
+                                  lableName = "numbers"
+                                  placeholder = "سایز کفش"
+                                  val = {arraysize_1_to_60}
+                                  _handleChange = {event =>  this.handleChangeShoeSize(event,index) }
+                                  /> 
+                                )}
+                            </div>
+                          }
                         </td>
                       </tr>
                     )} 
@@ -543,7 +669,8 @@ export default class Update extends Component {
               </div>
                   
             </div>
-            {/*جزییات */}
+           
+           {/*change description */}
             <div id="section5-SubmitInformation_update">
               {show}
             </div>
