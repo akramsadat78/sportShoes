@@ -11,11 +11,9 @@ export default class LoginComponent extends Component {
     this.onSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-        response: '',
-        responseToPost: '',//show data from server in client
         username: '',
         password: '',
-        validation:0
+        validation:0 //check username ans password
     }
   }
   
@@ -58,6 +56,7 @@ export default class LoginComponent extends Component {
  
   render() {
     
+    //go to first page after authoriz
     if (this.state.validation == 1) {
       this.props.history.push('/first')
     }
