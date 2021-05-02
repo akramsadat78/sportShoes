@@ -32,6 +32,7 @@
      overflow: auto;
      border-radius: 1%;
      margin-top: 3%;
+     background-color:  rgb(193, 230, 230);
 }
 
 #border_ProfitCalculation {    
@@ -66,6 +67,7 @@
     border-radius: 1%;
     margin-top: 12%;
     border-width: 2px;
+    background-color:  rgb(193, 230, 230);
 }
 
 #wrap2_ProfitCalculation li {

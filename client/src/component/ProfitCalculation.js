@@ -8,34 +8,33 @@ export default class ProfitCalculation extends Component {
     this.onSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-        shoe_name: '',
-        shoe_model: '',
-        shoe_code: '',
-        shoe_purchase_date: '',
-        shoe_sale_date: '',
-        shoe_profit: '',
-        array_name:[],
-        array_model:[],
-        array_code:[],
-        array_profit:[],
-        array_size:[],
-        start:1,
-        validation:0,
-        sum:0,
-        dynamic_sale_date : '',
-        dynamic_purchase_date : '',
-        array : []
+        shoe_name: '',//shoe_name in DB
+        shoe_model: '',//shoe_model in DB
+        shoe_code: '',//shoe_code in DB
+        shoe_purchase_date: '',//shoe_purchase_date in DB
+        shoe_sale_date: '',//shoe_sale_date in DB
+        shoe_profit: '',//shoe_profit in DB
+        array_name:[],//keep name that is in range
+        array_model:[],//keep nammodel that is in range
+        array_code:[],//keep code that is in range
+        array_profit:[],//keep profit that is in range
+        array_size:[],//keep size that is in range
+        validation:0,//check end_date is in range 30 days after start_date
+        sum:0,//sum profits
+        finish_date : '',//accepted finish_date
+        start_date : ''//entered start_date
     }
   }
 
+  /* enter range date(purchase and sale) for 1 month */
   handleCallbackenterShoeSaleDate = (childData) =>{
 
-    var entered_purchase_date = this.state.dynamic_purchase_date.split('/');
+    var entered_purchase_date = this.state.start_date.split('/');
     var yearPurchaseDate =  Math.floor(entered_purchase_date[0]);
     var monthPurchaseDate = Math.floor( entered_purchase_date[1]);
     var dayPurchaseDate = Math.floor( entered_purchase_date[2]);
 
-    var entered_sale_date = childData.split('/');
+    var entered_sale_date = childData.split('/');//end date
     var yearSaleDate =  Math.floor(entered_sale_date[0]);
     var monthSaleDate =  Math.floor(entered_sale_date[1]);
     var daySaleDate =  Math.floor(entered_sale_date[2]);
@@ -47,7 +46,7 @@ export default class ProfitCalculation extends Component {
           if(yearPurchaseDate == yearSaleDate){
             this.setState({
               validation:1,
-              dynamic_sale_date : childData
+              finish_date : childData
             });
           }
         }
@@ -56,7 +55,7 @@ export default class ProfitCalculation extends Component {
           if((yearPurchaseDate+1) == yearSaleDate){
             this.setState({
               validation:1,
-              dynamic_sale_date : childData
+              finish_date : childData
             });
           }
         }
@@ -67,7 +66,7 @@ export default class ProfitCalculation extends Component {
           if(yearPurchaseDate == yearSaleDate){
             this.setState({
               validation:1,
-              dynamic_sale_date : childData
+              finish_date : childData
             });
           }
         }
@@ -76,7 +75,7 @@ export default class ProfitCalculation extends Component {
           if(yearPurchaseDate == yearSaleDate){
             this.setState({
               validation:1,
-              dynamic_sale_date : childData
+              finish_date : childData
             });
           }
         }
@@ -87,21 +86,22 @@ export default class ProfitCalculation extends Component {
   handleCallbackenterShoePurchaseDate = (childData) =>{
     
     this.setState({
-      dynamic_purchase_date : childData
+      start_date : childData
     });
   }
 
+  /* search and show profit,code,name,model,size */
   handleSubmit = async e => {
     e.preventDefault();
     alert("محاسبه درامد ...")
 
     if(this.state.validation == 1){
-      var purchase_date = this.state.dynamic_purchase_date.split('/');
+      var purchase_date = this.state.start_date.split('/');//start date
       var year_pd = Math.floor(purchase_date[0]);
       var month_pd = Math.floor(purchase_date[1]);
       var day_pd = Math.floor(purchase_date[2]);
 
-      var sale_date = this.state.dynamic_sale_date.split('/');
+      var sale_date = this.state.finish_date.split('/');//finish date
       var year_sd = Math.floor(sale_date[0]);
       var month_sd = Math.floor(sale_date[1]);
       var day_sd = Math.floor(sale_date[2]);
@@ -130,6 +130,7 @@ export default class ProfitCalculation extends Component {
 
         index.shoe_sale_date.map((item,ind) =>{
          
+          //caculate corect size to show
           if ( ind == 0 ){
             count = index.shoe_count[counter];
             counter = counter + 1;
@@ -142,7 +143,7 @@ export default class ProfitCalculation extends Component {
 
           if( item != null){
 
-            shoeSaleDateDB = item.split('/');
+            shoeSaleDateDB = item.split('/');//sale date in DB
             var yearDB = Math.floor(shoeSaleDateDB[0]);
             var monthDB = Math.floor(shoeSaleDateDB[1]);
             var dayDB = Math.floor(shoeSaleDateDB[2]);
@@ -164,8 +165,7 @@ export default class ProfitCalculation extends Component {
                     array_code: code ,
                     array_profit: profit ,
                     array_size: size,
-                    sum:this.state.sum+index.shoe_profit[ind],
-                    start:0
+                    sum:this.state.sum+index.shoe_profit[ind]
                   }) 
       
                 }
@@ -189,8 +189,7 @@ export default class ProfitCalculation extends Component {
                       array_code: code ,
                       array_profit: profit ,
                       array_size: size ,
-                      sum:this.state.sum+index.shoe_profit[ind],
-                      start:0
+                      sum:this.state.sum+index.shoe_profit[ind]
                     }) 
         
                   }
@@ -210,8 +209,7 @@ export default class ProfitCalculation extends Component {
                       array_code: code ,
                       array_profit: profit ,
                       array_size: size,
-                      sum:this.state.sum+index.shoe_profit[ind],
-                      start:0
+                      sum:this.state.sum+index.shoe_profit[ind]
                     }) 
                   }
                 }
@@ -233,8 +231,7 @@ export default class ProfitCalculation extends Component {
                       array_code: code ,
                       array_profit: profit ,
                       array_size: size,
-                      sum:this.state.sum+index.shoe_profit[ind],
-                      start:0
+                      sum:this.state.sum+index.shoe_profit[ind]
                     }) 
         
                   }
@@ -254,8 +251,7 @@ export default class ProfitCalculation extends Component {
                       array_code: code ,
                       array_profit: profit ,
                       array_size: size,
-                      sum:this.state.sum+index.shoe_profit[ind],
-                      start:0
+                      sum:this.state.sum+index.shoe_profit[ind]
                     }) 
                   }
                 }
@@ -329,10 +325,10 @@ export default class ProfitCalculation extends Component {
           <form onSubmit={this.handleSubmit}>
             <ul>
               <li>
-                <p  ><b>: تاریخ خرید</b></p> 
+                <p  ><b>: از تاریخ </b></p> 
               </li>
               <li>
-                <DatePicker dataParentToChild = {this.state.dynamic_purchase_date} parentCallback = {childData =>  this.handleCallbackenterShoePurchaseDate(childData) }/>    
+                <DatePicker parentCallback = {childData =>  this.handleCallbackenterShoePurchaseDate(childData) }/>    
               </li>
             </ul>
 
@@ -342,10 +338,10 @@ export default class ProfitCalculation extends Component {
 
           <ul>
             <li>
-              <p><b>: تاریخ فروش</b></p> 
+              <p><b>: تا تاریخ </b></p> 
             </li>
             <li>
-              <DatePicker dataParentToChild = {this.state.dynamic_sale_date} parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData) }/>   
+              <DatePicker  parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData) }/>   
             </li>
           </ul>
 
