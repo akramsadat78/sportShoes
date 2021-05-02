@@ -8,12 +8,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import {Link} from "react-router-dom";
 import '../css/FirstPage.css';
 
 const drawerWidth = 240;
@@ -35,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
@@ -46,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
 
 function PermanentDrawerRight() {
   const classes = useStyles();
-  const [array_images, update_array_images] = useState([]);
-  const [array_codes, update_array_codes] = useState([]);
+  const [array_images, update_array_images] = useState([]);//save image of shoe that is entered in DB
+  const [array_codes, update_array_codes] = useState([]);//save code of shoe that is entered in DB
 
   useEffect(() => {
     fetch('/information', {
@@ -82,6 +76,7 @@ function PermanentDrawerRight() {
         <div className={classes.toolbar} />
         <div id="wrap_first_page">
         
+          {/* show image */}
           {array_images.map((item, index) => (
           
                 <div id = "border_first" >
@@ -94,7 +89,37 @@ function PermanentDrawerRight() {
           }
         </div>
       </main>
-      <Drawer
+
+      <div id="wrap2_firstpage">
+
+        <ul>
+          <li>
+          <a href = { `/SubmitInformation` } ><label><b>ثبت اطلاعات</b></label></a>  
+          </li>
+        </ul>
+
+        <div class="line">
+          <hr/>
+        </div>
+
+        <ul>
+          <li>
+          <a  href = { `/Search` } ><label><b>جستجو</b></label></a>    
+          </li>
+        </ul>
+
+        <div class="line">
+          <hr/>
+        </div>
+
+        <ul>
+          <li>
+          <a href = { `/ProfitCalculation` } ><label><b>محاسبه درامد</b></label></a>    
+          </li>
+        </ul>
+
+      </div>
+      {/*<Drawer
         className={classes.drawer}
         variant="permanent"
         classes={{
@@ -104,8 +129,9 @@ function PermanentDrawerRight() {
       >
         <div className={classes.toolbar} />
       
-        <Divider />
-        <List id="firstpagelist"> 
+      <Divider />*/}
+        {/* SubmitInformation,Search,ProfitCalculation */}
+        {/*<List id="firstpagelist"> 
 
           <ListItem  style={{display:'flex', justifyContent:'center',padding:'10%'}}>  
             <a href = { `/SubmitInformation` } ><b>ثبت اطلاعات</b></a> 
@@ -123,7 +149,7 @@ function PermanentDrawerRight() {
           <Divider />
 
         </List>
-      </Drawer>
+    </Drawer>*/}
     </div>
   );
 }

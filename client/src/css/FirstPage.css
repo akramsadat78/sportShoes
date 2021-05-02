@@ -1,4 +1,5 @@
 #firstpagelist{
+    background-color: rgb(62, 155, 155);
     list-style: none;
     font-size: 150%;    
 }
@@ -56,21 +57,21 @@
 #wrap_first_page{
     background-color:  rgb(193, 230, 230);
     float: left;
-    width: 83%;
-    margin-left: 8.4%;
+    width: 93%;
+    margin-left: 4%;
     border: solid rgb(12, 6, 7);
-     height: 75vh;
-     overflow: auto;
-     border-radius: 1%;
-     margin-top: 3%;
+    height: 80vh;
+    overflow: auto;
+    border-radius: 1%;
+    margin-top: 1%;
 }
 
 #border_first {    
-    width: 70%;
-    height: 70.5vh;
+    width: 75%;
+    height: 75vh;
     overflow: auto;
     border-radius: 50px;
-    margin-left: 16%;
+    margin-left: 13%;
     margin-top: 1.5%;
     margin-bottom: 1%;
     padding: 1%;
@@ -82,7 +83,60 @@
 
 #border_first #image{
     width: 100%;
-    height: 60vh;
+    height: 65vh;
     border-radius: 50px;
     padding-left: .5%;
 }
+
+
+/* wrap2 */
+#wrap2_firstpage{
+    float: right;
+    width: 30%;
+    border: solid rgb(12, 6, 7);
+    margin-right: .5%;
+    height: 43vh;
+    overflow: auto;
+    border-radius: 1%;
+    margin-top: 16%;
+    border-width: 2px;
+    background-color:  rgb(193, 230, 230);
+}
+
+#wrap2_firstpage a{
+    text-decoration: none;
+}
+
+#wrap2_firstpage label{
+    float: right;
+    width: 80%;
+    height: 6vh;
+    border: solid rgb(12, 6, 7);
+    text-align: center;
+    border-radius: 30px;
+    border-width: 1px;
+    background-color: rgb(44, 196, 196);
+    text-align: center;
+    margin-top: 5%;
+    margin-right: 15%;
+    font-size: 150%;
+    color: black;
+}
+
+
+#wrap2_firstpage li {
+    height: 7vh;
+    list-style-type: none;
+}
+
+#wrap2_firstpage label:hover {
+    background-color: rgb(23, 122, 122);
+    color: aliceblue;
+}
+
+#wrap2_firstpage .line hr {
+    height: 1px;
+    border: 0;
+    margin-top: 10%;
+    background: black;
+  }
