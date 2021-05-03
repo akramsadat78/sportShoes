@@ -49,7 +49,7 @@ export default class LoginComponent extends Component {
      })
      
      if(this.state.validation == 0){
-       alert("The username or password is incorrect");
+       alert("نام کاربری یا رمز عبور درست نمی باشد");
      }
 
   };
@@ -94,7 +94,7 @@ export default class LoginComponent extends Component {
               <InputTextField 
                 name = "psw"
                 id = "input-loginpage"
-                type = "number"
+                type = "password"
                 required = "true"
                 placeholder = "رمز عبور"
                 val = {this.state.password}
