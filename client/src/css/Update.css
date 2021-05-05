@@ -225,7 +225,7 @@
 /***** section3-SubmitInformation *****/
 #section3-SubmitInformation_update{
    background-color: rgb(203, 240, 255);
-    height: 45%;
+    height:32%;
     border: solid rgb(12, 6, 7);
     border-width: 2px;
     margin-right: .8%;
@@ -257,7 +257,7 @@
     margin-right: 13%;
     border: solid rgb(12, 6, 7);
     text-align: center;
-    border-radius: 30px;
+    border-radius: 30p  x;
     border-width: 1px;
     background-color: rgb(62, 155, 155);
     height: 4vh;
@@ -276,7 +276,7 @@
 }
 #section3-SubmitInformation_update #lableEdit label {
    float: right;
-    margin-top: .8%;
+    margin-top: 1%;
     width: 30%;
     margin-right: 13%;
     border: solid rgb(12, 6, 7);
@@ -284,7 +284,7 @@
     border-radius: 30px;
     border-width: 1px;
     background-color: rgb(44, 196, 196);
-    height: 4vh;
+    height: 5vh;
 }
 #section3-SubmitInformation_update label {
    width: 85%;
@@ -316,7 +316,7 @@
    margin-top: .4%;
    margin-left: .4%;
    width: 99%;
-   height: 29vh;
+   height: 17vh;
    direction: ltr;
    overflow: auto;
 }
@@ -468,7 +468,7 @@
 /***** section5-SubmitInformation *****/
 #section5-SubmitInformation_update{
    background-color: rgb(203, 240, 255);
-    height: 22.5%;
+    height: 35%;
     border: solid rgb(12, 6, 7);
     border-width: 2px;
     margin-right: .8%;
@@ -533,10 +533,10 @@
    border: solid rgb(12, 6, 7);
    border-width: 1px;
    list-style: none;
-   margin-top: .4%;
+   margin-top: .7%;
    margin-left: .4%;
    width: 99%;
-   height: 17vh;
+   height: 26vh;
    direction: ltr;
    overflow: auto;
 }
@@ -570,6 +570,16 @@
    background-color: rgb(44, 196, 196);
 }
 
+#section5-SubmitInformation_update  #table_inform select {
+   width: 90%;
+   height: 5vh;
+   border: solid rgb(12, 6, 7);
+   text-align: center;
+   border-radius: 30px;
+   border-width: 1px;
+   display: block;
+   background-color: rgb(44, 196, 196);
+}
 
 #section5-SubmitInformation_update  #table_inform label{
    width: 75%;

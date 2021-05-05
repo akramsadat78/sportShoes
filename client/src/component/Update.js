@@ -48,7 +48,8 @@ export default class Update extends Component {
       indexrow:0,//keep indexrow of first table
       arraymodel:['Nike','Pama','Adidas','Reebook','Skechers','Asics','Puma'],
       checkWriteDate:[],//if cost is entered => check sale date enter too
-      checkWriteCost:[]//if date is entered => check cost enter too
+      checkWriteCost:[],//if date is entered => check cost enter too
+      choseRow : 0 //witch row is selected to be edited
     }
   }
 
@@ -383,7 +384,13 @@ export default class Update extends Component {
     }
   };
 
- 
+  /* selected the row to be edited */
+  handleRow  = (event,val)  => {
+    this.setState({
+      choseRow : event.target.value
+    })
+  }
+
   render() { 
 
     var arraynumber_1_to_100 = Array.from(Array(100).keys()) // 1 to 100
@@ -415,44 +422,49 @@ export default class Update extends Component {
                   <th>سود </th>
                   <th>هزینه فروش</th>
                   <th>تاریخ فروش</th>
-                  <th>شماره</th>
+                  <th>انتخاب سطر</th>
                 </tr>
               </thead>
-                        
+
+              <tr>
+                <td>-</td>
+                <td>      
+                  <InputTextField 
+                  name = "test"
+                  id = "test"
+                  type = "number"
+                  min = "0"
+                  _handleChange ={e =>  this.changeShoeCostSale(e,this.state.choseRow-1+sum)}
+                  />    
+                </td>
+                <td>
+                  <DatePickerDetail  parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,this.state.choseRow-1+sum) }/>   
+                </td>
+                <td> 
+                  <div  id="selectRow">
+                  <DropdownSelect 
+                  name = "helloo"
+                  lableName = "numbers"
+                  placeholder = " شماره سطر"
+                  val = {Array.from(Array(this.state.inside_row.length).keys()) }
+                  _handleChange = {event =>  this.handleRow(event,this.state.inside_row.length) }
+                  />
+                  </div>
+                </td>
+              </tr>  
+
+              {/* details */}
               <tbody>
                 {this.state.inside_row.map((item,index) =>
                   <tr>
                     <td> 
                       <label>{this.state.dynamic_profit[index+sum]}</label>
                     </td>
-                    <td> 
-                      {
-                        <div>
-                          {(((this.state.dynamic_profit_save[index+sum] == null) || (this.state.dynamic_profit_save[index+sum] == '')) 
-                            ) ? (
-                              <InputTextField 
-                              name = "test"
-                              id = "test"
-                              type = "number"
-                              min = "0"
-                              _handleChange ={e =>  this.changeShoeCostSale(e,index+sum)}
-                              />
-                            ) : (
-                              <label>{this.state.dynamic_cost_sale[index+sum]}</label>
-                          )}
-                      </div>
-                      }
-                      
+                    <td>
+                      <label>{this.state.dynamic_cost_sale[index+sum]}</label>
                     </td>
                     <td>
-                      <div>
-                        {( (this.state.dynamic_profit_save[index+sum] == null) || (this.state.dynamic_profit_save[index+sum] == '')
-                          ) ? (
-                            <DatePickerDetail  parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,index+sum) }/>   
-                          ) : (
-                            <label>{this.state.dynamic_sale_date[index+sum]}</label>
-                        )}
-                      </div>
+                      <label>{this.state.dynamic_sale_date[index+sum]}</label>
                      </td>
                     <td>
                       {index+1}
@@ -570,18 +582,7 @@ export default class Update extends Component {
                     {this.state.dynamicRowsIds.map((item,index) =>
                       <tr>
                         <td >
-                        {
-                            <div id="lables">
-                              {((index<this.state.staticRowsIds) 
-                                ) ? (
-                                  <label id="edit" onClick={() => { this.click(index+1,this.state.dynamic_count[index],this.state.dynamic_cost_buy[index])}}>جزئیات </label> 
-                                ) : (
-                                  <div  id="not_allowed">
-                                    <label > جزئیات</label>
-                                  </div>
-                              )}
-                            </div>
-                          }
+                          <label id="edit" onClick={() => { this.click(index+1,this.state.dynamic_count[index],this.state.dynamic_cost_buy[index])}}>جزئیات </label> 
                         </td>
 
                         <td>
