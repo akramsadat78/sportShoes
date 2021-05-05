@@ -14,8 +14,8 @@ export default class DatePicker extends Component {
   constructor(props){
     super(props);
     this.state = {
-       // data: this.props.dataParentToChild,
-        currentDateTime: new Date().toLocaleDateString('fa-IR')
+      //data: this.props.dataParentToChild,
+      currentDateTime: new Date().toLocaleDateString('fa-IR')
     }
 }
   static propTypes = {
