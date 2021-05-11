@@ -223,9 +223,15 @@ export default class Search extends Component {
         }
 
     })
-      
+     
     if(this.state.validation == 0){
       alert("کفش موجود نیست");
+    }
+
+    if(this.state.validation == 1){
+      this.setState({
+        validation : 0
+      })
     }
 
   };
@@ -263,8 +269,15 @@ export default class Search extends Component {
       })
     })
 
+   
     if(this.state.validationsize == 0){
       alert("سایز کفش موجود نیست");
+    }
+
+    if(this.state.validationsize == 1){
+      this.setState({
+        validationsize : 0
+      })
     }
   
   };
