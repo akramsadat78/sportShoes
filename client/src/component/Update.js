@@ -154,30 +154,55 @@ export default class Update extends Component {
   }
 
   /* part enter SaleDate,CostSale */
-  handleCallbackenterShoeSaleDate = (childData,val) =>{
-    let dynamic_sale_date = [ ...this.state.dynamic_sale_date ];
+  handleCallbackenterShoeSaleDate = (childData,val,selectRow) =>{
+    //check row in detail is selected
+    if(selectRow == '' || selectRow == 0){
 
-    if( childData  == '' ){//user is deleted all data of date in box
-      dynamic_sale_date[val] = '' ;
+      alert("سطر را انتخاب کنید")
 
-      this.setState({
-        dynamic_sale_date
-      });
-    }else{//user chose date
+    }else{ 
 
-      var entered_purchase_date = this.state.first_purchase_date[val].split('/');
-      var yearPurchaseDate =  Math.floor(entered_purchase_date[0]);
-      var monthPurchaseDate = Math.floor( entered_purchase_date[1]);
-      var dayPurchaseDate = Math.floor( entered_purchase_date[2]);
+      let dynamic_sale_date = [ ...this.state.dynamic_sale_date ];
 
-      var entered_sale_date = childData.split('/');//end date
-      var yearSaleDate =  Math.floor(entered_sale_date[0]);
-      var monthSaleDate =  Math.floor(entered_sale_date[1]);
-      var daySaleDate =  Math.floor(entered_sale_date[2]);
+      if( childData  == '' ){//user is deleted all data of date in box
+        dynamic_sale_date[val] = '' ;
 
-      if(yearPurchaseDate == yearSaleDate){//same year
-        if(monthSaleDate == monthPurchaseDate){//same month
-          if(daySaleDate >= dayPurchaseDate){//correct
+        this.setState({
+          dynamic_sale_date
+        });
+      }else{//user chose date
+
+        var entered_purchase_date = this.state.first_purchase_date[val].split('/');
+        var yearPurchaseDate =  Math.floor(entered_purchase_date[0]);
+        var monthPurchaseDate = Math.floor( entered_purchase_date[1]);
+        var dayPurchaseDate = Math.floor( entered_purchase_date[2]);
+
+        var entered_sale_date = childData.split('/');//end date
+        var yearSaleDate =  Math.floor(entered_sale_date[0]);
+        var monthSaleDate =  Math.floor(entered_sale_date[1]);
+        var daySaleDate =  Math.floor(entered_sale_date[2]);
+
+        if(yearPurchaseDate == yearSaleDate){//same year
+          if(monthSaleDate == monthPurchaseDate){//same month
+            if(daySaleDate >= dayPurchaseDate){//correct
+              dynamic_sale_date[val] = childData ;
+
+              let checkWriteCost = [ ...this.state.checkWriteCost ];
+              checkWriteCost[val] = 1;
+
+              this.setState({
+                dynamic_sale_date,
+                checkWriteCost
+              });
+            }else{
+              dynamic_sale_date[val] = '' ;
+
+              this.setState({
+                dynamic_sale_date
+              });
+              alert("تاریخ فروش درست نیست")
+            }
+          }else if(monthSaleDate > monthPurchaseDate){//future month => correct
             dynamic_sale_date[val] = childData ;
 
             let checkWriteCost = [ ...this.state.checkWriteCost ];
@@ -187,7 +212,7 @@ export default class Update extends Component {
               dynamic_sale_date,
               checkWriteCost
             });
-          }else{
+          }else{//prev month => incoorect
             dynamic_sale_date[val] = '' ;
 
             this.setState({
@@ -195,7 +220,7 @@ export default class Update extends Component {
             });
             alert("تاریخ فروش درست نیست")
           }
-        }else if(monthSaleDate > monthPurchaseDate){//future month => correct
+        }else if(yearPurchaseDate < yearSaleDate){//future year => correct
           dynamic_sale_date[val] = childData ;
 
           let checkWriteCost = [ ...this.state.checkWriteCost ];
@@ -205,7 +230,7 @@ export default class Update extends Component {
             dynamic_sale_date,
             checkWriteCost
           });
-        }else{//prev month => incoorect
+        }else{//prev year => incorrect
           dynamic_sale_date[val] = '' ;
 
           this.setState({
@@ -213,57 +238,49 @@ export default class Update extends Component {
           });
           alert("تاریخ فروش درست نیست")
         }
-      }else if(yearPurchaseDate < yearSaleDate){//future year => correct
-        dynamic_sale_date[val] = childData ;
 
-        let checkWriteCost = [ ...this.state.checkWriteCost ];
-        checkWriteCost[val] = 1;
-
-        this.setState({
-          dynamic_sale_date,
-          checkWriteCost
-        });
-      }else{//prev year => incorrect
-        dynamic_sale_date[val] = '' ;
-
-        this.setState({
-          dynamic_sale_date
-        });
-        alert("تاریخ فروش درست نیست")
       }
 
     }
   }
 
-  changeShoeCostSale(e,val) {
-    let dynamic_cost_sale = [ ...this.state.dynamic_cost_sale ];
-    let dynamic_profit = [ ...this.state.dynamic_profit ];
+  changeShoeCostSale(e,val,selectRow) {
+    //check row in detail is selected
+    if(selectRow == '' || selectRow == 0){
 
-    if( e.target.value  == '' ){//user is deleted all data of cost in box
+      alert("سطر را انتخاب کنید")
 
-      dynamic_cost_sale[val] = '' ;
-      dynamic_profit[val] = '';
+    }else{
+    
+      let dynamic_cost_sale = [ ...this.state.dynamic_cost_sale ];
+      let dynamic_profit = [ ...this.state.dynamic_profit ];
 
-      this.setState({
-        dynamic_cost_sale,
-        dynamic_profit
-      });
+      if( e.target.value  == '' ){//user is deleted all data of cost in box
 
-    }else{//user enter cost
-      dynamic_cost_sale[val] = e.target.value ;
-      dynamic_profit[val] = e.target.value - this.state.first_cost_sale;
+        dynamic_cost_sale[val] = '' ;
+        dynamic_profit[val] = '';
 
-      let checkWriteDate = [ ...this.state.checkWriteDate ];
-      checkWriteDate[val] = 1;
+        this.setState({
+          dynamic_cost_sale,
+          dynamic_profit
+        });
 
-      this.setState({
-        dynamic_cost_sale,
-        dynamic_profit,
-        checkWriteDate
-      });
+      }else{//user enter cost
+        dynamic_cost_sale[val] = e.target.value ;
+        dynamic_profit[val] = e.target.value - this.state.first_cost_sale;
+
+        let checkWriteDate = [ ...this.state.checkWriteDate ];
+        checkWriteDate[val] = 1;
+
+        this.setState({
+          dynamic_cost_sale,
+          dynamic_profit,
+          checkWriteDate
+        });
+
+      }
 
     }
-
   }
 
   /* get data(for selected shoe) from DB*/
@@ -434,11 +451,11 @@ export default class Update extends Component {
                   id = "test"
                   type = "number"
                   min = "0"
-                  _handleChange ={e =>  this.changeShoeCostSale(e,this.state.choseRow-1+sum)}
+                  _handleChange ={e =>  this.changeShoeCostSale(e,this.state.choseRow-1+sum,this.state.choseRow)}
                   />    
                 </td>
                 <td>
-                  <DatePickerDetail  parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,this.state.choseRow-1+sum) }/>   
+                  <DatePickerDetail  parentCallback = {childData =>  this.handleCallbackenterShoeSaleDate(childData,this.state.choseRow-1+sum,this.state.choseRow) }/>   
                 </td>
                 <td> 
                   <div  id="selectRow">
@@ -582,7 +599,16 @@ export default class Update extends Component {
                     {this.state.dynamicRowsIds.map((item,index) =>
                       <tr>
                         <td >
-                          <label id="edit" onClick={() => { this.click(index+1,this.state.dynamic_count[index],this.state.dynamic_cost_buy[index])}}>جزئیات </label> 
+                          {((index<this.state.staticRowsIds) 
+                            ) ? (
+                              <label id="edit" onClick={() => { this.click(index+1,this.state.dynamic_count[index],this.state.dynamic_cost_buy[index])}}>جزئیات </label> 
+                            ) : (
+                              <div  id="not_allowed">
+                                <label > جزئیات</label>
+                              </div>
+                            )
+                          }
+                          
                         </td>
 
                         <td>

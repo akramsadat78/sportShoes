@@ -269,7 +269,7 @@
    color: aliceblue;
 }
 
-#section3-SubmitInformation_update #border-table  #table_inform #lables #not_allowed label {
+#section3-SubmitInformation_update #border-table  #table_inform #not_allowed label {
    cursor: not-allowed;
    background-color: rgb(23, 122, 122);
 
