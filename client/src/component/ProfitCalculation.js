@@ -112,7 +112,7 @@ export default class ProfitCalculation extends Component {
       var profit ;
       var shoeSaleDateDB;
       var size ;
-      
+
       const response = await fetch('/information', {
         method: 'GET',
         headers: {
@@ -132,17 +132,20 @@ export default class ProfitCalculation extends Component {
          
           //caculate corect size to show
           if ( ind == 0 ){
+        
             count = index.shoe_count[counter];
             counter = counter + 1;
+
           }else if ( ind == count ){
+            
             save_count = count;
             count = index.shoe_count[counter];
-            count = count + save_count;
+            count =  Math.floor(count) +  Math.floor(save_count);
             counter = counter + 1;
           }
 
           if( item != null){
-
+            
             shoeSaleDateDB = item.split('/');//sale date in DB
             var yearDB = Math.floor(shoeSaleDateDB[0]);
             var monthDB = Math.floor(shoeSaleDateDB[1]);
