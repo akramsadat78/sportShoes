@@ -7,7 +7,7 @@ wite npm run dev in terminal
 # App
 https://sport-shoes.herokuapp.com/
 
-# Tool
+# Tools
 * reactjs(frontend)
 * node express(backend)
 * heroku   => https://sport-shoes.herokuapp.com/
