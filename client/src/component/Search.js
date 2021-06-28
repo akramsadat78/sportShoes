@@ -348,7 +348,7 @@ export default class Search extends Component {
 
           <form onSubmit={this.handleSubmit}>
             <div id = "sectionSubmit-search" >
-              <button  type="submit" class = "button-search"> ثبت </button> 
+              <button  type="submit" class = "button-search"> جستجو </button> 
             </div>
           </form>
 

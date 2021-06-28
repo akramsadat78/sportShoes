@@ -357,7 +357,7 @@ export default class ProfitCalculation extends Component {
           </div>
           
           <div id = "sectionSubmit_ProfitCalculation" >
-            <button  type="submit" class = "button_ProfitCalculation"> ثبت </button> 
+            <button  type="submit" class = "button_ProfitCalculation"> محاسبه درامد </button> 
           </div>
               
         </form>

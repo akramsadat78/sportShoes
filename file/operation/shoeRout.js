@@ -8,11 +8,11 @@ shoeRoutes.route('/add').post(function (req, res) {
   let shoe = new Shoe(req.body);
   shoe.save()
         .then(() => res.json({
-            message: "Created account successfully"
+            message: "shoe in added successfully"
         }))
         .catch(err => res.status(400).json({
             "error": err,
-            "message": "Error creating account"
+            "message": "unable to save to database"
         })) 
 });
 
