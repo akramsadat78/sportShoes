@@ -12,5 +12,5 @@ https://sport-shoes.herokuapp.com/
 * node express(backend)
 * heroku   => https://sport-shoes.herokuapp.com/ => username = safavimoghadam , password = 96243040
 * mongodb  => https://cloud.mongodb.com/
-* trello   => https://trello.com/
+* trello   => https://trello.com/b/HzENpd7b/shoe-sales-management
 * picofile => https://www.picofile.com/
