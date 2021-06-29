@@ -2,7 +2,7 @@
 write npm install for both dierectories(home and client) in terminal
 
 # Run
-wite npm run dev in terminal
+write npm run dev in terminal
 
 # App
 https://sport-shoes.herokuapp.com/
@@ -10,7 +10,7 @@ https://sport-shoes.herokuapp.com/
 # Tools
 * reactjs(frontend)
 * node express(backend)
-* heroku   => https://sport-shoes.herokuapp.com/
+* heroku   => https://sport-shoes.herokuapp.com/ => username = safavimoghadam , password = 96243040
 * mongodb  => https://cloud.mongodb.com/
-* trello   => https://trello.com/
+* trello   => https://trello.com/b/HzENpd7b/shoe-sales-management
 * picofile => https://www.picofile.com/
