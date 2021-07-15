@@ -78,7 +78,7 @@ export default class LoginComponent extends Component {
                 id = "input-loginpage"
                 type = "text"
                 required = "true"
-                placeholder = "نام کاربری"
+                placeholder = "safavimoghadam"
                 val = {this.state.username}
                 _handleChange ={this.enterUserName}
               />
@@ -96,7 +96,7 @@ export default class LoginComponent extends Component {
                 id = "input-loginpage"
                 type = "password"
                 required = "true"
-                placeholder = "رمز عبور"
+                placeholder = "1234"
                 val = {this.state.password}
                 _handleChange = { this.enterPassword }
               />
